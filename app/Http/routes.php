@@ -10,9 +10,10 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PagesController@index');
+Route::get('/update-password', 'PagesController@showUpdatePasswordForm');
+Route::put('/update-password', 'PagesController@updatePassword');
 
 Route::resource('clients', 'ClientController');
+
+Route::auth();

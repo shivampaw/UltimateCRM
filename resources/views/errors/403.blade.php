@@ -1,5 +1,5 @@
 @extends('errors.layout')
 
 @section('message')
-Be right back!
+You Cannot Access This Page!
 @stop

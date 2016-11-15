@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Laravel</title>
+        <title>Error</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -14,8 +14,8 @@
                 margin: 0;
                 padding: 0;
                 width: 100%;
+                color: black;
                 display: table;
-                font-weight: 100;
                 font-family: 'Lato', sans-serif;
             }
 
@@ -31,14 +31,15 @@
             }
 
             .title {
-                font-size: 96px;
+                font-size: 40px;
+                margin-bottom: 40px;
             }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">@yield('message')</div>
             </div>
         </div>
     </body>

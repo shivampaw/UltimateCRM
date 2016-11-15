@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role',
     ];
 
     /**
@@ -23,4 +23,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Returns true if the user is an admin and 
+     * false if not
+     *
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        if($this->id == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function client()
+    {
+        return $this->hasOne('App\Client');
+    }
 }
