@@ -25,11 +25,17 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li class="nav-item"><a href="{{ url('/') }}" class="nav-link">Home</a>
+                    @if (Auth::user()->isAdmin())
+                        <li class="nav-item"><a href="{{ url('/clients') }}" class="nav-link">Clients</a>
+                    @elseif (Auth::user())
+
+                    @endif
                     </li>
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav float-md-right">
-                    <!-- Authentication Links -->@if (Auth::guest())
+                    <!-- Authentication Links -->
+                    @if (Auth::guest())
                     <li class="nav-item"><a href="{{ url('/login') }}" class="nav-link">Login</a>
                     </li>
                     @else

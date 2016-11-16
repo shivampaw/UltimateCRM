@@ -6,9 +6,6 @@ use App\Client;
 use App\Invoice;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
 
 class InvoicesController extends Controller
 {
@@ -37,9 +34,9 @@ class InvoicesController extends Controller
             'due_date'	=> 'date|required',
         ];
         $messages = [
-        	'item_details.0.description.required' => 'You need to have at least one product description',
-        	'item_details.0.quantity.required' => 'You need to have at least one product quantity',
-        	'item_details.0.price.required' => 'You need to have at least one product price'
+        	'item_details.0.description.required' => 'You need to have at least one completed product description',
+        	'item_details.0.quantity.required' => 'You need to have at least one completed product quantity',
+        	'item_details.0.price.required' => 'You need to have at least one completed product price'
         ];
         $this->validate($request, $rules, $messages);
 
@@ -52,5 +49,25 @@ class InvoicesController extends Controller
 
     	flash("Invoice Created!");
         return redirect('/clients/'.$client->id);
+    }
+
+    public function show(Client $client, Invoice $invoice)
+    {
+        return $invoice;
+    }
+
+    public function destroy(Client $client, Invoice $invoice)
+    {
+        
+    }
+
+    public function edit(Client $client, Invoice $invoice)
+    {
+        abort(404);
+    }
+
+    public function update(Request $request, Client $client, Invoice $invoice)
+    {
+        abort(404);
     }
 }

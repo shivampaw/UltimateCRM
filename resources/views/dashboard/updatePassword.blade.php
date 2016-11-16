@@ -4,18 +4,6 @@
 
 @section('content')
     <p>Enter your current password and then your new password to update your password</p>
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    @if (Session::has('success'))
-       <div class="alert alert-info">{{ Session::get('success') }}</div>
-    @endif
     <form action="/update-password" method="post">
 		<div class="form-group">
 			<label for="currentPassword" class="sr-only">Current Password</label>
@@ -31,7 +19,7 @@
         </div>
 		<div class="form-group">
 			<input type="hidden" name="_method" value="put">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            {{csrf_field() }}
             <button class="btn btn-primary btn-block">Update Password</button>
 		</div>
     </form>

@@ -43,7 +43,7 @@ class PagesController extends Controller
 
         $rules = [
             'currentPassword' => 'required',
-            'password' => 'required|same:confirmPassword',
+            'password' => 'required|same:confirmPassword|min:6',
             'confirmPassword' => 'required'
         ];
         $validator = Validator::make($request->all(), $rules);
@@ -54,16 +54,15 @@ class PagesController extends Controller
                 'password' => $request->currentPassword
             ]);
             if (!$check):
-                $validator->errors()->add('current_password', 
-                    'Your current password is incorrect.');
+                $validator->errors()->add('current_password', 'Your current password is incorrect.');
             endif;
         });
 
         if($validator->passes()){
             Auth::user()->password = Hash::make($request->password);
             Auth::user()->save();
-            Session::flash('success', "Your password was updated!");
-            return Redirect::back();
+            flash("Your password was updated!");
+            return back();
         }
         return back()->withErrors($validator);
     }

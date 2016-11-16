@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role',
+        'name', 'email', 'password', 'role', 'is_admin',
     ];
 
     /**
@@ -32,7 +32,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        if($this->id == 1){
+        if($this->is_admin === 1){
             return true;
         }else{
             return false;
@@ -41,6 +41,6 @@ class User extends Authenticatable
 
     public function client()
     {
-        return $this->hasOne('App\Client');
+        return $this->hasOne(Client::class);
     }
 }

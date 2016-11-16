@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
 	protected $fillable = ['full_name', 'email', 'number', 'address'];
-    //
+
     public function invoices()
     {
     	return $this->hasMany(Invoice::class);
@@ -27,6 +27,15 @@ class Client extends Model
     public function addInvoice(Invoice $invoice)
     {
         return $this->invoices()->save($invoice);
+    }
+    
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($client) {
+            $client->invoices()->delete();
+            $client->transactions()->delete();
+            User::find($client->user_id)->delete();
+        });
     }
 
 }
