@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
-class ClientController extends Controller
+class ClientsController extends Controller
 {
 
     public function __construct()
@@ -27,7 +27,6 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
         $clients = Client::all();
         return view("clients.index", compact('clients'));
     }
@@ -39,7 +38,6 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
         return view("clients.create");
     }
 
@@ -51,35 +49,30 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
         $rules = [
             'full_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:clients|unique:users',
             'number' => 'numeric'
         ];
-        $validator = Validator::make($request->all(), $rules);
+        $this->validate($request, $rules);
 
-        if($validator->passes()){
-            $user = new User();
-            $password = str_random(8);
-            $user->name = $request->full_name;
-            $user->password = bcrypt($password);
-            $user->email = $request->email;
-            $user->save();
+        $user = new User();
+        $password = str_random(10);
+        $user->name = $request->full_name;
+        $user->password = bcrypt($password);
+        $user->email = $request->email;
+        $user->save();
 
-            $client = new Client();
-            $client->full_name = $request->full_name;
-            $client->email = $request->email;
-            $client->number = $request->number;
-            $client->address = $request->address;
-            $client->user_id = $user->id;
-            $client->save();
+        $client = new Client();
+        $client->full_name = $request->full_name;
+        $client->email = $request->email;
+        $client->number = $request->number;
+        $client->address = $request->address;
+        $client->user_id = $user->id;
+        $client->save();
 
-            Session::flash('success', "Client Created!");
-            return Redirect::to('/clients');
-        }
-        return back()->withErrors($validator);
+        flash("Client Created!");
+        return redirect('/clients');
     }
 
     /**
@@ -90,7 +83,8 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = Client::with('invoices')->find($id);
+        return view("clients.show", compact('client'));
     }
 
     /**

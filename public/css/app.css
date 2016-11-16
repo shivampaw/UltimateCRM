@@ -1,0 +1,37 @@
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+  color: #aaa;
+  margin-right: 0.5em;
+}
+
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+  content: "";
+}
+
+body {
+    font-family: 'Lato';
+}
+
+.fa-btn {
+    margin-right: 6px;
+}
+
+nav.navbar.navbar-light.bg-faded.navbar-static-top{
+	margin-bottom: 20px;
+}
+
+@media screen and (max-width: 767px){
+    #nav-content{
+        clear: both;
+    }
+}
+
+.dropdown-menu{
+	right: 0;
+	left: auto;
+}
+
+.invoice_item input{
+  margin: 5px 0;
+}

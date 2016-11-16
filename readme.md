@@ -1,5 +1,7 @@
 # Laravel CRM
 
+## Features
+
 ## Requirements
 
 ## Installation

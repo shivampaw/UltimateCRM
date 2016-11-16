@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Invoice;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
@@ -10,12 +11,22 @@ class Client extends Model
     //
     public function invoices()
     {
-    	return $this->hasMany('App\Invoice');
+    	return $this->hasMany(Invoice::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 
     public function user()
     {
-    	return $this->hasOne('App\User');
+    	return $this->hasOne(User::class);
+    }
+
+    public function addInvoice(Invoice $invoice)
+    {
+        return $this->invoices()->save($invoice);
     }
 
 }
