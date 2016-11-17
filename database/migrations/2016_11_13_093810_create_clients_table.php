@@ -19,6 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('email')->unique();
             $table->string('number')->nullable();
             $table->text('address')->nullable();
+            $table->text('stripe_customer_id')->nullable();
             $table->timestamps();
         });
     }

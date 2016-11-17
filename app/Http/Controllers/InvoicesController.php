@@ -45,6 +45,12 @@ class InvoicesController extends Controller
     	$invoice->due_date = $request->due_date;
     	$invoice->paid = FALSE;
     	$invoice->notes = $request->notes;
+        $invoice->total = 0;
+        foreach($request->item_details as $item){
+            $invoice->total += $item['quantity'] * $item['price'];
+        }
+        $invoice->total = $invoice->total * 100;
+        
     	$client->addInvoice($invoice);
 
     	flash("Invoice Created!");

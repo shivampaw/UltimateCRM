@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -33,6 +34,15 @@ class User extends Authenticatable
     public function isAdmin()
     {
         if($this->is_admin === 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function isSuperAdmin()
+    {
+        if($this->id === 1){
             return true;
         }else{
             return false;

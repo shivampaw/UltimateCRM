@@ -18,6 +18,9 @@ class CreateInvoicesTable extends Migration
             $table->longText('item_details');
             $table->date('due_date');
             $table->boolean('paid');
+            $table->datetime('paid_at')->nullable();
+            $table->string('stripe_charge_id')->nullable();
+            $table->integer('total');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

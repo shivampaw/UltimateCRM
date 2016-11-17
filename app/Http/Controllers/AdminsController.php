@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Client;
+use App\Admin;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class ClientsController extends Controller
+class AdminsController extends Controller
 {
 
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin');
+        $this->middleware('super_admin');
     }
 
     /**
@@ -24,8 +23,8 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
-        return view("clients.index", compact('clients'));
+        $admins = User::where('is_admin', 1)->get();
+        return $admins;
     }
 
     /**
@@ -35,7 +34,7 @@ class ClientsController extends Controller
      */
     public function create()
     {
-        return view("clients.create");
+        return view("admins.create");
     }
 
     /**
@@ -49,22 +48,13 @@ class ClientsController extends Controller
         $rules = [
             'name' => 'required',
             'email' => 'required|email|unique:clients|unique:users',
-            'number' => 'numeric'
         ];
         $this->validate($request, $rules);
+        
+        $user = addUser($request, true);
 
-        $user = addUser($request);
-
-        $client = new Client();
-        $client->full_name = $request->name;
-        $client->email = $request->email;
-        $client->number = $request->number;
-        $client->address = $request->address;
-        $client->user_id = $user->id;
-        $client->save();
-
-        flash("Client Created!");
-        return redirect('/clients');
+        flash("Admin Created!");
+        return redirect('/admins');
     }
 
     /**
@@ -73,10 +63,10 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show($id)
     {
-        $client->load('invoices');
-        return view("clients.show", compact('client'));
+        $admin = User::where('is_admin', 1)->findOrFail($id);
+        return $admin;
     }
 
     /**
@@ -85,7 +75,7 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client)
+    public function edit($id)
     {
         //
     }
@@ -97,7 +87,7 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -108,10 +98,10 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        $client->delete();
-        flash("Client Deleted!");
-        return redirect('/clients');
+        User::where('is_admin', 1)->findOrFail($id)->delete();
+        flash("Admin Deleted!");
+        return redirect('/admins');
     }
 }

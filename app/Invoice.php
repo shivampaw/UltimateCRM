@@ -7,21 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    protected $fillable = ['item_details', 'due_date', 'paid', 'notes'];
+	protected $fillable = ['item_details', 'due_date', 'paid', 'notes', 'paid_at'];
+	protected $dates = ['created_at', 'updated_at', 'paid_at'];
+
     
     //
 	public function client()
 	{
 		return $this->belongsTo(Client::class);
-	}
-
-	public function transaction()
-	{
-		return $this->hasOne(Transaction::class);	
-	}
-
-	public function addTransaction(Transaction $transaction)
-	{
-		return $this->transaction()->save($transaction);
 	}
 }
