@@ -22,7 +22,9 @@ Route::put('/update-password', 'PagesController@updatePassword');
 Route::resource('/clients', 'ClientsController');
 
 // Invoice Routes
-Route::resource('/clients.invoices', 'InvoicesController');
+Route::resource('/clients.invoices', 'InvoicesController', ['except' =>[
+	'update', 'edit'
+]]);
 
 // Admin Routes
 Route::resource('/admins', 'AdminsController');

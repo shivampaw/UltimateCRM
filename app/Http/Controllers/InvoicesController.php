@@ -6,6 +6,7 @@ use App\Client;
 use App\Invoice;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InvoicesController extends Controller
 {
@@ -28,17 +29,9 @@ class InvoicesController extends Controller
     public function store(Request $request, Client $client)
     {
     	$rules = [
-            'item_details.0.description' => 'required',
-            'item_details.0.price' => 'required',
-            'item_details.0.quantity' => 'required',
             'due_date'	=> 'date|required',
         ];
-        $messages = [
-        	'item_details.0.description.required' => 'You need to have at least one completed product description',
-        	'item_details.0.quantity.required' => 'You need to have at least one completed product quantity',
-        	'item_details.0.price.required' => 'You need to have at least one completed product price'
-        ];
-        $this->validate($request, $rules, $messages);
+        $this->validate($request, $rules);
 
     	$invoice = new Invoice();
     	$invoice->item_details = json_encode($request->item_details);
@@ -50,11 +43,16 @@ class InvoicesController extends Controller
             $invoice->total += $item['quantity'] * $item['price'];
         }
         $invoice->total = $invoice->total * 100;
-        
+
     	$client->addInvoice($invoice);
 
+        Mail::send('emails.newInvoice', ['client' => $client, 'invoice' => $invoice], function($mail) use ($client){
+            $mail->to($client->email, $client->full_name);
+            $mail->subject('['.$client->full_name.'] New Invoice Generated');
+        });
+
     	flash("Invoice Created!");
-        return redirect('/clients/'.$client->id);
+        return redirect('/clients/'.$client->id)->withInput();
     }
 
     public function show(Client $client, Invoice $invoice)
@@ -64,16 +62,6 @@ class InvoicesController extends Controller
 
     public function destroy(Client $client, Invoice $invoice)
     {
-        
-    }
-
-    public function edit(Client $client, Invoice $invoice)
-    {
-        abort(404);
-    }
-
-    public function update(Request $request, Client $client, Invoice $invoice)
-    {
-        abort(404);
+        return $client->invoices()->findOrFail($invoice->id);
     }
 }

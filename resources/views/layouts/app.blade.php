@@ -66,16 +66,15 @@
                     </div>
                     <div class="card-block">
                         @if (session('status'))
-                            <div class="alert alert-{{ session('status_level') }}">
+                            <div class="alert alert-{{ session('status_level') ?: "success" }}">
                                 {{ session('status') }}
                             </div>
                         @endif
 
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
-                                <ul>
                                     @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
+                                        <p>{{ $error }}</p>
                                     @endforeach
                                 </ul>
                             </div>

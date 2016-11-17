@@ -9,4 +9,5 @@
 		<input type="hidden" name="_method" value="delete">
 		<button>Delete Client</button>
     </form>
+    <a href="/clients/{{ $client->id }}/invoices">Invoices</a>
 @endsection

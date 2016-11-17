@@ -6,13 +6,8 @@
     <form role="form" method="POST" action="{{ url('/password/email') }}">
         {{ csrf_field() }}
 
-        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+        <div class="form-group">
             <input id="email" type="email" class="form-control" name="email" placeholder="E-Mail Address" value="{{ old('email') }}">
-            @if ($errors->has('email'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('email') }}</strong>
-                </span>
-            @endif
         </div>
 
         <div class="form-group">

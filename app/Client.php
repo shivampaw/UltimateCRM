@@ -28,7 +28,6 @@ class Client extends Model
         parent::boot();
         static::deleting(function($client) {
             $client->invoices()->delete();
-            $client->transactions()->delete();
             User::find($client->user_id)->delete();
         });
     }

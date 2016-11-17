@@ -9,7 +9,8 @@ function flash($message, $level = 'success')
 	session()->flash('status_level', $level);
 }
 
-function addUser(Request $request, $admin = false){
+function addUser(Request $request, $admin = false)
+{
 	$user = new User();
     $password = str_random(10);
     $user->name = $request->name;
@@ -18,8 +19,9 @@ function addUser(Request $request, $admin = false){
     $user->is_admin = $admin;
     $user->save();
 
-    Mail::raw('Password for '.$user->email.' is '.$password, function ($mail) {
-        $mail->to('shivam@shivampaw.com');    
+    Mail::send('emails.newClient', ['user' => $user, 'password' => $password], function($mail) use ($user){
+        $mail->to($user->email, $user->name);
+        $mail->subject('['.$user->name.'] Your New Client Account');
     });
 
     return $user;
