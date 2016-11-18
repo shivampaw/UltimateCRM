@@ -44,3 +44,7 @@
     </script>
 
 @endsection
+
+@section('footer')
+<script type="text/javascript" src="/js/newInvoice.js"></script>
+@endsection
