@@ -38,7 +38,7 @@
             <button id="payInvoiceBtn" type="submit" class="btn btn-primary btn-block">Pay Invoice</button>
         </div>
     </form>
-@stop
+@endsection
 
 @section('footer')  
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>

@@ -33,3 +33,8 @@ function addUser(Request $request, $admin = false)
 
     return $user;
 }
+
+function formatInvoiceTotal($number)
+{
+    return '£'.number_format($number/100, 2);
+}

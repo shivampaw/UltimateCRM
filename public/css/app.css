@@ -65,3 +65,14 @@ nav.navbar.navbar-light.bg-faded.navbar-static-top{
         column-count: 3;
     }
 }
+
+div#invoice .row{
+  border-bottom: 1px solid #aaa;
+  padding: 15px 0;
+}
+div#invoice .row:last-of-type{
+  border-bottom: none;
+}
+.invoice_break{
+  margin: 10px;
+}

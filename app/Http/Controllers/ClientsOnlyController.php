@@ -22,14 +22,14 @@ class ClientsOnlyController extends Controller
 
     public function allInvoices()
     {
-    	$invoices =  Auth::user()->client->invoices;
-    	return $invoices;
+    	$invoices =  Auth::user()->client->invoices()->paginate(6);
+    	return view("clientsOnly.allInvoices", compact('invoices'));
     }
 
     public function showInvoice($id)
     {
     	$invoice = Auth::user()->client->invoices()->where('id', $id)->firstOrFail();
-    	return $invoice;
+    	return view("clientsOnly.showInvoice", compact('invoice'));
     }
 
     public function payInvoice($id)
