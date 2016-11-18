@@ -48,10 +48,10 @@ class CreateSuperAdmin extends Command
         }
 
         User::create([
-                'email' => $email,
-                'name' => $name,
-                'password' => bcrypt($password),
-                'is_admin' => TRUE
-            ]);
+            'email' => $email,
+            'name' => $name,
+            'password' => bcrypt($password),
+            'is_admin' => TRUE
+        ]);
     }
 }
