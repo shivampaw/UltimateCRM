@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('page_title', 'Pay Invoice')
+@section('page_title', 'Pay Invoice #'.$invoice->id)
 
 @section('content')
-
+    <p><strong>Invoice Total is {{ formatInvoiceTotal($invoice->total) }}</strong></p>
     <form action="/invoices/{{ $invoice->id }}" method="POST" id="payment-form">
         {{ csrf_field() }}
         <div class="payment-errors"></div>
@@ -38,6 +38,7 @@
             <button id="payInvoiceBtn" type="submit" class="btn btn-primary btn-block">Pay Invoice</button>
         </div>
     </form>
+    <a href="/invoices/{{ $invoice->id }}" class="btn btn-danger"><span class="fa fa-angle-double-left"></span> Back to Invoice</a>
 @endsection
 
 @section('footer')  

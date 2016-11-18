@@ -31,7 +31,7 @@
                     @if ( (!Auth::guest()) && (Auth::user()->isAdmin()) )
                         <li class="nav-item"><a href="{{ url('/clients') }}" class="nav-link">Clients</a>
                     @elseif ( (!Auth::guest()) && (Auth::user()) )
-                        <li class="nav-item"><a href="{{ url('/me') }}" class="nav-link">Me</a>
+                        <li class="nav-item"><a href="{{ url('/invoices') }}" class="nav-link">Invoices</a>
                     @endif
                     </li>
                 </ul>
