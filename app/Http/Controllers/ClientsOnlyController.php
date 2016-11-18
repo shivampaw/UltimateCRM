@@ -10,6 +10,7 @@ use Stripe\Customer;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ClientsOnlyController extends Controller
 {
@@ -56,13 +57,20 @@ class ClientsOnlyController extends Controller
 	    	$charge = Charge::create([
 	    		'amount' => $invoice->total,
 	    		'customer' => $client->stripe_customer_id,
-	    		'currency' => 'gbp'
+	    		'currency' => 'gbp',
+                'invoice' => $invoice->id,
+                'receipt_email' => $client->email
 	    	]);
 
 	    	$invoice->stripe_charge_id = $charge->id;
 			$invoice->paid = TRUE;
 			$invoice->paid_at = Carbon::now();
 			$invoice->save();
+
+            Mail::send('emails.paidInvoice', ['client' => $client, 'invoice' => $invoice], function($mail) use ($client, $invoice){
+                $mail->to($client->email, $client->full_name);
+                $mail->subject('['.$client->full_name.'] Invoice #'.$invoice->id.' Has Been Paid For');
+            });
 
 			flash("Invoice Paid!");
 			return redirect("/invoices/".$id);

@@ -24,7 +24,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Client::paginate(6);
+        $clients = Client::with('invoices')->paginate(6);
         return view("clients.index", compact('clients'));
     }
 
@@ -70,7 +70,7 @@ class ClientsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
     public function show(Client $client)
@@ -82,7 +82,7 @@ class ClientsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
     public function edit(Client $client)
@@ -94,7 +94,7 @@ class ClientsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Client $client)
@@ -105,7 +105,7 @@ class ClientsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
     public function destroy(Client $client)
