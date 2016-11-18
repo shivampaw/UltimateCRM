@@ -12,10 +12,7 @@ class CreateSuperAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'super_admin:create
-                            {name : The name of the Super Admin}
-                            {email : The email of the Super Admin}
-                            {password : The password for the Super Admin}';
+    protected $signature = 'super_admin:create';
 
     /**
      * The console command description.
@@ -41,9 +38,9 @@ class CreateSuperAdmin extends Command
      */
     public function handle()
     {
-        $name = $this->argument('name');
-        $email = $this->argument('email');
-        $password = $this->argument('password');
+        $name = $this->ask('What is the full name for the super admin?');
+        $email = $this->ask('What is the email for the super admin?');
+        $password = $this->secret('What is the password for the super admin? (You won\'t be able to see what you are typing)');
 
         if(User::find(1)){
             $this->error("The Super Admin (user with ID 1) already exists!");
