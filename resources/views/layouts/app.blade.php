@@ -25,6 +25,9 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li class="nav-item"><a href="{{ url('/') }}" class="nav-link">Home</a>
+                    @if ( (!Auth::guest()) && (Auth::user()->isSuperAdmin()) )
+                        <li class="nav-item"><a href="{{ url('/admins') }}" class="nav-link">Admins</a>
+                    @endif
                     @if ( (!Auth::guest()) && (Auth::user()->isAdmin()) )
                         <li class="nav-item"><a href="{{ url('/clients') }}" class="nav-link">Clients</a>
                     @elseif ( (!Auth::guest()) && (Auth::user()) )

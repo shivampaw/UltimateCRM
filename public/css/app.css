@@ -1,3 +1,7 @@
+p{
+  margin: 10px 0;
+}
+
 input[type="date"]:before {
   content: attr(placeholder) !important;
   color: #aaa;

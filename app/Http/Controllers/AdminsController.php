@@ -23,8 +23,8 @@ class AdminsController extends Controller
      */
     public function index()
     {
-        $admins = User::where('is_admin', 1)->get();
-        return $admins;
+        $admins = User::where('is_admin', 1)->paginate(6);
+        return view("admins.index", compact('admins'));
     }
 
     /**
