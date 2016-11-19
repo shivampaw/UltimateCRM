@@ -26,6 +26,9 @@ Route::resource('/clients.invoices', 'InvoicesController', ['except' =>[
 	'update', 'edit'
 ]]);
 
+// Project Routes
+Route::resource('/clients.projects', 'ProjectsController');
+
 // Admin Routes
 Route::resource('/admins', 'AdminsController', ['except' =>[
 	'show'
