@@ -29,7 +29,7 @@ Then setup your database and open the `.env.example` file. Rename this file to `
 
 Run `php artisan key:generate` from the root project folder.
 
-Run `php artisan migrate` from the root project folder. This will create the databases for you.
+Run `php artisan migrate` from the root project folder. This will create the database tables for you.
 
 Now you can setup your Super Admin account by running `php artisan super_admin:create` which will walk you through creating the account.
 
