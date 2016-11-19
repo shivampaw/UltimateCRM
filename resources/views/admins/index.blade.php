@@ -13,11 +13,9 @@
 					<div class="card-block">
 						<h4 class="card-title">{{ $admin->name }}</h4>
 						<p class="card-text">
-							<div class="text-info">Email: {{ $admin->email }}</div>
-							<div class="text-info">Created On: {{ $admin->created_at->toFormattedDateString() }}</div>
-							<div class="text-info">Updated On: {{ $admin->updated_at->toFormattedDateString() }}</div>
+							<div>{{ $admin->email }}</div>
 						</p>
-						<a href="/admins/{{ $admin->id}}/" title="{{ $admin->name }}" class="btn btn-primary">View Admin</a>
+						<a href="/admins/{{ $admin->id}}" title="{{ $admin->name }}" class="btn btn-primary">View Admin</a>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,91 @@
-p{
-  margin: 10px 0;
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/fonts/Open-Sans-regular/Open-Sans-regular.eot');
+  src: url('/fonts/Open-Sans-regular/Open-Sans-regular.eot?#iefix') format('embedded-opentype'),
+       local('Open Sans'),
+       local('Open-Sans-regular'),
+       url('/fonts/Open-Sans-regular/Open-Sans-regular.woff2') format('woff2'),
+       url('/fonts/Open-Sans-regular/Open-Sans-regular.woff') format('woff'),
+       url('/fonts/Open-Sans-regular/Open-Sans-regular.ttf') format('truetype'),
+       url('/fonts/Open-Sans-regular/Open-Sans-regular.svg#OpenSans') format('svg');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/fonts/Open-Sans-700/Open-Sans-700.eot');
+  src: url('/fonts/Open-Sans-700/Open-Sans-700.eot?#iefix') format('embedded-opentype'),
+       local('Open Sans Bold'),
+       local('Open-Sans-700'),
+       url('/fonts/Open-Sans-700/Open-Sans-700.woff2') format('woff2'),
+       url('/fonts/Open-Sans-700/Open-Sans-700.woff') format('woff'),
+       url('/fonts/Open-Sans-700/Open-Sans-700.ttf') format('truetype'),
+       url('/fonts/Open-Sans-700/Open-Sans-700.svg#OpenSans') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/fonts/Lato-regular/Lato-regular.eot');
+  src: url('/fonts/Lato-regular/Lato-regular.eot?#iefix') format('embedded-opentype'),
+       local('Lato Regular'),
+       local('Lato-regular'),
+       url('/fonts/Lato-regular/Lato-regular.woff2') format('woff2'),
+       url('/fonts/Lato-regular/Lato-regular.woff') format('woff'),
+       url('/fonts/Lato-regular/Lato-regular.ttf') format('truetype'),
+       url('/fonts/Lato-regular/Lato-regular.svg#Lato') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/fonts/Lato-700/Lato-700.eot');
+  src: url('/fonts/Lato-700/Lato-700.eot?#iefix') format('embedded-opentype'),
+       local('Lato Bold'),
+       local('Lato-700'),
+       url('/fonts/Lato-700/Lato-700.woff2') format('woff2'),
+       url('/fonts/Lato-700/Lato-700.woff') format('woff'),
+       url('/fonts/Lato-700/Lato-700.ttf') format('truetype'),
+       url('/fonts/Lato-700/Lato-700.svg#Lato') format('svg');
+}
+
+
+
+/*--------------------------------------------------------------
+# Typography
+--------------------------------------------------------------*/
+body{
+  font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: black;
+  font-size: 15px;
+  line-height: 1.5 !important;
+}
+
+h1, .h1 { font-size: 32px; } 
+h2, .h2 { font-size: 26px; } 
+h3, .h3 { font-size: 22px; } 
+h4, .h4 { font-size: 20px; } 
+h5, .h5 { font-size: 18px; } 
+h6, .h6 { font-size: 16px; } 
+
+@media screen and (max-width: 767px){ 
+    h1, .h1 { font-size: 30px; } 
+    h2, .h2 { font-size: 24px; } 
+    h3, .h3 { font-size: 20px; } 
+    h4, .h4 { font-size: 18px; } 
+    h5, .h5 { font-size: 17px; } 
+    h6, .h6 { font-size: 16px; } 
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+  font-family: 'Lato', sans-serif;
+  line-height : 1.4 !important;
 }
 
 input[type="date"]:before {
@@ -11,10 +97,6 @@ input[type="date"]:before {
 input[type="date"]:focus:before,
 input[type="date"]:valid:before {
   content: "";
-}
-
-body {
-    font-family: 'Lato';
 }
 
 .fa-btn {
@@ -59,11 +141,11 @@ nav.navbar.navbar-light.bg-faded.navbar-static-top{
 }
 
 @media (min-width: 992px) {
-      .card-columns {
-        -webkit-column-count: 3;
-        -moz-column-count: 3;
-        column-count: 3;
-    }
+  .card-columns {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+  }
 }
 
 div#invoice .row{
@@ -75,4 +157,8 @@ div#invoice .row:last-of-type{
 }
 .invoice_break{
   margin: 10px;
+}
+
+div.col_row{
+  padding-bottom: 15px;
 }

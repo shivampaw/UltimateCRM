@@ -4,38 +4,32 @@
 
 @section('content')
     
-    <p>
-		<strong>Email: </strong>
-		{{ $client->email }}
-	</p>
-	
-	<p>
-		<strong>Number: </strong>
-		{{ $client->number }}
-	</p>
-	
-	<p>
-		<strong>Address: </strong>
-		{{ $client->address }}
-	</p>
-	
-	<p>
-		<strong>Unpaid Invoices: </strong>
-		{{ $client->invoices()->where('paid', false)->count() }}
-	</p>
-
-	<p>
-		<strong>Paid Invoices: </strong>
-		{{ $client->invoices()->where('paid', true)->count() }}
-	</p>
-
-
-    <form action="/clients/{{ $client->id }}" class="float-sm-left" method="post">
-		{{ csrf_field() }}
-		<input type="hidden" name="_method" value="delete">
-		<button class="btn btn-danger btn-block">Delete Client</button>
-    </form>
-	<p class="float-sm-right">
-		<a href="/clients/{{ $client->id }}/invoices" title="View Client Invoices" class="btn btn-info btn-block">View Invoices</a>
-	</p>
+    <div class="row text-xs-center">
+		<div class="col-md-4 col_row">
+			<h5>Client Details</h5>
+			<p>{{ $client->full_name }}</p>
+			<p>{{ $client->email }}</p>
+			<p>{{ $client->number }}</p>
+		</div>
+		<div class="col-md-4 col_row">
+			<h5>Client Address</h5>
+			<p>
+				{!! nl2br($client->address) !!}
+			</p>
+		</div>
+		<div class="col-md-4 col_row">
+			<h5>Invoices</h5>
+			<p class="text-success">Paid Invoices: {{ $client->invoices()->where('paid', true)->count() }}</p>
+			<p class="text-danger">Unpaid Invoices: {{ $client->invoices()->where('paid', false)->count() }}</p>
+			<a href="/clients/{{ $client->id }}/invoices" title="View Client Invoices">View Invoices</a>
+		</div>
+    </div>
+	<div class="text-xs-center">
+	    <form action="/clients/{{ $client->id }}" method="post">
+			{{ csrf_field() }}
+			<input type="hidden" name="_method" value="delete">
+			<button class="btn btn-link float-md-left"><span class="fa fa-trash"></span> Delete Client</button>
+	    </form>
+	    <a href="/clients/{{ $client->id }}/edit" class="btn btn-link float-md-right" title="Edit Client"><span class="fa fa-pencil"></span> Edit Client</a>
+    </div>
 @endsection
