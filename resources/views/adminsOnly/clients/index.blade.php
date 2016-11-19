@@ -15,6 +15,7 @@
 						<p class="card-text">
 							<div class="text-success">Paid Invoices: {{ $client->invoices()->where('paid', true)->count() }}</div>
 							<div class="text-danger">Unpaid Invoices: {{ $client->invoices()->where('paid', false)->count() }}</div>
+							<div class="text-info">Total Projects: {{ $client->projects()->count() }}</div>
 						</p>
 						<a href="/clients/{{ $client->id}}/" title="{{ $client->name }}" class="btn btn-primary">View Client</a>
 					</div>

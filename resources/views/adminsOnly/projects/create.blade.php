@@ -4,10 +4,14 @@
 
 @section('content')
 
-<p>Upload a PDF file below with the project details. The client will be able to view the PDF by logging in and it will also be emailed to them.</p>
+<p>Enter a title and upload a PDF file below with the project details. The client will be able to view the PDF by logging in and it will also be emailed to them.</p>
 
 <form action="/clients/{{ $client->id }}/projects" method="post" enctype="multipart/form-data">
 	{{ csrf_field() }}
+	<div class="form-group">
+		<label for="title" class="sr-only">Project Title</label>
+		<input type="text" class="form-control" placeholder="Project Title" name="title" id="title">
+	</div>
 	<div class="form-group">
 		<label class="custom-file">
 		  <input type="file" id="pdf" name="pdf" class="custom-file-input">

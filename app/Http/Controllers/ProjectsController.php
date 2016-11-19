@@ -7,6 +7,7 @@ use App\Project;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectsController extends Controller
 {
@@ -25,7 +26,7 @@ class ProjectsController extends Controller
     public function index(Client $client)
     {
         $projects = $client->projects;
-        return view("adminsOnly.projects.index", compact('client', 'projects'));   
+        return view("adminsOnly.projects.index", compact('client', 'projects'));
     }
 
     /**
@@ -47,7 +48,8 @@ class ProjectsController extends Controller
     public function store(Request $request, Client $client)
     {
         $this->validate($request,[
-            'pdf' => 'required|file'
+            'pdf' => 'required|file',
+            'title' => 'required'
         ]);
 
         $pdfExt = $request->pdf->extension();
@@ -57,9 +59,16 @@ class ProjectsController extends Controller
             $path = $request->pdf->move(public_path() . $fileUrlPath, $fileUrlName);
 
             $project = new Project();
+            $project->title = $request->title;
             $project->pdf_path = $fileUrlPath.$fileUrlName;
 
             $client->addProject($project);
+
+            Mail::send('emails.projects.new', ['client' => $client, 'project' => $project], function($mail) use ($client, $project){
+                $mail->to($client->email, $client->full_name);
+                $mail->attach(public_path() . $project->pdf_path);
+                $mail->subject('['.$client->full_name.'] New Project Created');
+            });
 
             flash("The project has been created!");
             return redirect("/clients/".$client->id."/projects");

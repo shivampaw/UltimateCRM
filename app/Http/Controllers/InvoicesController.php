@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Invoice;
+use App\Project;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -34,11 +35,19 @@ class InvoicesController extends Controller
         ];
         $this->validate($request, $rules);
 
+        if($request->project_id){
+            if(Project::where('id', $request->project_id)->where('client_id', $client->id)->count() !== 1){
+                flash("That Project ID does not exist for this user.", "danger");
+                return back()->withInput();
+            }
+        }
+
     	$invoice = new Invoice();
     	$invoice->item_details = json_encode($request->item_details);
     	$invoice->due_date = $request->due_date;
     	$invoice->paid = FALSE;
     	$invoice->notes = $request->notes;
+        $invoice->project_id = $request->project_id;
         $invoice->total = 0;
         foreach($request->item_details as $item){
             $invoice->total += $item['quantity'] * $item['price'];

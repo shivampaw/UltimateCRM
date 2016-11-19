@@ -12,4 +12,17 @@ class Project extends Model
 	{
 		return $this->belongsTo(Client::class);
 	}
+
+	public function invoices()
+	{
+		return $this->hasMany(Invoice::class);
+	}
+
+
+	protected static function boot() {
+        parent::boot();
+        static::deleting(function($project) {
+            $project->invoices()->delete();
+        });
+    }
 }

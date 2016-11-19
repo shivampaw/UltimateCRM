@@ -15,6 +15,7 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('client_id')->unsigned()->index();
+            $table->string('title');
             $table->string('pdf_path');
             $table->boolean('accepted')->default(FALSE);
             $table->date('accepted_at')->nullable();

@@ -5,23 +5,29 @@
 @section('content')
     
     <div class="row text-xs-center">
-		<div class="col-md-4 col_row">
+		<div class="col-md-3 col_row">
 			<h5>Client Details</h5>
-			<p>{{ $client->full_name }}</p>
-			<p>{{ $client->email }}</p>
-			<p>{{ $client->number }}</p>
+			<p class="text-success">{{ $client->full_name }}</p>
+			<p class="text-warning">{{ $client->email }}</p>
+			<p class="text-info">{{ $client->number }}</p>
 		</div>
-		<div class="col-md-4 col_row">
+		<div class="col-md-3 col_row">
 			<h5>Client Address</h5>
-			<p>
+			<p class="text-info">
 				{!! nl2br($client->address) !!}
 			</p>
 		</div>
-		<div class="col-md-4 col_row">
+		<div class="col-md-3 col_row">
 			<h5>Invoices</h5>
 			<p class="text-success">Paid Invoices: {{ $client->invoices()->where('paid', true)->count() }}</p>
-			<p class="text-danger">Unpaid Invoices: {{ $client->invoices()->where('paid', false)->count() }}</p>
+			<p class="text-warning">Unpaid Invoices: {{ $client->invoices()->where('paid', false)->count() }}</p>
 			<a href="/clients/{{ $client->id }}/invoices" title="View Client Invoices">View Invoices</a>
+		</div>
+		<div class="col-md-3 col_row">
+			<h5>Projects</h5>
+			<p class="text-success">Agreed Projects: {{ $client->projects()->where('accepted', true)->count() }}</p>
+			<p class="text-warning">Total Projects: {{ $client->projects()->count() }}</p>
+			<a href="/clients/{{ $client->id }}/projects" title="View Client Projects">View Projects</a>
 		</div>
     </div>
 	<div class="text-xs-center">

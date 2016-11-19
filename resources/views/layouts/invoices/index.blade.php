@@ -13,7 +13,7 @@
                         @endif
                     </p>
                     @if(Auth::user()->isAdmin())
-                        <a href="/clients/{{ $client->id }}/invoices/{{ $invoice->id}}/" title="Invoice #{{ $invoice->id }}" class="btn btn-primary">View Invoice</a>
+                        <a href="/clients/{{ $invoice->client->id }}/invoices/{{ $invoice->id}}/" title="Invoice #{{ $invoice->id }}" class="btn btn-primary">View Invoice</a>
                     @else
                         <a href="/invoices/{{ $invoice->id}}/" title="Invoice #{{ $invoice->id }}" class="btn btn-primary">View Invoice</a>
                     @endif
