@@ -58,7 +58,6 @@ class ClientsOnlyController extends Controller
 	    		'amount' => $invoice->total,
 	    		'customer' => $client->stripe_customer_id,
 	    		'currency' => 'gbp',
-                'invoice' => $invoice->id,
                 'receipt_email' => $client->email
 	    	]);
 

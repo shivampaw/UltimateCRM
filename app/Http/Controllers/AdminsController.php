@@ -58,18 +58,6 @@ class AdminsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $admin = User::where('is_admin', 1)->findOrFail($id);
-        return $admin;
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -77,7 +65,8 @@ class AdminsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $admin = User::where('is_admin', 1)->findOrFail($id);
+        return view("admins.edit", compact('admin'));
     }
 
     /**
@@ -89,7 +78,13 @@ class AdminsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $admin = User::where('is_admin', 1)->findOrFail($id);
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->save();
+
+        flash("Admin (".$admin->name.") Updated!");
+        return redirect("/admins");
     }
 
     /**

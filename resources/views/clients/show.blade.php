@@ -28,7 +28,7 @@
 	    <form action="/clients/{{ $client->id }}" method="post">
 			{{ csrf_field() }}
 			<input type="hidden" name="_method" value="delete">
-			<button class="btn btn-link float-md-left"><span class="fa fa-trash"></span> Delete Client</button>
+			<button onclick="return confirm('Are you sure you want to delete {{ $client->full_name }}')" class="btn btn-link float-md-left"><span class="fa fa-trash"></span> Delete Client</button>
 	    </form>
 	    <a href="/clients/{{ $client->id }}/edit" class="btn btn-link float-md-right" title="Edit Client"><span class="fa fa-pencil"></span> Edit Client</a>
     </div>

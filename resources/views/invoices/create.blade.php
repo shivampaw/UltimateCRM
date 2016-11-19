@@ -25,6 +25,10 @@
         </div>
     </form>
 
+    <p>
+        <a href="/clients/{{ $client->id }}/invoices" class="btn btn-info"><span class="fa fa-angle-double-left"></span> Back to Client Invoices</a>
+    </p>
+
     <script type="text/jQuery-tpl" id="invoiceItemTemplate">
         <div class="form-group invoice_item">
             <a href="#" class="text-danger" onClick="removeItem({i})">Remove Item</a>
