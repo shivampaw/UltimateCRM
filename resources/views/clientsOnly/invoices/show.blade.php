@@ -9,7 +9,7 @@
     <div class="row">
         @if(!$invoice->paid)
             <div class="col-xs-12 text-sm-right text-xs-center">
-                <a href="/invoices/{{ $invoice->id }}/pay" class="btn btn-success" title="Pay Invoice #{{ $invoice->id }}">Pay Invoice</a>
+                <a href="/invoices/{{ $invoice->id }}/pay" class="btn btn-info" title="Pay Invoice #{{ $invoice->id }}">Pay Invoice</a>
             </div>
         @else
             <div class="col-xs-12 text-sm-right text-xs-center">
