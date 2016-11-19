@@ -4,6 +4,6 @@
 
 @section('content')
 
-@include("layouts.invoicesIndex")
+@include("layouts.invoices.index")
 
 @endsection

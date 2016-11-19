@@ -20,12 +20,12 @@ function addUser(Request $request, $admin = false)
     $user->save();
 
     if(!$admin){
-        Mail::send('emails.newClient', ['user' => $user, 'password' => $password], function($mail) use ($user){
+        Mail::send('emails.users.client', ['user' => $user, 'password' => $password], function($mail) use ($user){
             $mail->to($user->email, $user->name);
             $mail->subject('['.$user->name.'] Your New Client Account');
         });
     }else{
-        Mail::send('emails.newAdmin', ['user' => $user, 'password' => $password], function($mail) use ($user){
+        Mail::send('emails.users.admin', ['user' => $user, 'password' => $password], function($mail) use ($user){
             $mail->to($user->email, $user->name);
             $mail->subject('['.$user->name.'] Your New Admin Account');
         });

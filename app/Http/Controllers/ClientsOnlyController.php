@@ -23,19 +23,19 @@ class ClientsOnlyController extends Controller
     public function allInvoices()
     {
     	$invoices =  Auth::user()->client->invoices()->paginate(6);
-    	return view("clientsOnly.allInvoices", compact('invoices'));
+    	return view("clientsOnly.invoices.index", compact('invoices'));
     }
 
     public function showInvoice($id)
     {
     	$invoice = Auth::user()->client->invoices()->where('id', $id)->firstOrFail();
-    	return view("clientsOnly.showInvoice", compact('invoice'));
+    	return view("clientsOnly.invoices.show", compact('invoice'));
     }
 
     public function payInvoice($id)
     {
     	$invoice = Auth::user()->client->invoices()->where('id', $id)->where('paid', false)->firstOrFail();
-    	return view("clientsOnly.payInvoice", compact("invoice"));
+    	return view("clientsOnly.invoices.pay", compact("invoice"));
     }
 
     public function paidInvoice(Request $request, $id)
@@ -66,7 +66,7 @@ class ClientsOnlyController extends Controller
 			$invoice->paid_at = Carbon::now();
 			$invoice->save();
 
-            Mail::send('emails.paidInvoice', ['client' => $client, 'invoice' => $invoice], function($mail) use ($client, $invoice){
+            Mail::send('emails.invoices.paid', ['client' => $client, 'invoice' => $invoice], function($mail) use ($client, $invoice){
                 $mail->to($client->email, $client->full_name);
                 $mail->subject('['.$client->full_name.'] Invoice #'.$invoice->id.' Has Been Paid For');
             });

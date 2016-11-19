@@ -1,1 +1,0 @@
-<p>You are an admin!</p>
