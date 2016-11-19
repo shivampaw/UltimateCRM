@@ -27,7 +27,9 @@ Route::resource('/clients.invoices', 'InvoicesController', ['except' =>[
 ]]);
 
 // Admin Routes
-Route::resource('/admins', 'AdminsController');
+Route::resource('/admins', 'AdminsController', ['except' =>[
+	'show'
+]]);
 
 // Authentication Routes
 Route::auth();
