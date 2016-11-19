@@ -1,18 +1,19 @@
     <div id="invoice">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6 text-xs-center text-sm-left">
                 <strong>Billed To</strong><br />
                 {{ $invoice->client->full_name }}<br />
-                {{ $invoice->client->address }}
+                {!! nl2br($invoice->client->address) !!}
             </div>
-            <div class="col-md-6 text-sm-right">
+            <span class="hidden-sm-up invoice_break"></span>
+            <div class="col-sm-6 text-sm-right text-xs-center">
                 <strong>Invoice #{{ $invoice->id }}</strong>
-                <div>Total Charge: <strong>{{ formatInvoiceTotal($invoice->total) }}</strong></div>
+                <div>Total Charge: {{ formatInvoiceTotal($invoice->total) }}</div>
                 @if($invoice->paid)
-                    <div>Paid On: <strong>{{ $invoice->paid_at->toFormattedDateString() }}</strong></div>
+                    <div>Paid On: {{ $invoice->paid_at->toFormattedDateString() }}</div>
                 @endif
-                <div>Created On: <strong>{{ $invoice->created_at->toFormattedDateString() }}</strong></div>
-                <div>Due By: <strong>{{ $invoice->due_date->toFormattedDateString() }}</strong></div>
+                <div>Created On: {{ $invoice->created_at->toFormattedDateString() }}</div>
+                <div>Due By: {{ $invoice->due_date->toFormattedDateString() }}</div>
             </div>
         </div>
         <div class="row">
@@ -51,9 +52,9 @@
                 <div class="col-xs-12">
                     <h5>Notes</h5>
                 </div>
-                <p>
-                    {{ $invoice->notes }}
-                </p>
+                <div class="col-xs-12">
+                    <p>{{ $invoice->notes }}</p>
+                </div>
             </div>
         @endif
     </div>

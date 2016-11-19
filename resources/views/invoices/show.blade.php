@@ -9,7 +9,11 @@
     <div class="row">
         @if(!$invoice->paid)
             <div class="col-xs-12 text-sm-right text-xs-center">
-                <a href="/invoices/{{ $invoice->id }}/pay" class="btn btn-success" title="Pay Invoice #{{ $invoice->id }}">Pay Invoice</a>
+                <form action="/clients/{{ $invoice->client->id }}/invoices/{{ $invoice->id }}" method="post">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="_method" value="delete">
+                    <button class="btn btn-danger"><span class="fa fa-trash"></span> Delete Invoice</button>
+                </form>
             </div>
         @else
             <div class="col-xs-12 text-sm-right text-xs-center">

@@ -65,7 +65,7 @@
             <div class="col-lg-10 offset-lg-1 col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>@yield('page_title')</h5>
+                        <h3>@yield('page_title')</h3>
                     </div>
                     <div class="card-block">
                         @if (session('status'))

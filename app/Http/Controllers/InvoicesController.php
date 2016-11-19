@@ -18,7 +18,8 @@ class InvoicesController extends Controller
 
     public function index(Client $client)
     {
-    	return $client->load('invoices');
+        $invoices = $client->invoices;
+    	return view("invoices.index", compact('client', 'invoices'));
     }
 
     public function create(Client $client)
@@ -57,11 +58,13 @@ class InvoicesController extends Controller
 
     public function show(Client $client, Invoice $invoice)
     {
-        return $invoice;
+        return view("invoices.show", compact('invoice'));
     }
 
     public function destroy(Client $client, Invoice $invoice)
     {
-        return $client->invoices()->findOrFail($invoice->id);
+        $client->invoices()->findOrFail($invoice->id)->delete();
+        flash("Invoice Deleted!");
+        return redirect("/clients/".$client->id."/invoices");
     }
 }
