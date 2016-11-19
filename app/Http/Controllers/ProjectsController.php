@@ -6,6 +6,7 @@ use App\Client;
 use App\Project;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class ProjectsController extends Controller
 {
@@ -45,7 +46,28 @@ class ProjectsController extends Controller
      */
     public function store(Request $request, Client $client)
     {
-        //
+        $this->validate($request,[
+            'pdf' => 'required|file'
+        ]);
+
+        $pdfExt = $request->pdf->extension();
+        if(strtolower($pdfExt) === "pdf"){
+            $fileUrlPath= '/project_files/'.$client->id.'/';
+            $fileUrlName = time().'.pdf';
+            $path = $request->pdf->move(public_path() . $fileUrlPath, $fileUrlName);
+
+            $project = new Project();
+            $project->pdf_path = $fileUrlPath.$fileUrlName;
+
+            $client->addProject($project);
+
+            flash("The project has been created!");
+            return redirect("/clients/".$client->id."/projects");
+
+        }else{
+            flash("The uploaded file must be a PDF", "danger");
+            return back();
+        }
     }
 
     /**
