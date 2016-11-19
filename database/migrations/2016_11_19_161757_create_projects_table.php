@@ -13,7 +13,7 @@ class CreateProjectsTable extends Migration
     public function up()
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->increments('id')->primary();
+            $table->increments('id');
             $table->integer('client_id')->unsigned()->index();
             $table->text('pdf_path');
             $table->boolean('accepted');
