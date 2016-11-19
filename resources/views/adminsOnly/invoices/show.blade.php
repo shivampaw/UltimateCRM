@@ -12,7 +12,7 @@
                 <form action="/clients/{{ $invoice->client->id }}/invoices/{{ $invoice->id }}" method="post">
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="delete">
-                    <button class="btn btn-danger"><span class="fa fa-trash"></span> Delete Invoice</button>
+                    <button onclick="return confirm('Are you are you want to delete this invoice?')" class="btn btn-danger"><span class="fa fa-trash"></span> Delete Invoice</button>
                 </form>
             </div>
         @else

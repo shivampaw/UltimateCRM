@@ -81,4 +81,28 @@ class ClientsOnlyController extends Controller
     	flash("There was an error processing your payment. Please try again.", "danger");
     	return back();
     }
+
+
+    public function allProjects()
+    {
+        $projects =  Auth::user()->client->projects()->paginate(6);
+        return view("clientsOnly.projects.index", compact('projects'));
+    }
+
+    public function showProject($id)
+    {
+        $project = Auth::user()->client->projects()->where('id', $id)->firstOrFail();
+        return view("clientsOnly.projects.show", compact('project'));   
+    }
+
+    public function acceptProject($id)
+    {
+        $project = Auth::user()->client->projects()->where('id', $id)->firstOrFail();
+        $project->accepted = true;
+        $project->accepted_at = Carbon::now();
+        $project->save();
+
+        flash("Project Accepted");
+        return redirect("/projects/".$project->id);
+    }
 }

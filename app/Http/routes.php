@@ -27,8 +27,9 @@ Route::resource('/clients.invoices', 'InvoicesController', ['except' =>[
 ]]);
 
 // Project Routes
-Route::resource('/clients.projects', 'ProjectsController');
-
+Route::resource('/clients.projects', 'ProjectsController', ['except' =>[
+	'update', 'edit'
+]]);
 // Admin Routes
 Route::resource('/admins', 'AdminsController', ['except' =>[
 	'show'
@@ -43,4 +44,6 @@ Route::get('/invoices/{id}', 'ClientsOnlyController@showInvoice');
 Route::get('/invoices/{id}/pay', 'ClientsOnlyController@payInvoice');
 Route::post('/invoices/{id}', 'ClientsOnlyController@paidInvoice');
 
-
+Route::get('/projects', 'ClientsOnlyController@allProjects');
+Route::get('/projects/{id}', 'ClientsOnlyController@showProject');
+Route::get('/projects/{id}/accept', 'ClientsOnlyController@acceptProject');

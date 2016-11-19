@@ -8,20 +8,10 @@
 
         <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
             <input id="email" type="email" class="form-control" name="email" placeholder="E-Mail Address" value="{{ old('email') }}">
-            @if ($errors->has('email'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('email') }}</strong>
-                </span>
-            @endif
         </div>
 
         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
             <input id="password" type="password" class="form-control" placeholder="Password" name="password">
-            @if ($errors->has('password'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </span>
-            @endif
         </div>
 
         <div class="form-group ">
