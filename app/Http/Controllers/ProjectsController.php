@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use App\Client;
+use App\Project;
 use App\Http\Requests;
+use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
@@ -22,7 +23,8 @@ class ProjectsController extends Controller
      */
     public function index(Client $client)
     {
-        return $client->projects;   
+        $projects = $client->projects;
+        return view("adminsOnly.projects.index", compact('client', 'projects'));   
     }
 
     /**
@@ -32,7 +34,7 @@ class ProjectsController extends Controller
      */
     public function create(Client $client)
     {
-        //
+        return view("adminsOnly.projects.create", compact('client'));
     }
 
     /**
@@ -54,7 +56,7 @@ class ProjectsController extends Controller
      */
     public function show(Client $client, Project $project)
     {
-        //
+        return view("adminsOnly.projects.show", compact('project'));   
     }
 
     /**
@@ -88,6 +90,8 @@ class ProjectsController extends Controller
      */
     public function destroy(Client $client, Project $project)
     {
-        //
+        $client->projects()->findOrFail($project->id)->delete();
+        flash("Project Deleted!");
+        return redirect("/clients/".$client->id."/projects");
     }
 }
