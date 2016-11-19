@@ -24,7 +24,7 @@ class AdminsController extends Controller
     public function index()
     {
         $admins = User::where('is_admin', 1)->paginate(6);
-        return view("admins.index", compact('admins'));
+        return view("superAdminOnly.admins.index", compact('admins'));
     }
 
     /**
@@ -34,7 +34,7 @@ class AdminsController extends Controller
      */
     public function create()
     {
-        return view("admins.create");
+        return view("superAdminOnly.admins.create");
     }
 
     /**
@@ -66,7 +66,7 @@ class AdminsController extends Controller
     public function edit($id)
     {
         $admin = User::where('is_admin', 1)->findOrFail($id);
-        return view("admins.edit", compact('admin'));
+        return view("superAdminOnly.admins.edit", compact('admin'));
     }
 
     /**

@@ -5,8 +5,8 @@
 @section('content')
     <h1>Welcome {{ $user->name }}</h1>
     @if($user->isAdmin())
-        @include('dashboard.admin')
+        @include('layouts.dashboard.admin')
     @else
-        @include('dashboard.client')
+        @include('layouts.dashboard.client')
     @endif
 @endsection

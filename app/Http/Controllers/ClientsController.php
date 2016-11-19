@@ -25,7 +25,7 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Client::with('invoices')->paginate(6);
-        return view("clients.index", compact('clients'));
+        return view("adminsOnly.clients.index", compact('clients'));
     }
 
     /**
@@ -35,7 +35,7 @@ class ClientsController extends Controller
      */
     public function create()
     {
-        return view("clients.create");
+        return view("adminsOnly.clients.create");
     }
 
     /**
@@ -76,7 +76,7 @@ class ClientsController extends Controller
     public function show(Client $client)
     {
         $client->load('invoices');
-        return view("clients.show", compact('client'));
+        return view("adminsOnly.clients.show", compact('client'));
     }
 
     /**
@@ -87,7 +87,7 @@ class ClientsController extends Controller
      */
     public function edit(Client $client)
     {
-        return view("clients.edit", compact('client'));
+        return view("adminsOnly.clients.edit", compact('client'));
     }
 
     /**

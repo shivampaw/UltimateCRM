@@ -19,12 +19,12 @@ class InvoicesController extends Controller
     public function index(Client $client)
     {
         $invoices = $client->invoices;
-    	return view("invoices.index", compact('client', 'invoices'));
+    	return view("adminsOnly.invoices.index", compact('client', 'invoices'));
     }
 
     public function create(Client $client)
     {
-    	return view("invoices.create", compact('client'));
+    	return view("adminsOnly.invoices.create", compact('client'));
     }
 
     public function store(Request $request, Client $client)
@@ -47,7 +47,7 @@ class InvoicesController extends Controller
 
     	$client->addInvoice($invoice);
 
-        Mail::send('emails.newInvoice', ['client' => $client, 'invoice' => $invoice], function($mail) use ($client){
+        Mail::send('emails.invoices.new', ['client' => $client, 'invoice' => $invoice], function($mail) use ($client){
             $mail->to($client->email, $client->full_name);
             $mail->subject('['.$client->full_name.'] New Invoice Generated');
         });
@@ -58,7 +58,7 @@ class InvoicesController extends Controller
 
     public function show(Client $client, Invoice $invoice)
     {
-        return view("invoices.show", compact('invoice'));
+        return view("adminsOnly.invoices.show", compact('invoice'));
     }
 
     public function destroy(Client $client, Invoice $invoice)

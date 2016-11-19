@@ -4,16 +4,12 @@
 
 @section('content')
     
-    @include("layouts.invoice")
+    @include("layouts.invoices.show")
 
     <div class="row">
         @if(!$invoice->paid)
             <div class="col-xs-12 text-sm-right text-xs-center">
-                <form action="/clients/{{ $invoice->client->id }}/invoices/{{ $invoice->id }}" method="post">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="_method" value="delete">
-                    <button class="btn btn-danger"><span class="fa fa-trash"></span> Delete Invoice</button>
-                </form>
+                <a href="/invoices/{{ $invoice->id }}/pay" class="btn btn-success" title="Pay Invoice #{{ $invoice->id }}">Pay Invoice</a>
             </div>
         @else
             <div class="col-xs-12 text-sm-right text-xs-center">
