@@ -7,6 +7,9 @@
         <div class="form-group">
             <input type="date" name="due_date" class="form-control" placeholder="Due Date" value="{{ old('due_date') }}">
         </div>
+        <div class="form-group">
+            <input type="number" name="project_id" placeholder="Project ID" class="form-control" value="{{ old('project_id') }}">
+        </div>
         <hr />
         <p class="clearfix">
             <strong class="pull-left">Invoice Items</strong>

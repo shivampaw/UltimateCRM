@@ -160,5 +160,10 @@ div#invoice .row:last-of-type{
 }
 
 div.col_row{
-  padding-bottom: 15px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.custom-file{
+  width: 100%;
 }
