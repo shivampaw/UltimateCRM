@@ -5,9 +5,9 @@ This CRM is in active development and more features are in work.
 ## Features
 * Super Admins (ID 1) can create and delete multiple admins
 * Admins can create and manage clients
-* Admins can create invoices and projects for clients
+* Admins can create invoices for clients
 * Clients can view and pay invoice through Stripe integration
-* Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid.
+* Emails sent when a new admin or client account is created, a client invoice is created and a client invoice is paid.
 
 ## Requirements
 This CRM runs with Laravel 5.2 for which the requirements are as follows:
