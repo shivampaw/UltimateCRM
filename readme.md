@@ -2,6 +2,13 @@
 This is a CRM made with Laravel 5.2.
 This CRM is in active development and more features are in work.
 
+**Build Status**
+
+Master: [![Build Status](https://travis-ci.org/shivampaw/laravel-crm.svg?branch=master)](https://travis-ci.org/shivampaw/laravel-crm)
+
+Develop: [![Build Status](https://travis-ci.org/shivampaw/laravel-crm.svg?branch=develop)](https://travis-ci.org/shivampaw/laravel-crm)
+
+
 ## Features
 * Super Admins (ID 1) can create and delete multiple admins
 * Admins can create and manage clients
