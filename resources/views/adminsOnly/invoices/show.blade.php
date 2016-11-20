@@ -6,19 +6,16 @@
     
     @include("layouts.invoices.show")
 
-    <div class="row">
+    <div class="text-xs-center">
+        <a  href="/clients/{{ $invoice->client->id }}/invoices" class="btn btn-info float-md-left"><span class="fa fa-angle-double-left"></span> Back to Client Invoices</a>
         @if(!$invoice->paid)
-            <div class="col-xs-12 text-sm-right text-xs-center">
-                <form action="/clients/{{ $invoice->client->id }}/invoices/{{ $invoice->id }}" method="post">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="_method" value="delete">
-                    <button onclick="return confirm('Are you are you want to delete this invoice?')" class="btn btn-danger"><span class="fa fa-trash"></span> Delete Invoice</button>
-                </form>
-            </div>
+            <form action="/clients/{{ $invoice->client->id }}/invoices/{{ $invoice->id }}" method="post">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="delete">
+                <button onclick="return confirm('Are you are you want to delete this invoice?')" class="btn btn-danger float-md-right"><span class="fa fa-trash"></span> Delete Invoice</button>
+            </form>
         @else
-            <div class="col-xs-12 text-sm-right text-xs-center">
-                <button class="btn btn-success">Invoice Paid on {{ $invoice->paid_at->toFormattedDateString() }}</button>
-            </div>
+            <button class="btn btn-success float-md-right">Invoice Paid on {{ $invoice->paid_at->toFormattedDateString() }}</button>
         @endif
     </div>
 
