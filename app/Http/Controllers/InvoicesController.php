@@ -20,48 +20,48 @@ class InvoicesController extends Controller
     public function index(Client $client)
     {
         $invoices = $client->invoices;
-    	return view("adminsOnly.invoices.index", compact('client', 'invoices'));
+        return view("adminsOnly.invoices.index", compact('client', 'invoices'));
     }
 
     public function create(Client $client)
     {
-    	return view("adminsOnly.invoices.create", compact('client'));
+        return view("adminsOnly.invoices.create", compact('client'));
     }
 
     public function store(Request $request, Client $client)
     {
-    	$rules = [
-            'due_date'	=> 'date|required',
+        $rules = [
+            'due_date'    => 'date|required',
         ];
         $this->validate($request, $rules);
 
-        if($request->project_id){
-            if(Project::where('id', $request->project_id)->where('client_id', $client->id)->count() !== 1){
+        if ($request->project_id) {
+            if (Project::where('id', $request->project_id)->where('client_id', $client->id)->count() !== 1) {
                 flash("That Project ID does not exist for this user.", "danger");
                 return back()->withInput();
             }
         }
 
-    	$invoice = new Invoice();
-    	$invoice->item_details = json_encode($request->item_details);
-    	$invoice->due_date = $request->due_date;
-    	$invoice->paid = FALSE;
-    	$invoice->notes = $request->notes;
+        $invoice = new Invoice();
+        $invoice->item_details = json_encode($request->item_details);
+        $invoice->due_date = $request->due_date;
+        $invoice->paid = false;
+        $invoice->notes = $request->notes;
         $invoice->project_id = $request->project_id;
         $invoice->total = 0;
-        foreach($request->item_details as $item){
+        foreach ($request->item_details as $item) {
             $invoice->total += $item['quantity'] * $item['price'];
         }
         $invoice->total = $invoice->total * 100;
 
-    	$client->addInvoice($invoice);
+        $client->addInvoice($invoice);
 
-        Mail::send('emails.invoices.new', ['client' => $client, 'invoice' => $invoice], function($mail) use ($client){
+        Mail::send('emails.invoices.new', ['client' => $client, 'invoice' => $invoice], function ($mail) use ($client) {
             $mail->to($client->email, $client->full_name);
             $mail->subject('['.$client->full_name.'] New Invoice Generated');
         });
 
-    	flash("Invoice Created!");
+        flash("Invoice Created!");
         return redirect('/clients/'.$client->id)->withInput();
     }
 
