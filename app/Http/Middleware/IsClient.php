@@ -16,8 +16,7 @@ class IsClient
      */
     public function handle($request, Closure $next)
     {
-        if ( Auth::check() && !Auth::user()->isAdmin() )
-        {
+        if (Auth::check() && !Auth::user()->isAdmin()) {
             return $next($request);
         }
         return abort(403);

@@ -70,12 +70,13 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register() {
+    public function register()
+    {
         return redirect('/');
     }
 
-    public function showRegistrationForm() {
+    public function showRegistrationForm()
+    {
         return redirect('/');
     }
-
 }

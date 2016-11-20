@@ -23,16 +23,16 @@ Route::resource('/clients', 'ClientsController');
 
 // Invoice Routes
 Route::resource('/clients.invoices', 'InvoicesController', ['except' =>[
-	'update', 'edit'
+    'update', 'edit'
 ]]);
 
 // Project Routes
 Route::resource('/clients.projects', 'ProjectsController', ['except' =>[
-	'update', 'edit'
+    'update', 'edit'
 ]]);
 // Admin Routes
 Route::resource('/admins', 'AdminsController', ['except' =>[
-	'show'
+    'show'
 ]]);
 
 // Authentication Routes

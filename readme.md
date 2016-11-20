@@ -37,6 +37,13 @@ You should then be able to access the CRM easily!
 
 ## Contributing
 If you would like to contribute to this project then please submit all pull requests to the `develop` branch.
+Please ensure your coding standard matches PSR-2. You can do so by running the following commands:
+
+#### Install PHP-CS-Fixer
+`composer global require friendsofphp/php-cs-fixer`
+
+#### Run Command
+`php-cs-fixer fix PATH_TO_PROJECT_FILES --level=psr2 --fixers=-psr0`
 
 ## License
 This project is open-sourced and licensed under the [MIT license](http://opensource.org/licenses/MIT).

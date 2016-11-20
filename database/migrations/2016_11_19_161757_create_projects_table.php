@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->integer('client_id')->unsigned()->index();
             $table->string('title');
             $table->string('pdf_path');
-            $table->boolean('accepted')->default(FALSE);
+            $table->boolean('accepted')->default(false);
             $table->date('accepted_at')->nullable();
             $table->timestamps();
         });

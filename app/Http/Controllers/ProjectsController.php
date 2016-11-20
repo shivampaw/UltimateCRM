@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Mail;
 
 class ProjectsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -47,13 +46,13 @@ class ProjectsController extends Controller
      */
     public function store(Request $request, Client $client)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'pdf' => 'required|file',
             'title' => 'required'
         ]);
 
         $pdfExt = $request->pdf->extension();
-        if(strtolower($pdfExt) === "pdf"){
+        if (strtolower($pdfExt) === "pdf") {
             $fileUrlPath= '/project_files/'.$client->id.'/';
             $fileUrlName = time().'.pdf';
             $path = $request->pdf->move(public_path() . $fileUrlPath, $fileUrlName);
@@ -64,7 +63,7 @@ class ProjectsController extends Controller
 
             $client->addProject($project);
 
-            Mail::send('emails.projects.new', ['client' => $client, 'project' => $project], function($mail) use ($client, $project){
+            Mail::send('emails.projects.new', ['client' => $client, 'project' => $project], function ($mail) use ($client, $project) {
                 $mail->to($client->email, $client->full_name);
                 $mail->attach(public_path() . $project->pdf_path);
                 $mail->subject('['.$client->full_name.'] New Project Created');
@@ -72,8 +71,7 @@ class ProjectsController extends Controller
 
             flash("The project has been created!");
             return redirect("/clients/".$client->id."/projects");
-
-        }else{
+        } else {
             flash("The uploaded file must be a PDF", "danger");
             return back();
         }
@@ -87,7 +85,7 @@ class ProjectsController extends Controller
      */
     public function show(Client $client, Project $project)
     {
-        return view("adminsOnly.projects.show", compact('project'));   
+        return view("adminsOnly.projects.show", compact('project'));
     }
 
     /**

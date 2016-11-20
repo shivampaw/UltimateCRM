@@ -42,7 +42,7 @@ class CreateSuperAdmin extends Command
         $email = $this->ask('What is the email for the super admin?');
         $password = $this->secret('What is the password for the super admin? (You won\'t be able to see what you are typing)');
 
-        if(User::find(1)){
+        if (User::find(1)) {
             $this->error("The Super Admin (user with ID 1) already exists!");
             return false;
         }
@@ -51,7 +51,7 @@ class CreateSuperAdmin extends Command
             'email' => $email,
             'name' => $name,
             'password' => bcrypt($password),
-            'is_admin' => TRUE
+            'is_admin' => true
         ]);
     }
 }
