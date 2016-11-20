@@ -2,9 +2,10 @@
 A quick and easy way to manage your clients, invoices and projects!
 
 Master: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch=master)](https://travis-ci.org/shivampaw/UltimateCRM)
+
 Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch=develop)](https://travis-ci.org/shivampaw/UltimateCRM)
 
-[UltimateCRM](http://i.imgur.com/KTLolK8.png)
+![UltimateCRM](http://i.imgur.com/KTLolK8.png)
 
 ### Features
 * Super Admins (ID 1) can create and delete multiple admins
