@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Middleware;
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +16,8 @@ class IsSuperAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->isSuperAdmin()) {
+        if ( Auth::check() && Auth::user()->isSuperAdmin() )
+        {
             return $next($request);
         }
         return abort(403);

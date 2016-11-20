@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Providers;
+namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -25,7 +25,8 @@ class PaginationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Paginator::presenter(function ($paginator) {
+        Paginator::presenter(function($paginator)
+        {
             return new BootstrapFourPresenter($paginator);
         });
     }

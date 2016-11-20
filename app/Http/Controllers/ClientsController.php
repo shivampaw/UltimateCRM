@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\User;
 use App\Client;
@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientsController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
