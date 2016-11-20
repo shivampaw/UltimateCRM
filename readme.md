@@ -26,7 +26,7 @@ This CRM runs with Laravel 5.2 for which the requirements are as follows:
 
 ### Installation
 To install run the following commands in a working directory:
-`git clone https://github.com/shivampaw/laravel-crm.git`
+`git clone https://github.com/shivampaw/UltimateCRM.git`
 
 You will then need to change your web server root to the public directory. Contact your host for help if you need it.
 
