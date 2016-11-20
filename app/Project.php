@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -24,6 +25,7 @@ class Project extends Model
         parent::boot();
         static::deleting(function ($project) {
             $project->invoices()->delete();
+            File::delete(public_path() . $project->pdf_path);
         });
     }
 }

@@ -20,14 +20,11 @@
 
 <hr />
 
+<h2>Project Invoices </h2>
 @if($project->invoices()->count() > 0)
-	<h2>
-		Project Invoices 
-		@if(Auth::user()->isAdmin()) 
-			- <a href="/clients/{{ $project->client->id }}/invoices/create?project_id={{ $project->id }}">Create</a>
-		@endif
-	</h2>
 	<p>Below you can see all invoices related to this project.</p>
 	@php $invoices = $project->invoices; @endphp
 	@include("layouts.invoices.index")
+@else
+	<p>No Invoices Yet</p>
 @endif
