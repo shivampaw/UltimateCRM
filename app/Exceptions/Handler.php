@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace app\Exceptions;
 
 use Exception;
 use Illuminate\Session\TokenMismatchException;

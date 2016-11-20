@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace app;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,25 +26,25 @@ class User extends Authenticatable
     ];
 
     /**
-     * Returns true if the user is an admin and 
+     * Returns true if the user is an admin and
      * false if not
      *
      * @return boolean
      */
     public function isAdmin()
     {
-        if($this->is_admin === 1){
+        if ($this->is_admin === 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     public function isSuperAdmin()
     {
-        if($this->id === 1){
+        if ($this->id === 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

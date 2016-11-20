@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace app;
 
 use App\Invoice;
 use App\Project;
@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-	protected $fillable = ['full_name', 'email', 'number', 'address', 'stripe_customer_id'];
+    protected $fillable = ['full_name', 'email', 'number', 'address', 'stripe_customer_id'];
 
     public function invoices()
     {
-    	return $this->hasMany(Invoice::class);
+        return $this->hasMany(Invoice::class);
     }
 
     public function user()
     {
-    	return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function projects()
@@ -35,13 +35,13 @@ class Client extends Model
         return $this->projects()->save($project);
     }
     
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
-        static::deleting(function($client) {
+        static::deleting(function ($client) {
             $client->invoices()->delete();
             $client->projects()->delete();
             User::find($client->user_id)->delete();
         });
     }
-
 }
