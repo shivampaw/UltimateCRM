@@ -10,13 +10,10 @@
                         @else
                             <div class="text-danger">Project Not Accepted Yet</div>
                         @endif
-                            <div>Project Invoices: {{ $project->invoices()->count() }}</div>
-                        @if(Auth::user()->isAdmin())
-                            <div>Project ID: {{ $project->id }}</div>
-                        @endif
+                            <div>Project Invoices: {{ count($project->invoices) }}</div>
                     </p>
                     @if(Auth::user()->isAdmin())
-                        <a href="/clients/{{ $client->id }}/projects/{{ $project->id}}/" title="{{ $project->title }}" class="btn btn-primary">View Project</a>
+                        <a href="/clients/{{ $project->client->id }}/projects/{{ $project->id}}/" title="{{ $project->title }}" class="btn btn-primary">View Project</a>
                     @else
                         <a href="/projects/{{ $project->id}}/" title="{{ $project->title }}" class="btn btn-primary">View Project</a>
                     @endif

@@ -6,15 +6,12 @@
     
     @include("layouts.invoices.show")
 
-    <div class="row">
+    <div class="text-xs-center">
+        <a  href="/invoices" class="btn btn-info float-md-left"><span class="fa fa-angle-double-left"></span> Back to Invoices</a>
         @if(!$invoice->paid)
-            <div class="col-xs-12 text-sm-right text-xs-center">
-                <a href="/invoices/{{ $invoice->id }}/pay" class="btn btn-info" title="Pay Invoice #{{ $invoice->id }}">Pay Invoice</a>
-            </div>
+            <a href="/invoices/{{ $invoice->id }}/pay" class="btn btn-success float-md-right" title="Pay Invoice #{{ $invoice->id }}">Pay Invoice</a>
         @else
-            <div class="col-xs-12 text-sm-right text-xs-center">
-                <button class="btn btn-success">Invoice Paid on {{ $invoice->paid_at->toFormattedDateString() }}</button>
-            </div>
+            <button class="btn btn-success float-md-right">Invoice Paid on {{ $invoice->paid_at->toFormattedDateString() }}</button>
         @endif
     </div>
 

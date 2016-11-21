@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    use Notifiable;
     /**
      * The attributes that are mass assignable.
      *

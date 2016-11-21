@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>CRM - @yield('page_title')</title>
+    <title>{{ config('crm.site_title') }} - @yield('page_title')</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -19,18 +19,18 @@
     <nav class="navbar navbar-light bg-faded navbar-static-top">
         <div class="container">
             <button type="button" class="navbar-toggler hidden-md-up float-xs-right" data-toggle="collapse" data-target="#nav-content" aria-expanded="false"></button>
-            <a class="navbar-brand" href="{{ url('/') }}">CRM</a>
+            <a class="navbar-brand" href="{{ url('/') }}">{{ config('crm.site_title') }}</a>
 
             <div id="nav-content" class="collapse navbar-toggleable-sm">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li class="nav-item"><a href="{{ url('/') }}" class="nav-link">Home</a>
-                    @if ( (!Auth::guest()) && (Auth::user()->isSuperAdmin()) )
+                    @if ( Auth::user() && (Auth::user()->isSuperAdmin()) )
                         <li class="nav-item"><a href="{{ url('/admins') }}" class="nav-link">Admins</a>
                     @endif
-                    @if ( (!Auth::guest()) && (Auth::user()->isAdmin()) )
+                    @if ( Auth::user() && (Auth::user()->isAdmin()) )
                         <li class="nav-item"><a href="{{ url('/clients') }}" class="nav-link">Clients</a>
-                    @elseif ( (!Auth::guest()) && (Auth::user()) )
+                    @elseif ( Auth::user() && (!Auth::user()->isAdmin()) )
                         <li class="nav-item"><a href="{{ url('/invoices') }}" class="nav-link">Invoices</a>
                         <li class="nav-item"><a href="{{ url('/projects') }}" class="nav-link">Projects</a>
                     @endif
@@ -39,23 +39,28 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav float-md-right">
                     <!-- Authentication Links -->
-                    @if (Auth::guest())
-                    <li class="nav-item"><a href="{{ url('/login') }}" class="nav-link">Login</a>
-                    </li>
+                    @if ( Auth::guest() )
+                        <li class="nav-item"><a href="{{ url('/login') }}" class="nav-link">Login</a></li>
                     @else
-                    <li class="dropdown nav-item"> <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"
-                        aria-expanded="false">
-
-                                        {{ Auth::user()->name }} <span class="caret"></span>
-
+                        <li class="dropdown nav-item">
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"aria-expanded="false">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="dropdown-item"><a href="{{ url('/update-password') }}"><i class="fa fa-btn fa-cog"></i>Update Password</a></li>
+                                <li class="dropdown-item">
+                                    <a href="{{ url('/logout') }}"
+                                        onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-btn fa-sign-out"></i> Logout
                                     </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li class="dropdown-item"><a href="{{ url('/update-password') }}"><i class="fa fa-btn fa-cog"></i>Update Password</a>
-                            </li>
-                            <li class="dropdown-item"><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a>
-                            </li>
-                        </ul>
-                    </li>@endif
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -71,14 +76,14 @@
                     <div class="card-block">
                         @if (session('status'))
                             <div class="alert alert-{{ session('status_level') ?: "success" }}">
-                                {{ session('status') }}
+                                <div>{{ session('status') }}</div>
                             </div>
                         @endif
 
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                     @foreach ($errors->all() as $error)
-                                        <p>{{ $error }}</p>
+                                        <div>{{ $error }}</div>
                                     @endforeach
                                 </ul>
                             </div>

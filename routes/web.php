@@ -10,8 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::singularResourceParameters();
-
 
 // Home and Update Password Routes
 Route::get('/', 'PagesController@index');
@@ -36,7 +34,7 @@ Route::resource('/admins', 'AdminsController', ['except' =>[
 ]]);
 
 // Authentication Routes
-Route::auth();
+Auth::routes();
 
 // Routes for logged in clients only
 Route::get('/invoices', 'ClientsOnlyController@allInvoices');

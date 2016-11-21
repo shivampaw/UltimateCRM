@@ -28,8 +28,4 @@
 			</div>
 		@endforeach
 	</div>
-
-	<div class="text-xs-center">
-		{{ $admins->links() }}
-	</div>
 @endsection
