@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'My Application',
+    'name' => env('SITE_TITLE', 'UltimateCRM'),
 
     /*
     |--------------------------------------------------------------------------
@@ -176,8 +176,6 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\PaginationServiceProvider::class,
-
     ],
 
     /*

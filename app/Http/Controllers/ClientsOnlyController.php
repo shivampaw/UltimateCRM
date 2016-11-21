@@ -49,8 +49,8 @@ class ClientsOnlyController extends Controller
                 'email' => Auth::user()->email,
                 'source' => $request->stripeToken
             ]);
-            $client->stripe_customer_id = $customer->id;
-            $client->save();
+        $client->stripe_customer_id = $customer->id;
+        $client->save();
         endif;
 
         try {
