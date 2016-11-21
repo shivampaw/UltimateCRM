@@ -52,7 +52,7 @@ class PagesController extends Controller
                 'email'    => Auth::user()->email,
                 'password' => $request->currentPassword
             ]);
-            if (!$check):
+            if (!$check) :
                 $validator->errors()->add('current_password', 'Your current password is incorrect.');
             endif;
         });
