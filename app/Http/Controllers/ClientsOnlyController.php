@@ -22,26 +22,26 @@ class ClientsOnlyController extends Controller
 
     public function allInvoices()
     {
-        $invoices =  Auth::user()->client->invoices()->paginate(6);
+        $invoices =  Auth::user()->client->invoices;
         return view("clientsOnly.invoices.index", compact('invoices'));
     }
 
     public function showInvoice($id)
     {
-        $invoice = Auth::user()->client->invoices()->where('id', $id)->firstOrFail();
+        $invoice = Auth::user()->client->invoices()->findOrFail($id);
         return view("clientsOnly.invoices.show", compact('invoice'));
     }
 
     public function payInvoice($id)
     {
-        $invoice = Auth::user()->client->invoices()->where('id', $id)->where('paid', false)->firstOrFail();
+        $invoice = Auth::user()->client->invoices()->where('paid', false)->findOrFail($id);
         return view("clientsOnly.invoices.pay", compact("invoice"));
     }
 
     public function paidInvoice(Request $request, $id)
     {
         $client = Auth::user()->client;
-        $invoice = $client->invoices()->where('id', $id)->firstOrFail();
+        $invoice = $client->invoices()->findOrFail($id);
 
         Stripe::setApiKey(config('services.stripe.secret'));
         if (!$client->stripe_customer_id):
@@ -49,8 +49,8 @@ class ClientsOnlyController extends Controller
                 'email' => Auth::user()->email,
                 'source' => $request->stripeToken
             ]);
-        $client->stripe_customer_id = $customer->id;
-        $client->save();
+            $client->stripe_customer_id = $customer->id;
+            $client->save();
         endif;
 
         try {
@@ -84,19 +84,19 @@ class ClientsOnlyController extends Controller
 
     public function allProjects()
     {
-        $projects =  Auth::user()->client->projects()->paginate(6);
+        $projects =  Auth::user()->client->projects;
         return view("clientsOnly.projects.index", compact('projects'));
     }
 
     public function showProject($id)
     {
-        $project = Auth::user()->client->projects()->where('id', $id)->firstOrFail();
+        $project = Auth::user()->client->projects()->findOrFail($id);
         return view("clientsOnly.projects.show", compact('project'));
     }
 
     public function acceptProject($id)
     {
-        $project = Auth::user()->client->projects()->where('id', $id)->firstOrFail();
+        $project = Auth::user()->client->projects()->findOrFail($id);
         $project->accepted = true;
         $project->accepted_at = Carbon::now();
         $project->save();

@@ -23,7 +23,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Client::with('invoices')->paginate(6);
+        $clients = Client::all();
         return view("adminsOnly.clients.index", compact('clients'));
     }
 
@@ -74,7 +74,6 @@ class ClientsController extends Controller
      */
     public function show(Client $client)
     {
-        $client->load('invoices');
         return view("adminsOnly.clients.show", compact('client'));
     }
 
@@ -104,10 +103,9 @@ class ClientsController extends Controller
         $client->address = $request->address;
         $client->save();
 
-        $user = User::find($client->user_id);
-        $user->name = $client->full_name;
-        $user->email = $client->email;
-        $user->save();
+        $client->user->name = $client->full_name;
+        $client->user->email = $client->email;
+        $client->user->save();
 
         flash("Client Updated!");
         return redirect('/clients/'.$client->id);

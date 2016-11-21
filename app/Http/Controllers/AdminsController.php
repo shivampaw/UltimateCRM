@@ -22,7 +22,7 @@ class AdminsController extends Controller
      */
     public function index()
     {
-        $admins = User::where('is_admin', 1)->paginate(6);
+        $admins = User::where('is_admin', 1)->get();
         return view("superAdminOnly.admins.index", compact('admins'));
     }
 

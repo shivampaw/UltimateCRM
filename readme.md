@@ -14,7 +14,7 @@ Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch
 * Clients can view and pay invoice through Stripe integration
 * Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid.
 
-## Setup / Usage / Installation / Troubleshooting
+## Requirements / Installation / Troubleshooting
 Need help getting started? Here's where to look!
 ### Requirements
 This CRM runs with Laravel 5.2 for which the requirements are as follows:
@@ -30,7 +30,7 @@ To install run the following commands in a working directory:
 
 You will then need to change your web server root to the public directory. Contact your host for help if you need it.
 
-Now run `composer install` and `npm install` make sure you have composer and npm installed on your server!
+Now run `composer install` and make sure you have composer installed on your server!
 
 Then setup your database and open the `.env.example` file. Rename this file to `.env` and enter details for your database, stripe and email integration.
 

@@ -23,8 +23,4 @@
 			</div>
 		@endforeach
 	</div>
-
-	<div class="text-xs-center">
-		{{ $clients->links() }}
-	</div>
 @endsection

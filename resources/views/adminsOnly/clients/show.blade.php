@@ -50,7 +50,7 @@
 					<h4 class="card-title">Projects</h4>
 					<p class="card-text">
 						<div class="text-success">Agreed Projects: {{ $client->projects()->where('accepted', true)->count() }}</div>
-						<div class="text-warning">Total Projects: {{ $client->projects()->count() }}</div>
+						<div class="text-warning">Unagreed Projects: {{ $client->projects()->where('accepted', false)->count() }}</div>
 						<div class="text-info"><a href="/clients/{{ $client->id }}/projects" title="View Client Projects">View Projects</a></div>
 					</p>
 				</div>
