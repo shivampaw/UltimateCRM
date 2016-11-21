@@ -40,6 +40,8 @@ class InvoicesController extends Controller
                 flash("That Project ID does not exist for this user.", "danger");
                 return back()->withInput();
             }
+        }else{
+            $request->project_id = null;
         }
 
         $invoice = new Invoice();

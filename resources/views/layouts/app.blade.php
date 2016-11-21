@@ -48,7 +48,16 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li class="dropdown-item"><a href="{{ url('/update-password') }}"><i class="fa fa-btn fa-cog"></i>Update Password</a></li>
-                                <li class="dropdown-item"><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li class="dropdown-item">
+                                    <a href="{{ url('/logout') }}"
+                                        onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-btn fa-sign-out"></i> Logout
+                                    </a>
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
                             </ul>
                         </li>
                     @endif
@@ -67,14 +76,14 @@
                     <div class="card-block">
                         @if (session('status'))
                             <div class="alert alert-{{ session('status_level') ?: "success" }}">
-                                <p>{{ session('status') }}</p>
+                                <div>{{ session('status') }}</div>
                             </div>
                         @endif
 
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                     @foreach ($errors->all() as $error)
-                                        <p>{{ $error }}</p>
+                                        <div>{{ $error }}</div>
                                     @endforeach
                                 </ul>
                             </div>
