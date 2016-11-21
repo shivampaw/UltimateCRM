@@ -6,10 +6,6 @@
 
     @include("layouts.projects.show")
 
-    @if(Auth::user()->isAdmin()) 
-        <a href="/clients/{{ $project->client->id }}/invoices/create?project_id={{ $project->id }}">Create Project Invoice</a>
-    @endif
-
     <hr />
 
     <div class="text-xs-center">
