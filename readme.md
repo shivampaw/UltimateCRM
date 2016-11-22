@@ -1,5 +1,5 @@
 # UltimateCRM
-A quick and easy way to manage your clients, invoices and projects!
+A quick and easy way to manage your clients, invoices and projects all on one web application made with Laravel!
 
 Master: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch=master)](https://travis-ci.org/shivampaw/UltimateCRM)
 
@@ -8,11 +8,13 @@ Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch
 ![UltimateCRM](https://i.imgur.com/UMAIxfa.png)
 
 ### Features
-* Super Admins (ID 1) can create and delete multiple admins
+* The super admin (ID 1) can create and delete multiple admins
 * Admins can create and manage clients
 * Admins can create invoices and projects for clients
 * Clients can view and pay invoice through Stripe integration
 * Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid.
+
+**If you have any feature requests then just [open an issue](https://github.com/shivampaw/UltimateCRM/issues/new) and let us know!**
 
 ## Requirements / Installation / Troubleshooting
 Need help getting started? Here's where to look!
