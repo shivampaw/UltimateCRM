@@ -40,7 +40,7 @@ class InvoicesController extends Controller
                 flash('That Project ID does not exist for this user.', 'danger');
                 return back()->withInput();
             }
-        } else {
+        }else{
             $request->project_id = null;
         }
 
@@ -59,8 +59,8 @@ class InvoicesController extends Controller
         $client->addInvoice($invoice);
 
         Mail::send('emails.invoices.new', ['client' => $client, 'invoice' => $invoice], function ($mail) use ($client) {
-            $mail->to($client->email, $client->full_name);
-            $mail->subject('['.$client->full_name.'] New Invoice Generated');
+            $mail->to($client->email, $client->name);
+            $mail->subject('['.$client->name.'] New Invoice Generated');
         });
 
         flash('Invoice Created!');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page_title', $client->full_name)
+@section('page_title', $client->name)
 
 @section('content')
     
@@ -10,7 +10,7 @@
 				<div class="card-block">
 					<h4 class="card-title">Client Details</h4>
 					<p class="card-text">
-						<div class="text-success">{{ $client->full_name }}</div>
+						<div class="text-success">{{ $client->name }}</div>
 						<div class="text-warning">{{ $client->email }}</div>
 						<div class="text-info">{{ $client->number }}</div>
 					</p>
@@ -65,7 +65,7 @@
 	    <form action="/clients/{{ $client->id }}" method="post">
 			{{ csrf_field() }}
 			<input type="hidden" name="_method" value="delete">
-			<button onclick="return confirm('Are you sure you want to delete {{ $client->full_name }}')" class="btn btn-danger float-md-left"><span class="fa fa-trash"></span> Delete Client</button>
+			<button onclick="return confirm('Are you sure you want to delete {{ $client->name }}')" class="btn btn-danger float-md-left"><span class="fa fa-trash"></span> Delete Client</button>
 	    </form>
 	    <a href="/clients/{{ $client->id }}/edit" class="btn btn-info float-md-right" title="Edit Client"><span class="fa fa-pencil"></span> Edit Client</a>
     </div>

@@ -2,7 +2,7 @@
         <div class="row">
             <div class="col-sm-6 text-xs-center text-sm-left">
                 <strong>Billed To</strong><br />
-                {{ $invoice->client->full_name }}<br />
+                {{ $invoice->client->name }}<br />
                 {!! nl2br($invoice->client->address) !!}
             </div>
             <span class="hidden-sm-up invoice_break"></span>

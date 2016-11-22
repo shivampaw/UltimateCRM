@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page_title', 'Edit Project ('.$project->title.') For '.$client->full_name)
+@section('page_title', 'Edit Project ('.$project->title.') For '.$client->name)
 
 @section('content')
 

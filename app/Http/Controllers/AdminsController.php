@@ -50,9 +50,7 @@ class AdminsController extends Controller
             'email' => 'required|email|unique:clients|unique:users',
         ];
         $this->validate($request, $rules);
-        
         $user = addUser($request, true);
-
         flash('Admin Created!');
         return redirect('/admins');
     }
@@ -78,13 +76,9 @@ class AdminsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $admin)
     {
-        $admin = User::where('is_admin', 1)->findOrFail($id);
-        $admin->name = $request->name;
-        $admin->email = $request->email;
-        $admin->save();
-
+        $admin->update($request->all());
         flash('Admin ('.$admin->name.') Updated!');
         return redirect('/admins');
     }

@@ -54,14 +54,7 @@ class ClientsController extends Controller
         $this->validate($request, $rules);
 
         $user = addUser($request);
-
-        $client = new Client();
-        $client->full_name = $request->name;
-        $client->email = $request->email;
-        $client->number = $request->number;
-        $client->address = $request->address;
-        $client->user_id = $user->id;
-        $client->save();
+        $user->client()->save(new Client($request->all()));
 
         flash('Client Created!');
         return redirect('/clients');
@@ -101,15 +94,8 @@ class ClientsController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        $client->full_name = $request->full_name;
-        $client->email = $request->email;
-        $client->number = $request->number;
-        $client->address = $request->address;
-        $client->save();
-
-        $client->user->name = $client->full_name;
-        $client->user->email = $client->email;
-        $client->user->save();
+        $client->update($request->all());
+        $client->user->update($request->all());
 
         flash('Client Updated!');
         return redirect('/clients/'.$client->id);

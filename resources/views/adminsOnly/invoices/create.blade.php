@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page_title', 'Create Invoice For '.$client->full_name)
+@section('page_title', 'Create Invoice For '.$client->name)
 
 @section('content')
     <form action="/clients/{{ $client->id }}/invoices" method="post">

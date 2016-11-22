@@ -65,9 +65,9 @@ class ProjectsController extends Controller
             $client->addProject($project);
 
             Mail::send('emails.projects.new', ['client' => $client, 'project' => $project], function ($mail) use ($client, $project) {
-                $mail->to($client->email, $client->full_name);
+                $mail->to($client->email, $client->name);
                 $mail->attach(public_path().$project->pdf_path);
-                $mail->subject('['.$client->full_name.'] New Project Created');
+                $mail->subject('['.$client->name.'] New Project Created');
             });
 
             flash('The project has been created!');

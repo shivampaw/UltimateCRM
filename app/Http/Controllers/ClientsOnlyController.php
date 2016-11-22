@@ -63,8 +63,8 @@ class ClientsOnlyController extends Controller
             $invoice->save();
 
             Mail::send('emails.invoices.paid', ['client' => $client, 'invoice' => $invoice], function ($mail) use ($client, $invoice) {
-                $mail->to($client->email, $client->full_name);
-                $mail->subject('['.$client->full_name.'] Invoice #'.$invoice->id.' Has Been Paid For');
+                $mail->to($client->email, $client->name);
+                $mail->subject('['.$client->name.'] Invoice #'.$invoice->id.' Has Been Paid For');
             });
 
             flash('Invoice Paid!');
