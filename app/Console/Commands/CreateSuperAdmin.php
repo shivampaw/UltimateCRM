@@ -43,13 +43,13 @@ class CreateSuperAdmin extends Command
         $password = $this->secret('What is the password for the super admin? (You won\'t be able to see what you are typing)');
 
         if (User::find(1)) {
-            $this->error("The Super Admin (user with ID 1) already exists!");
+            $this->error('The Super Admin (user with ID 1) already exists!');
             return false;
         }
 
         User::create([
-            'email' => $email,
-            'name' => $name,
+            'email'    => $email,
+            'name'     => $name,
             'password' => bcrypt($password),
             'is_admin' => true
         ]);

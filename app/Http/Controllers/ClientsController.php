@@ -24,7 +24,7 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Client::all();
-        return view("adminsOnly.clients.index", compact('clients'));
+        return view('adminsOnly.clients.index', compact('clients'));
     }
 
     /**
@@ -34,20 +34,21 @@ class ClientsController extends Controller
      */
     public function create()
     {
-        return view("adminsOnly.clients.create");
+        return view('adminsOnly.clients.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required',
-            'email' => 'required|email|unique:clients|unique:users',
+            'name'   => 'required',
+            'email'  => 'required|email|unique:clients|unique:users',
             'number' => 'numeric'
         ];
         $this->validate($request, $rules);
@@ -62,37 +63,40 @@ class ClientsController extends Controller
         $client->user_id = $user->id;
         $client->save();
 
-        flash("Client Created!");
+        flash('Client Created!');
         return redirect('/clients');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Client  $client
+     * @param \App\Client $client
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Client $client)
     {
-        return view("adminsOnly.clients.show", compact('client'));
+        return view('adminsOnly.clients.show', compact('client'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Client  $client
+     * @param \App\Client $client
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Client $client)
     {
-        return view("adminsOnly.clients.edit", compact('client'));
+        return view('adminsOnly.clients.edit', compact('client'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Client  $client
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Client              $client
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Client $client)
@@ -107,20 +111,21 @@ class ClientsController extends Controller
         $client->user->email = $client->email;
         $client->user->save();
 
-        flash("Client Updated!");
+        flash('Client Updated!');
         return redirect('/clients/'.$client->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Client  $client
+     * @param \App\Client $client
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Client $client)
     {
         $client->delete();
-        flash("Client Deleted!");
+        flash('Client Deleted!');
         return redirect('/clients');
     }
 }

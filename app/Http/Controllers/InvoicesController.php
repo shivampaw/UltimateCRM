@@ -20,12 +20,12 @@ class InvoicesController extends Controller
     public function index(Client $client)
     {
         $invoices = $client->invoices;
-        return view("adminsOnly.invoices.index", compact('client', 'invoices'));
+        return view('adminsOnly.invoices.index', compact('client', 'invoices'));
     }
 
     public function create(Client $client)
     {
-        return view("adminsOnly.invoices.create", compact('client'));
+        return view('adminsOnly.invoices.create', compact('client'));
     }
 
     public function store(Request $request, Client $client)
@@ -37,10 +37,10 @@ class InvoicesController extends Controller
 
         if ($request->project_id) {
             if (Project::where('id', $request->project_id)->where('client_id', $client->id)->count() !== 1) {
-                flash("That Project ID does not exist for this user.", "danger");
+                flash('That Project ID does not exist for this user.', 'danger');
                 return back()->withInput();
             }
-        }else{
+        } else {
             $request->project_id = null;
         }
 
@@ -63,19 +63,19 @@ class InvoicesController extends Controller
             $mail->subject('['.$client->full_name.'] New Invoice Generated');
         });
 
-        flash("Invoice Created!");
+        flash('Invoice Created!');
         return redirect('/clients/'.$client->id)->withInput();
     }
 
     public function show(Client $client, Invoice $invoice)
     {
-        return view("adminsOnly.invoices.show", compact('invoice'));
+        return view('adminsOnly.invoices.show', compact('invoice'));
     }
 
     public function destroy(Client $client, Invoice $invoice)
     {
         $client->invoices()->findOrFail($invoice->id)->delete();
-        flash("Invoice Deleted!");
-        return redirect("/clients/".$client->id."/invoices");
+        flash('Invoice Deleted!');
+        return redirect('/clients/'.$client->id.'/invoices');
     }
 }

@@ -56,7 +56,8 @@ Please ensure your coding standard matches PSR-2. You can do so by running the f
 `composer global require friendsofphp/php-cs-fixer`
 
 #### Run Command
-`php-cs-fixer fix PATH_TO_PROJECT_FILES --level=psr2 --fixers=-psr0`
+Run the following command from the project root (it will load the .php_cs config file)
+`php-cs-fixer fix`
 
 ## License
 This project is open-sourced and licensed under the [MIT license](http://opensource.org/licenses/MIT).

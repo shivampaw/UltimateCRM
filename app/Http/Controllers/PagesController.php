@@ -42,7 +42,7 @@ class PagesController extends Controller
     {
         $rules = [
             'currentPassword' => 'required',
-            'password' => 'required|same:confirmPassword|min:6',
+            'password'        => 'required|same:confirmPassword|min:6',
             'confirmPassword' => 'required'
         ];
         $validator = Validator::make($request->all(), $rules);
@@ -60,7 +60,7 @@ class PagesController extends Controller
         if ($validator->passes()) {
             Auth::user()->password = Hash::make($request->password);
             Auth::user()->save();
-            flash("Your password was updated!");
+            flash('Your password was updated!');
             return back();
         }
         return back()->withErrors($validator);
