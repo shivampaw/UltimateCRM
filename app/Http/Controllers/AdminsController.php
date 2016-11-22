@@ -23,7 +23,7 @@ class AdminsController extends Controller
     public function index()
     {
         $admins = User::where('is_admin', 1)->get();
-        return view("superAdminOnly.admins.index", compact('admins'));
+        return view('superAdminOnly.admins.index', compact('admins'));
     }
 
     /**
@@ -33,46 +33,49 @@ class AdminsController extends Controller
      */
     public function create()
     {
-        return view("superAdminOnly.admins.create");
+        return view('superAdminOnly.admins.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required',
+            'name'  => 'required',
             'email' => 'required|email|unique:clients|unique:users',
         ];
         $this->validate($request, $rules);
         
         $user = addUser($request, true);
 
-        flash("Admin Created!");
+        flash('Admin Created!');
         return redirect('/admins');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $admin = User::where('is_admin', 1)->findOrFail($id);
-        return view("superAdminOnly.admins.edit", compact('admin'));
+        return view('superAdminOnly.admins.edit', compact('admin'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -82,20 +85,21 @@ class AdminsController extends Controller
         $admin->email = $request->email;
         $admin->save();
 
-        flash("Admin (".$admin->name.") Updated!");
-        return redirect("/admins");
+        flash('Admin ('.$admin->name.') Updated!');
+        return redirect('/admins');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         User::where('is_admin', 1)->findOrFail($id)->delete();
-        flash("Admin Deleted!");
+        flash('Admin Deleted!');
         return redirect('/admins');
     }
 }

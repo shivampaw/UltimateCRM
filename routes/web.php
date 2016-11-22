@@ -20,16 +20,16 @@ Route::put('/update-password', 'PagesController@updatePassword');
 Route::resource('/clients', 'ClientsController');
 
 // Invoice Routes
-Route::resource('/clients.invoices', 'InvoicesController', ['except' =>[
+Route::resource('/clients.invoices', 'InvoicesController', ['except' => [
     'update', 'edit'
 ]]);
 
 // Project Routes
-Route::resource('/clients.projects', 'ProjectsController', ['except' =>[
+Route::resource('/clients.projects', 'ProjectsController', ['except' => [
     'update', 'edit'
 ]]);
 // Admin Routes
-Route::resource('/admins', 'AdminsController', ['except' =>[
+Route::resource('/admins', 'AdminsController', ['except' => [
     'show'
 ]]);
 
