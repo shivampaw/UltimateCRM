@@ -53,10 +53,12 @@ All builds are checked with Travis CI.
 Please ensure your coding standard matches PSR-2. You can do so by running the following commands:
 
 #### Install PHP-CS-Fixer
+This command will install `php-cs-fixer` which will be used to format the project to PSR-2 standards.
+
 `composer global require friendsofphp/php-cs-fixer`
 
 #### Run Command
-Run the following command from the project root (it will load the .php_cs config file)
+Run the following command from the project root because it needs to load the .php_cs config file.
 
 `php-cs-fixer fix`
 
