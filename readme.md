@@ -57,6 +57,7 @@ Please ensure your coding standard matches PSR-2. You can do so by running the f
 
 #### Run Command
 Run the following command from the project root (it will load the .php_cs config file)
+
 `php-cs-fixer fix`
 
 ## License
