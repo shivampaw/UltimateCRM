@@ -44,19 +44,12 @@ class ClientsOnlyController extends Controller
         $invoice = $client->invoices()->findOrFail($id);
 
         Stripe::setApiKey(config('services.stripe.secret'));
-        if (!$client->stripe_customer_id) :
-            $customer = Customer::create([
-                'email' => Auth::user()->email,
-                'source' => $request->stripeToken
-            ]);
-        $client->stripe_customer_id = $customer->id;
-        $client->save();
-        endif;
 
         try {
             $charge = Charge::create([
                 'amount' => $invoice->total,
-                'customer' => $client->stripe_customer_id,
+                'description' => config('app.name') . ' - Invoice #'.$invoice->id,
+                'source' => $request->stripeToken,
                 'currency' => 'gbp',
                 'receipt_email' => $client->email
             ]);
