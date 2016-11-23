@@ -89,7 +89,7 @@ class ClientsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Client              $client
+     * @param \App\Models\Client       $client
      *
      * @return \Illuminate\Http\Response
      */
