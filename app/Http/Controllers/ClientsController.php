@@ -54,7 +54,8 @@ class ClientsController extends Controller
         $this->validate($request, $rules);
 
         $user = addUser($request);
-        $user->client()->save(new Client($request->all()));
+        $client = new Client($request->all());
+        $user->client()->save($client);
 
         flash('Client Created!');
         return redirect('/clients');
