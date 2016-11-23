@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
-use App\Project;
+use App\Models\Client;
+use App\Models\Project;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Client;
+use App\Models\User;
+use App\Models\Client;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,7 +64,7 @@ class ClientsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Client $client
+     * @param \App\Models\Client $client
      *
      * @return \Illuminate\Http\Response
      */
@@ -76,7 +76,7 @@ class ClientsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Client $client
+     * @param \App\Models\Client $client
      *
      * @return \Illuminate\Http\Response
      */
@@ -89,7 +89,7 @@ class ClientsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Client              $client
+     * @param \App\Models\Client              $client
      *
      * @return \Illuminate\Http\Response
      */
@@ -105,7 +105,7 @@ class ClientsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Client $client
+     * @param \App\Models\Client $client
      *
      * @return \Illuminate\Http\Response
      */

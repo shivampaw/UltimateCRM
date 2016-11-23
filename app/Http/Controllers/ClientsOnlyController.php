@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Invoice;
+use App\Models\Invoice;
 use Carbon\Carbon;
 use Stripe\Charge;
 use Stripe\Stripe;

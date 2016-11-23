@@ -4,7 +4,7 @@
 
 @section('content')
 	<p>
-		<a href="/clients/create" class="btn btn-success btn-block" title="Create New Client">Create Client</a>
+		<a href="/clients/create" class="btn btn-success btn-block" title="Create New Client"><span class="fa fa-plus"></span> Create Client</a>
 	</p>
 	<div class="row">
 		@foreach($clients as $client)

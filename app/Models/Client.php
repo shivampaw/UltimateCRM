@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Invoice;
-use App\Project;
+use App\Models\Invoice;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
