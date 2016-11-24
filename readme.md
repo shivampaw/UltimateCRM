@@ -16,7 +16,7 @@ Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch
 
 **If you have any feature requests then just [open an issue](https://github.com/shivampaw/UltimateCRM/issues/new) and let us know!**
 
-## Requirements / Installation / Troubleshooting
+## Requirements / Installation / Usage / Troubleshooting
 Need help getting started? Here's where to look!
 ### Requirements
 This CRM runs with Laravel 5.3 for which the requirements are as follows:
@@ -44,6 +44,14 @@ Run `php artisan migrate` from the root project folder. This will create the dat
 Now you can setup your Super Admin account by running `php artisan super_admin:create` which will walk you through creating the account.
 
 You should then be able to access UltimateCRM easily!
+
+### Usage
+You can edit the .env to configure most of the settings the CRM uses.
+
+If you want to edit the display of the "views" then you can do so by adding the files in the `resources/customViews/` directory.
+For example, if you place a file in `resources/customViews/emails/invoices/new.blade.php` that file will be used when emailing the client about a new invoice instead of the default in `resources/views/emails/invoices/new.blade.php`. You can therefore edit all the views that come with UltimateCRM by default.
+
+If you want to add a custom CSS file you can add in in the `public/css` directory and then load that file in your `app.blade.php` view - be sure to override the default one though!
 
 ### Troubleshooting
 Found an error? [Open an issue](https://github.com/shivampaw/UltimateCRM/issues/new) and let us know! 
