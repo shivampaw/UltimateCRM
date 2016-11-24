@@ -1,6 +1,6 @@
 <?php
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 function flash($message, $level = 'success')
@@ -36,5 +36,5 @@ function addUser(Request $request, $admin = false)
 
 function formatInvoiceTotal($number)
 {
-    return '£'.number_format($number/100, 2);
+    return config('crm.currency').number_format($number/100, 2);
 }

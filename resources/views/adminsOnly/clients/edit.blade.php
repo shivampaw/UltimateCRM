@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('page_title', 'Edit '.$client->full_name)
+@section('page_title', 'Edit '.$client->name)
 
 @section('content') 
 
 <form action="/clients/{{ $client->id }}" method="post">
 	<input type="hidden" name="_method" value="PUT">
 	<div class="form-group">
-		<label for="full_name" class="sr-only">Full Name</label>
-		<input type="text" class="form-control" name="full_name" value="{{ $client->full_name }}" id="full_name" placeholder="Full Name">
+		<label for="name" class="sr-only">Full Name</label>
+		<input type="text" class="form-control" name="name" value="{{ $client->name }}" id="name" placeholder="Full Name">
 	</div>
 	<div class="form-group">
 		<label for="email" class="sr-only">Email</label>

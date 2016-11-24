@@ -1,14 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Invoice;
-use App\Project;
+use App\Models\Invoice;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $fillable = ['full_name', 'email', 'number', 'address', 'stripe_customer_id'];
+    protected $fillable = ['name', 'email', 'number', 'address', 'stripe_customer_id'];
 
     public function invoices()
     {

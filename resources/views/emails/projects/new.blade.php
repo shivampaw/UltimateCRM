@@ -1,4 +1,4 @@
-<p>Hi {{ $client->full_name }},</p>
+<p>Hi {{ $client->name }},</p>
 <p>A new project has just been created for you.</p>
 <p>You can view the details of this project by logging on at <strong>{!! url('/'); !!}</strong>.</p>
 <p>The project PDF has also been attached to this email for you.</p>

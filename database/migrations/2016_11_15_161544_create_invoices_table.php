@@ -17,7 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->integer('client_id')->unsigned()->index();
             $table->longText('item_details');
             $table->date('due_date');
-            $table->boolean('paid');
+            $table->boolean('paid')->default(false);
             $table->datetime('paid_at')->nullable();
             $table->string('stripe_charge_id')->nullable();
             $table->integer('total');

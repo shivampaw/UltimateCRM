@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Invoice;
+use App\Models\Invoice;
 use Carbon\Carbon;
 use Stripe\Charge;
 use Stripe\Stripe;
@@ -23,21 +23,18 @@ class ClientsOnlyController extends Controller
     public function allInvoices()
     {
         $invoices = Auth::user()->client->invoices;
-
         return view('clientsOnly.invoices.index', compact('invoices'));
     }
 
     public function showInvoice($id)
     {
         $invoice = Auth::user()->client->invoices()->findOrFail($id);
-
         return view('clientsOnly.invoices.show', compact('invoice'));
     }
 
     public function payInvoice($id)
     {
         $invoice = Auth::user()->client->invoices()->where('paid', false)->findOrFail($id);
-
         return view('clientsOnly.invoices.pay', compact('invoice'));
     }
 
@@ -63,12 +60,11 @@ class ClientsOnlyController extends Controller
             $invoice->save();
 
             Mail::send('emails.invoices.paid', ['client' => $client, 'invoice' => $invoice], function ($mail) use ($client, $invoice) {
-                $mail->to($client->email, $client->full_name);
-                $mail->subject('['.$client->full_name.'] Invoice #'.$invoice->id.' Has Been Paid For');
+                $mail->to($client->email, $client->name);
+                $mail->subject('['.$client->name.'] Invoice #'.$invoice->id.' Has Been Paid For');
             });
 
             flash('Invoice Paid!');
-
             return redirect('/invoices/'.$id);
         } catch (\Stripe\Error\Base $e) {
             flash($e->getMessage(), 'danger');
@@ -85,14 +81,12 @@ class ClientsOnlyController extends Controller
     public function allProjects()
     {
         $projects = Auth::user()->client->projects;
-
         return view('clientsOnly.projects.index', compact('projects'));
     }
 
     public function showProject($id)
     {
         $project = Auth::user()->client->projects()->findOrFail($id);
-
         return view('clientsOnly.projects.show', compact('project'));
     }
 
@@ -104,7 +98,6 @@ class ClientsOnlyController extends Controller
         $project->save();
 
         flash('Project Accepted');
-
         return redirect('/projects/'.$project->id);
     }
 }

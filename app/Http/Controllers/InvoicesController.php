@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
-use App\Invoice;
-use App\Project;
+use App\Models\Client;
+use App\Models\Invoice;
+use App\Models\Project;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -59,8 +59,8 @@ class InvoicesController extends Controller
         $client->addInvoice($invoice);
 
         Mail::send('emails.invoices.new', ['client' => $client, 'invoice' => $invoice], function ($mail) use ($client) {
-            $mail->to($client->email, $client->full_name);
-            $mail->subject('['.$client->full_name.'] New Invoice Generated');
+            $mail->to($client->email, $client->name);
+            $mail->subject('['.$client->name.'] New Invoice Generated');
         });
 
         flash('Invoice Created!');

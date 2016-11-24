@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page_title', 'All Invoices for '.$client->full_name)
+@section('page_title', 'All Invoices for '.$client->name)
 
 @section('content')
 

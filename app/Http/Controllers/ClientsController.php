@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Client;
+use App\Models\User;
+use App\Models\Client;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,14 +54,8 @@ class ClientsController extends Controller
         $this->validate($request, $rules);
 
         $user = addUser($request);
-
-        $client = new Client();
-        $client->full_name = $request->name;
-        $client->email = $request->email;
-        $client->number = $request->number;
-        $client->address = $request->address;
-        $client->user_id = $user->id;
-        $client->save();
+        $client = new Client($request->all());
+        $user->client()->save($client);
 
         flash('Client Created!');
         return redirect('/clients');
@@ -70,7 +64,7 @@ class ClientsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Client $client
+     * @param \App\Models\Client $client
      *
      * @return \Illuminate\Http\Response
      */
@@ -82,7 +76,7 @@ class ClientsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Client $client
+     * @param \App\Models\Client $client
      *
      * @return \Illuminate\Http\Response
      */
@@ -95,21 +89,14 @@ class ClientsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Client              $client
+     * @param \App\Models\Client       $client
      *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Client $client)
     {
-        $client->full_name = $request->full_name;
-        $client->email = $request->email;
-        $client->number = $request->number;
-        $client->address = $request->address;
-        $client->save();
-
-        $client->user->name = $client->full_name;
-        $client->user->email = $client->email;
-        $client->user->save();
+        $client->update($request->all());
+        $client->user->update($request->all());
 
         flash('Client Updated!');
         return redirect('/clients/'.$client->id);
@@ -118,7 +105,7 @@ class ClientsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Client $client
+     * @param \App\Models\Client $client
      *
      * @return \Illuminate\Http\Response
      */
