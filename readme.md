@@ -72,5 +72,7 @@ Run the following command from the project root because it needs to load the .ph
 
 `php-cs-fixer fix`
 
+This will format the project to PSR-2. Be sure to run this before committing and pushing any changes!
+
 ## License
 This project is open-sourced and licensed under the [MIT license](http://opensource.org/licenses/MIT).
