@@ -29,13 +29,7 @@ class MainTest extends TestCase
     {
         fwrite(STDERR, print_r(PHP_EOL.'Starting Test', true));
         fwrite(STDERR, print_r(PHP_EOL.'Number of users: '.User::count(), true));
-        $user = new User();
-        $password = str_random(10);
-        $user->name = 'PHPUnitTest';
-        $user->password = bcrypt($password);
-        $user->email = 'PHPUnitTest@PHPUnitTest.com';
-        $user->is_admin = true;
-        $user->save();
+        $user = addUser('PHPUnit', 'example@example.com');
         fwrite(STDERR, print_r(PHP_EOL.'Added user with ID: '.$user->id, true));
         fwrite(STDERR, print_r(PHP_EOL.'Number of users: '.User::count(), true));
         $user->delete();

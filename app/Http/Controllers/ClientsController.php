@@ -53,7 +53,7 @@ class ClientsController extends Controller
         ];
         $this->validate($request, $rules);
 
-        $user = addUser($request);
+        $user = addUser($request->name, $request->email);
         $client = new Client($request->all());
         $user->client()->save($client);
 

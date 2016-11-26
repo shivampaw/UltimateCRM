@@ -50,7 +50,7 @@ class AdminsController extends Controller
             'email' => 'required|email|unique:clients|unique:users',
         ];
         $this->validate($request, $rules);
-        $user = addUser($request, true);
+        $user = addUser($request->name, $request->email, null, true);
         flash('Admin Created!');
         return redirect('/admins');
     }
