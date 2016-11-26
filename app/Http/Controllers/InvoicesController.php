@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Project;
+use App\Mail\NewInvoice;
 use Illuminate\Http\Request;
 use App\Models\RecurringInvoice;
 use Illuminate\Support\Facades\Mail;
@@ -71,11 +72,7 @@ class InvoicesController extends Controller
             $recurringInvoice->how_often = $request->recurring_date;
             $recurringInvoice->save();
         }
-
-        Mail::send('emails.invoices.new', ['client' => $client, 'invoice' => $invoice], function ($mail) use ($client) {
-            $mail->to($client->email, $client->name);
-            $mail->subject('['.$client->name.'] New Invoice Generated');
-        });
+        Mail::send(new NewInvoice($client, $invoice));
 
         flash('Invoice Created!');
         return redirect('/clients/'.$client->id);

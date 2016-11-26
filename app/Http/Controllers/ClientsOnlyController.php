@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
 use Carbon\Carbon;
 use Stripe\Charge;
 use Stripe\Stripe;
 use Stripe\Customer;
 use App\Http\Requests;
+use App\Models\Invoice;
+use App\Mail\InvoicePaid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -59,10 +60,7 @@ class ClientsOnlyController extends Controller
             $invoice->paid_at = Carbon::now();
             $invoice->save();
 
-            Mail::send('emails.invoices.paid', ['client' => $client, 'invoice' => $invoice], function ($mail) use ($client, $invoice) {
-                $mail->to($client->email, $client->name);
-                $mail->subject('['.$client->name.'] Invoice #'.$invoice->id.' Has Been Paid For');
-            });
+            Mail::send(new InvoicePaid($client, $invoice));
 
             flash('Invoice Paid!');
             return redirect('/invoices/'.$id);

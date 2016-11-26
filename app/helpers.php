@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Mail\NewUser;
 use Illuminate\Http\Request;
 
 function flash($message, $level = 'success')
@@ -20,17 +21,7 @@ function addUser($name, $email, $password = null, $admin = false)
     ]);
 
     if(config('app.env') !== "testing"){
-        if (!$admin) {
-            Mail::send('emails.users.client', ['user' => $user, 'password' => $password], function ($mail) use ($user) {
-                $mail->to($user->email, $user->name);
-                $mail->subject('['.$user->name.'] Your New Client Account');
-            });
-        } else {
-            Mail::send('emails.users.admin', ['user' => $user, 'password' => $password], function ($mail) use ($user) {
-                $mail->to($user->email, $user->name);
-                $mail->subject('['.$user->name.'] Your New Admin Account');
-            });
-        }
+        Mail::send(new NewUser($user, $password));
     }
 
     return $user;

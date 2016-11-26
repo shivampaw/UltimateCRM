@@ -60,10 +60,7 @@ class ManageRecurringInvoices extends Command
 
             $client = $newInvoice->client;
 
-            Mail::send('emails.invoices.new', ['client' => $client, 'invoice' => $newInvoice], function ($mail) use ($client) {
-                $mail->to($client->email, $client->name);
-                $mail->subject('['.$client->name.'] New Invoice Generated');
-            });
+            Mail::send(new NewInvoice($client, $newInvoice));
         }
     }
 }

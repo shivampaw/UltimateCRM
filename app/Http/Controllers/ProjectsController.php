@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
 use App\Models\Client;
 use App\Models\Project;
-use App\Http\Requests;
+use App\Mail\NewProject;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
@@ -52,30 +53,20 @@ class ProjectsController extends Controller
             'title' => 'required'
         ]);
 
-        $pdfExt = $request->pdf->extension();
-        if (strtolower($pdfExt) === 'pdf') {
-            $fileUrlPath= '/project_files/'.$client->id.'/';
-            $fileUrlName = time().'.pdf';
-            $path = $request->pdf->move(public_path().$fileUrlPath, $fileUrlName);
+        $fileUrlPath= '/project_files/'.$client->id.'/';
+        $fileUrlName = time().'.pdf';
+        $path = $request->pdf->move(public_path().$fileUrlPath, $fileUrlName);
 
-            $project = new Project();
-            $project->title = $request->title;
-            $project->pdf_path = $fileUrlPath.$fileUrlName;
+        $project = new Project();
+        $project->title = $request->title;
+        $project->pdf_path = $fileUrlPath.$fileUrlName;
 
-            $client->addProject($project);
+        $client->addProject($project);
 
-            Mail::send('emails.projects.new', ['client' => $client, 'project' => $project], function ($mail) use ($client, $project) {
-                $mail->to($client->email, $client->name);
-                $mail->attach(public_path().$project->pdf_path);
-                $mail->subject('['.$client->name.'] New Project Created');
-            });
+        Mail::send(new NewProject($client, $project));
 
-            flash('The project has been created!');
-            return redirect('/clients/'.$client->id.'/projects');
-        } else {
-            flash('The uploaded file must be a PDF', 'danger');
-            return back();
-        }
+        flash('The project has been created!');
+        return redirect('/clients/'.$client->id.'/projects');
     }
 
     /**
