@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\CreateSuperAdmin::class,
+        Commands\ManageRecurringInvoices::class,
     ];
 
     /**
@@ -25,8 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('manage_invoices')
+                 ->hourly();
     }
     /**
      * Register the Closure based commands for the application.

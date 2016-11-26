@@ -43,6 +43,8 @@ Run `php artisan migrate` from the root project folder. This will create the dat
 
 Now you can setup your Super Admin account by running `php artisan super_admin:create` which will walk you through creating the account.
 
+You also need to add a crontab with the following details: * * * * * `php /path/to/artisan schedule:run >> /dev/null 2>&1` Edit the /path/to/artisan to your actual artisan path. Artisan is the file in the root directory of the project. You should be able to do this by logging into your server via SSH and running `crontab -e`. Then just paste the above line correctly. **This step is optional and only required if you want to use recurring invoices**.
+
 You should then be able to access UltimateCRM easily!
 
 ### Usage

@@ -13,8 +13,8 @@ function addUser($name, $email, $password = null, $admin = false)
 {
     $password = $password ?: str_random(10);
     $user = User::create([
-        'name' => $name,
-        'email' => $email,
+        'name'     => $name,
+        'email'    => $email,
         'password' => bcrypt($password),
         'is_admin' => $admin
     ]);

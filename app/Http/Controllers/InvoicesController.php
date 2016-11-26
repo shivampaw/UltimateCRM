@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Http\Requests;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Project;
-use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Models\RecurringInvoice;
 use Illuminate\Support\Facades\Mail;
 
 class InvoicesController extends Controller
@@ -32,6 +34,8 @@ class InvoicesController extends Controller
     {
         $rules = [
             'due_date'    => 'date|required',
+            'recurring_date' => 'required_with:recurring',
+            'recurring_due_date' => 'required_with:recurring',
         ];
         $this->validate($request, $rules);
 
@@ -58,13 +62,23 @@ class InvoicesController extends Controller
 
         $client->addInvoice($invoice);
 
+        if($request->has('recurring')){
+            $recurringInvoice = new RecurringInvoice();
+            $recurringInvoice->invoice_id = $invoice->id;
+            $recurringInvoice->last_run = Carbon::today();
+            $recurringInvoice->next_run = Carbon::today()->addDays($request->recurring_date);
+            $recurringInvoice->due_date = $request->recurring_due_date;
+            $recurringInvoice->how_often = $request->recurring_date;
+            $recurringInvoice->save();
+        }
+
         Mail::send('emails.invoices.new', ['client' => $client, 'invoice' => $invoice], function ($mail) use ($client) {
             $mail->to($client->email, $client->name);
             $mail->subject('['.$client->name.'] New Invoice Generated');
         });
 
         flash('Invoice Created!');
-        return redirect('/clients/'.$client->id)->withInput();
+        return redirect('/clients/'.$client->id);
     }
 
     public function show(Client $client, Invoice $invoice)
