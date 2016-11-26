@@ -19,16 +19,18 @@ function addUser($name, $email, $password = null, $admin = false)
         'is_admin' => $admin
     ]);
 
-    if (!$admin) {
-        Mail::send('emails.users.client', ['user' => $user, 'password' => $password], function ($mail) use ($user) {
-            $mail->to($user->email, $user->name);
-            $mail->subject('['.$user->name.'] Your New Client Account');
-        });
-    } else {
-        Mail::send('emails.users.admin', ['user' => $user, 'password' => $password], function ($mail) use ($user) {
-            $mail->to($user->email, $user->name);
-            $mail->subject('['.$user->name.'] Your New Admin Account');
-        });
+    if(config('app.env') !== "testing"){
+        if (!$admin) {
+            Mail::send('emails.users.client', ['user' => $user, 'password' => $password], function ($mail) use ($user) {
+                $mail->to($user->email, $user->name);
+                $mail->subject('['.$user->name.'] Your New Client Account');
+            });
+        } else {
+            Mail::send('emails.users.admin', ['user' => $user, 'password' => $password], function ($mail) use ($user) {
+                $mail->to($user->email, $user->name);
+                $mail->subject('['.$user->name.'] Your New Admin Account');
+            });
+        }
     }
 
     return $user;
