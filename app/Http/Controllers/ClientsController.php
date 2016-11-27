@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Client;
 use App\Http\Requests;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreUserRequest;
 
 class ClientsController extends Controller
 {
@@ -44,16 +45,10 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $rules = [
-            'name'   => 'required',
-            'email'  => 'required|email|unique:clients|unique:users',
-            'number' => 'numeric'
-        ];
-        $this->validate($request, $rules);
+        $user = $request->storeUser();
 
-        $user = addUser($request->name, $request->email);
         $client = new Client($request->all());
         $user->client()->save($client);
 

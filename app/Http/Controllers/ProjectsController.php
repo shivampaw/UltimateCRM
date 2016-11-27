@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Models\Client;
 use App\Models\Project;
-use App\Mail\NewProject;
-use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\StoreProjectRequest;
 
 class ProjectsController extends Controller
 {
@@ -46,25 +42,10 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Client $client)
+    public function store(StoreProjectRequest $request, Client $client)
     {
-        $this->validate($request, [
-            'pdf'   => 'required|file',
-            'title' => 'required'
-        ]);
-
-        $fileUrlPath= '/project_files/'.$client->id.'/';
-        $fileUrlName = time().'.pdf';
-        $path = $request->pdf->move(public_path().$fileUrlPath, $fileUrlName);
-
-        $project = new Project();
-        $project->title = $request->title;
-        $project->pdf_path = $fileUrlPath.$fileUrlName;
-
-        $client->addProject($project);
-
-        Mail::send(new NewProject($client, $project));
-
+        $request->storeProject();
+        
         flash('The project has been created!');
         return redirect('/clients/'.$client->id.'/projects');
     }
@@ -91,6 +72,7 @@ class ProjectsController extends Controller
     public function destroy(Client $client, Project $project)
     {
         $client->projects()->findOrFail($project->id)->delete();
+        
         flash('Project Deleted!');
         return redirect('/clients/'.$client->id.'/projects');
     }

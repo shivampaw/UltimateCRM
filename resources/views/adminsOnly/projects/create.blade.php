@@ -10,7 +10,7 @@
 	{{ csrf_field() }}
 	<div class="form-group">
 		<label for="title" class="sr-only">Project Title</label>
-		<input type="text" class="form-control" placeholder="Project Title" name="title" id="title">
+		<input type="text" class="form-control" placeholder="Project Title" value="{{ old('title') }}" name="title" id="title">
 	</div>
 	<div class="form-group">
 		<label class="custom-file">
