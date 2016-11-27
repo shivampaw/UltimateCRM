@@ -45,7 +45,7 @@ class ManageRecurringInvoices extends Command
                                             ->whereDate('last_run', '!=', Carbon::today())
                                             ->get();
         
-        foreach($toMakeInvoices as $completedInvoice){
+        foreach ($toMakeInvoices as $completedInvoice) {
             $oldInvoice = Invoice::find($completedInvoice->invoice_id);
             $newInvoice = $oldInvoice->replicate();
             $newInvoice->paid = false;

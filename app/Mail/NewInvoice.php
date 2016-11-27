@@ -37,6 +37,5 @@ class NewInvoice extends Mailable
                     ->with('invoice', $this->invoice)
                     ->to($this->client->email, $this->client->name)
                     ->subject('['.$this->client->name.'] New Invoice Generated');
-
     }
 }

@@ -37,6 +37,5 @@ class InvoicePaid extends Mailable
                     ->with('invoice', $this->invoice)
                     ->subject('['.$this->client->name.'] Invoice #'.$this->invoice->id.' Has Been Paid For')
                     ->to($this->client->email, $this->client->name);
-
     }
 }

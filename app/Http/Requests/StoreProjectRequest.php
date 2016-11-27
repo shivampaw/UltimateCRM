@@ -35,7 +35,7 @@ class StoreProjectRequest extends FormRequest
     }
 
     /**
-     * Get the validation rule messages that apply to 
+     * Get the validation rule messages that apply to
      * the request.
      *
      * @return array
@@ -43,7 +43,7 @@ class StoreProjectRequest extends FormRequest
     public function messages()
     {
         return [
-            'pdf.*' => 'You must upload a PDF with the project details.',
+            'pdf.*'          => 'You must upload a PDF with the project details.',
             'title.required' => 'You must enter a project title',
         ];
     }
@@ -52,7 +52,7 @@ class StoreProjectRequest extends FormRequest
      * Main method to be called to initiate save
      * for project.
      *
-     * @return boolean
+     * @return App\Models\Project
      */
     public function storeProject()
     {
@@ -64,7 +64,7 @@ class StoreProjectRequest extends FormRequest
         $this->client->addProject($project);
         Mail::send(new NewProject($this->client, $project));
 
-        return true;
+        return $project;
     }
 
     /**
@@ -81,6 +81,4 @@ class StoreProjectRequest extends FormRequest
 
         return $fileUrlPath.$fileUrlName;
     }
-
-
 }

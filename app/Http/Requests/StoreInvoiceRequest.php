@@ -12,7 +12,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreInvoiceRequest extends FormRequest
 {
-
     protected $client;
 
     /**
@@ -34,10 +33,10 @@ class StoreInvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'due_date'    => 'date|required',
-            'recurring_date' => 'required_with:recurring',
+            'due_date'           => 'date|required',
+            'recurring_date'     => 'required_with:recurring',
             'recurring_due_date' => 'required_with:recurring',
-            'project_id' => [
+            'project_id'         => [
                 'nullable',
                 Rule::exists('projects', 'id')->where(function ($query) {
                     $query->where('client_id', $this->client->id);
@@ -47,7 +46,7 @@ class StoreInvoiceRequest extends FormRequest
     }
 
     /**
-     * Get the validation rule messages that apply to 
+     * Get the validation rule messages that apply to
      * the request.
      *
      * @return array
@@ -55,9 +54,9 @@ class StoreInvoiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'project_id.exists' => 'The Project ID you entered does not exist for this user.',
-            'due_date.required' => 'You must enter a Due Date',
-            'recurring_date.required_with' => 'You need to enter a Recurring Date if you want this invoice to recur.',
+            'project_id.exists'                => 'The Project ID you entered does not exist for this user.',
+            'due_date.required'                => 'You must enter a Due Date',
+            'recurring_date.required_with'     => 'You need to enter a Recurring Date if you want this invoice to recur.',
             'recurring_due_date.required_with' => 'You need to enter a Recurring Due Date if you want this invoice to recur.',
         ];
     }
@@ -65,7 +64,7 @@ class StoreInvoiceRequest extends FormRequest
     /**
      * Main method to be called from controller.
      *
-     * @return boolean
+     * @return App\Models\Invoice
      */
     public function storeInvoice()
     {
@@ -83,20 +82,20 @@ class StoreInvoiceRequest extends FormRequest
 
         $this->client->addInvoice($invoice);
 
-        if($this->has('recurring')):
+        if ($this->has('recurring')):
             $this->recurInvoice($invoice->id, $this->recurring_date, $this->recurring_due_date);
         endif;
 
         Mail::send(new NewInvoice($this->client, $invoice));
 
-        return true;
+        return $invoice;
     }
 
     /**
-     * This is run to create a recurring value for the invoice 
-     * specified
-     * 
-     * @return boolean
+     * This is run to create a recurring value for the invoice
+     * specified.
+     *
+     * @return mixed
      */
     protected function recurInvoice($id, $date, $due_date)
     {
@@ -110,6 +109,4 @@ class StoreInvoiceRequest extends FormRequest
 
         return $recurringInvoice;
     }
-
-
 }

@@ -28,11 +28,10 @@ class MainTest extends TestCase
      */
     public function testAddAndDeleteUser()
     {
-
         fwrite(STDERR, print_r(PHP_EOL.'Starting Test', true));
         fwrite(STDERR, print_r(PHP_EOL.'Number of users: '.User::count(), true));
         
-        $user = (new StoreUserRequest())->storeUser("phpunit", "phpunit@example.com");
+        $user = (new StoreUserRequest())->storeUser('phpunit', 'phpunit@example.com');
         fwrite(STDERR, print_r(PHP_EOL.'Added user with ID: '.$user->id, true));
        
         fwrite(STDERR, print_r(PHP_EOL.'Number of users: '.User::count(), true));
