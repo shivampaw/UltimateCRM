@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use App\Models\Invoice;
+use App\Mail\NewInvoice;
 use Illuminate\Console\Command;
 use App\Models\RecurringInvoice;
 use Illuminate\Support\Facades\Mail;
@@ -60,7 +61,7 @@ class ManageRecurringInvoices extends Command
 
             $client = $newInvoice->client;
 
-            Mail::send(new NewInvoice($client, $newInvoice));
+            $this->info(Mail::send(new NewInvoice($client, $newInvoice)));
         }
     }
 }
