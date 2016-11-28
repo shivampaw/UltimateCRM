@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
         $exception = \Symfony\Component\Debug\Exception\FlattenException::create($e);
         $statusCode = $exception->getStatusCode($exception);
 
-        if (env('APP_DEBUG') == FALSE && $statusCode == 500 && $e instanceof ValidationException != TRUE) {
+        if (env('APP_DEBUG') == false && $statusCode == 500 && $e instanceof ValidationException != true) {
             return response()->view('errors.500', [], 500);
         } else {
             return parent::render($request, $e);
