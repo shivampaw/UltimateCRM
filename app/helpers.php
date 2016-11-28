@@ -1,9 +1,5 @@
 <?php
 
-use App\Models\User;
-use App\Mail\NewUser;
-use Illuminate\Http\Request;
-
 function flash($message, $level = 'success')
 {
     session()->flash('status', $message);
