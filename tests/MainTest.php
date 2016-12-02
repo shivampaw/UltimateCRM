@@ -11,17 +11,6 @@ class MainTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * Test the homepage returns ok.
-     *
-     * @return void
-     */
-    public function testHomePageResponse()
-    {
-        $this->visit('/')
-             ->assertResponseOk();
-    }
-
-    /**
      * Add a user and then try to delete it.
      *
      * @return void

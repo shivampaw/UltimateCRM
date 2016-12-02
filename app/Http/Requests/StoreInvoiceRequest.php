@@ -105,6 +105,7 @@ class StoreInvoiceRequest extends FormRequest
         $recurringInvoice->next_run = Carbon::today()->addDays($date);
         $recurringInvoice->due_date = $due_date;
         $recurringInvoice->how_often = $date;
+        $recurringInvoice->client_id = $this->client->id;
         $recurringInvoice->save();
 
         return $recurringInvoice;

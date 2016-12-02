@@ -16,6 +16,7 @@ class CreateRecurringInvoicesTable extends Migration
         Schema::create('recurring_invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('invoice_id')->unsigned()->index();
+            $table->integer('client_id')->unsigned()->index();
             $table->date('last_run');
             $table->date('next_run');
             $table->integer('due_date');

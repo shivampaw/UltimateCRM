@@ -25,6 +25,11 @@ class Client extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function recurringInvoices()
+    {
+        return $this->hasMany(RecurringInvoices::class);
+    }
+
     public function addInvoice(Invoice $invoice)
     {
         return $this->invoices()->save($invoice);
@@ -41,6 +46,7 @@ class Client extends Model
         static::deleting(function ($client) {
             $client->invoices()->delete();
             $client->projects()->delete();
+            $client->recurringInvoices()->delete();
             User::find($client->user_id)->delete();
         });
     }
