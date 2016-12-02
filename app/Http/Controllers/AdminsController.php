@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Admin;
+use App\Models\User;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
 
 class AdminsController extends Controller
 {
@@ -43,14 +44,10 @@ class AdminsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $rules = [
-            'name'  => 'required',
-            'email' => 'required|email|unique:clients|unique:users',
-        ];
-        $this->validate($request, $rules);
-        $user = addUser($request, true);
+        $user = $request->storeUser(null, null, null, true);
+
         flash('Admin Created!');
         return redirect('/admins');
     }

@@ -5,7 +5,7 @@
 @section('content')
     <form action="/clients/{{ $client->id }}/invoices" method="post">
         <div class="form-group">
-            <input type="date" name="due_date" class="form-control" placeholder="Due Date" value="{{ old('due_date') }}">
+            <input type="date" name="due_date" class="form-control" placeholder="Due Date">
         </div>
         <div class="form-group">
             <input type="number" name="project_id" placeholder="Project ID" class="form-control" value="{{ old('project_id', Input::get('project_id')) }}">
@@ -19,6 +19,21 @@
             
         </div>
         <hr />
+        <div class="form-group">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" name="recurring" id="recurring_check" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Check this if you want to make this invoice recurring.</span>
+            </label>
+        </div>
+        <div class="form-group recurring">
+            <input type="number" name="recurring_date" class="form-control" placeholder="Recurring Date">
+            <small class="form-text text-muted">How many days should this invoice be generated after it's last generation.</small>
+        </div>
+        <div class="form-group recurring">
+            <input type="number" name="recurring_due_date" class="form-control" placeholder="Reucrring Due Date">
+            <small class="form-text text-muted">How many days after this invoices generation should the due date be.</small>
+        </div>
         <div class="form-group">
             <textarea name="notes" id="notes" rows="5" placeholder="Notes" class="form-control">{{ old(('notes')) }}</textarea>
         </div>

@@ -167,3 +167,7 @@ div.col_row{
 .custom-file{
   width: 100%;
 }
+
+.recurring{
+  display: none;
+}

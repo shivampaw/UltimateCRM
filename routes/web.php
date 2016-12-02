@@ -10,7 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 // Home and Update Password Routes
 Route::get('/', 'PagesController@index');
 Route::get('/update-password', 'PagesController@showUpdatePasswordForm');

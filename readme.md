@@ -43,6 +43,8 @@ Run `php artisan migrate` from the root project folder. This will create the dat
 
 Now you can setup your Super Admin account by running `php artisan super_admin:create` which will walk you through creating the account.
 
+You also need to add a crontab with the following details: `* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1` Edit the /path/to/artisan to your actual artisan path. Artisan is the file in the root directory of the project. You should be able to do this by logging into your server via SSH and running `crontab -e`. Then just paste the above line correctly. **This step is optional and only required if you want to use recurring invoices**.
+
 You should then be able to access UltimateCRM easily!
 
 ### Usage
@@ -71,6 +73,8 @@ This command will install `php-cs-fixer` which will be used to format the projec
 Run the following command from the project root because it needs to load the .php_cs config file.
 
 `php-cs-fixer fix`
+
+This will format the project to PSR-2. Be sure to run this before committing and pushing any changes!
 
 ## License
 This project is open-sourced and licensed under the [MIT license](http://opensource.org/licenses/MIT).

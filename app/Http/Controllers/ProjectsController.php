@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Project;
-use App\Http\Requests;
-use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\StoreProjectRequest;
 
 class ProjectsController extends Controller
 {
@@ -45,37 +42,12 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Client $client)
+    public function store(StoreProjectRequest $request, Client $client)
     {
-        $this->validate($request, [
-            'pdf'   => 'required|file',
-            'title' => 'required'
-        ]);
-
-        $pdfExt = $request->pdf->extension();
-        if (strtolower($pdfExt) === 'pdf') {
-            $fileUrlPath= '/project_files/'.$client->id.'/';
-            $fileUrlName = time().'.pdf';
-            $path = $request->pdf->move(public_path().$fileUrlPath, $fileUrlName);
-
-            $project = new Project();
-            $project->title = $request->title;
-            $project->pdf_path = $fileUrlPath.$fileUrlName;
-
-            $client->addProject($project);
-
-            Mail::send('emails.projects.new', ['client' => $client, 'project' => $project], function ($mail) use ($client, $project) {
-                $mail->to($client->email, $client->name);
-                $mail->attach(public_path().$project->pdf_path);
-                $mail->subject('['.$client->name.'] New Project Created');
-            });
-
-            flash('The project has been created!');
-            return redirect('/clients/'.$client->id.'/projects');
-        } else {
-            flash('The uploaded file must be a PDF', 'danger');
-            return back();
-        }
+        $request->storeProject();
+        
+        flash('The project has been created!');
+        return redirect('/clients/'.$client->id.'/projects');
     }
 
     /**
@@ -100,6 +72,7 @@ class ProjectsController extends Controller
     public function destroy(Client $client, Project $project)
     {
         $client->projects()->findOrFail($project->id)->delete();
+        
         flash('Project Deleted!');
         return redirect('/clients/'.$client->id.'/projects');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\RecurringInvoice;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -17,5 +18,13 @@ class Invoice extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($invoice) {
+            RecurringInvoice::where('invoice_id', $invoice->id)->delete();
+        });
     }
 }
