@@ -7,23 +7,25 @@
 
     <title>{{ config('crm.site_title') }} - @yield('page_title')</title>
 
-    <!-- Fonts -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap-flex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app.css">
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-light bg-faded navbar-static-top">
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-static-top">
         <div class="container">
-            <button type="button" class="navbar-toggler hidden-md-up float-xs-right" data-toggle="collapse" data-target="#nav-content" aria-expanded="false"></button>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
             <a class="navbar-brand" href="{{ url('/') }}">{{ config('crm.site_title') }}</a>
 
-            <div id="nav-content" class="collapse navbar-toggleable-sm">
+            <div id="nav-content" class="collapse navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
+                <ul class="navbar-nav mr-auto mt-2 mt-md-0">
                     <li class="nav-item"><a href="{{ url('/') }}" class="nav-link">Home</a>
                     @if ( Auth::user() && (Auth::user()->isSuperAdmin()) )
                         <li class="nav-item"><a href="{{ url('/admins') }}" class="nav-link">Admins</a>
@@ -37,7 +39,7 @@
                     </li>
                 </ul>
                 <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav float-md-right">
+                <ul class="nav navbar-nav my-2 my-lg-0">
                     <!-- Authentication Links -->
                     @if ( Auth::guest() )
                         <li class="nav-item"><a href="{{ url('/login') }}" class="nav-link">Login</a></li>
@@ -98,8 +100,9 @@
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
     <script src="/js/app.js"></script>
 
     @yield('footer')

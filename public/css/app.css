@@ -107,12 +107,6 @@ nav.navbar.navbar-light.bg-faded.navbar-static-top{
 	margin-bottom: 20px;
 }
 
-@media screen and (max-width: 767px){
-    #nav-content{
-        clear: both;
-    }
-}
-
 .dropdown-menu{
 	right: 0;
 	left: auto;
@@ -170,4 +164,8 @@ div.col_row{
 
 .recurring{
   display: none;
+}
+
+.card {
+  margin: 15px 0px;
 }

@@ -27,7 +27,7 @@ class Client extends Model
 
     public function recurringInvoices()
     {
-        return $this->hasMany(RecurringInvoices::class);
+        return $this->hasMany(RecurringInvoice::class);
     }
 
     public function addInvoice(Invoice $invoice)
