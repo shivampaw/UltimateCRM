@@ -48,14 +48,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        $exception = \Symfony\Component\Debug\Exception\FlattenException::create($e);
-        $statusCode = $exception->getStatusCode($exception);
-
-        if (env('APP_DEBUG') == false && $statusCode == 500 && $e instanceof ValidationException != true) {
-            return response()->view('errors.500', [], 500);
-        } else {
-            return parent::render($request, $e);
-        }
+        return parent::render($request, $e);
     }
     /**
      * Convert an authentication exception into an unauthenticated response.
