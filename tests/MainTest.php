@@ -1,5 +1,8 @@
 <?php
 
+namespace Tests;
+
+
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
