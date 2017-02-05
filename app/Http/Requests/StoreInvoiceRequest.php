@@ -82,7 +82,7 @@ class StoreInvoiceRequest extends FormRequest
 
         $this->client->addInvoice($invoice);
 
-        if ($this->has('recurring')):
+        if ($this->has('recurring')) :
             $this->recurInvoice($invoice->id, $this->recurring_date, $this->recurring_due_date);
         endif;
 
