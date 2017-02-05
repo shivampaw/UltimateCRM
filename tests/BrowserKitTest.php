@@ -1,6 +1,6 @@
 <?php
 
-abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
+abstract class BrowserKitTest extends Laravel\BrowserKitTesting\TestCase
 {
     /**
      * The base URL to use while testing the application.
