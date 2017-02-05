@@ -47,6 +47,13 @@ You also need to add a crontab with the following details: `* * * * * php /path/
 
 You should then be able to access UltimateCRM easily!
 
+### Upgrading
+To upgrade run the following commands:
+`git pull`
+`composer install`
+`php artisan migrate`
+This should have you already to go in most versions. If additional steps are required they will be specified in the version release.
+
 ### Usage
 You can edit the .env to configure most of the settings the CRM uses.
 
