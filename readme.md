@@ -19,7 +19,7 @@ Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch
 ## Requirements / Installation / Usage / Troubleshooting
 Need help getting started? Here's where to look!
 ### Requirements
-This CRM runs with Laravel 5.3 for which the requirements are as follows:
+This CRM runs with Laravel 5.4 for which the requirements are as follows:
 * PHP >= 5.6.4
 * OpenSSL PHP Extension
 * PDO PHP Extension
@@ -46,6 +46,13 @@ Now you can setup your Super Admin account by running `php artisan super_admin:c
 You also need to add a crontab with the following details: `* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1` Edit the /path/to/artisan to your actual artisan path. Artisan is the file in the root directory of the project. You should be able to do this by logging into your server via SSH and running `crontab -e`. Then just paste the above line correctly. **This step is optional and only required if you want to use recurring invoices**.
 
 You should then be able to access UltimateCRM easily!
+
+### Upgrading
+To upgrade run the following commands:
+`git pull`
+`composer install`
+`php artisan migrate`
+This should have you already to go in most versions. If additional steps are required they will be specified in the version release.
 
 ### Usage
 You can edit the .env to configure most of the settings the CRM uses.
