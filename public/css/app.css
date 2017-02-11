@@ -107,21 +107,14 @@ nav.navbar.navbar-light.bg-faded.navbar-static-top{
 	margin-bottom: 20px;
 }
 
-@media screen and (max-width: 767px){
-    #nav-content{
-        clear: both;
-    }
-}
-
-.dropdown-menu{
-	right: 0;
-	left: auto;
-}
-
 .invoice_item input{
   margin: 5px 0;
 }
 
+.dropdown-menu{
+ right: 0;
+ left: auto;
+}
 
 @media (min-width: 544px) {
     .card-columns {

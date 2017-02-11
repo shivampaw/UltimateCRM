@@ -8,7 +8,7 @@
 
     <hr />
 
-    <div class="text-xs-center">
+    <div class="text-center">
         <a  href="/clients/{{ $project->client->id }}/projects" class="btn btn-info float-md-left"><span class="fa fa-angle-double-left"></span> Back to Client Projects</a>
         @if(!$project->accepted)
             <form action="/clients/{{ $project->client->id }}/projects/{{ $project->id }}" method="post">

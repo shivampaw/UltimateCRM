@@ -12,8 +12,8 @@
         </div>
         <hr />
         <p class="clearfix">
-            <strong class="pull-left">Invoice Items</strong>
-            <a id="add_invoice_item" class="pull-right"><span class="fa fa-plus"></span></a>
+            <strong class="float-left">Invoice Items</strong>
+            <a id="add_invoice_item" class="float-right"><span class="fa fa-plus"></span></a>
         </p>
         <div class="invoice-items">
             

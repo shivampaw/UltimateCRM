@@ -4,7 +4,7 @@
 
 @section('content')
     
-    <div class="row text-xs-center">
+    <div class="row text-center">
 		<div class="col-md-6">
 			<div class="card">
 				<div class="card-block">
@@ -61,7 +61,7 @@
 	
 	<hr />
 
-	<div class="text-xs-center">
+	<div class="text-center">
 	    <form action="/clients/{{ $client->id }}" method="post">
 			{{ csrf_field() }}
 			<input type="hidden" name="_method" value="delete">
