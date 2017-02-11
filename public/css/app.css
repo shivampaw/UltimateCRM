@@ -111,6 +111,10 @@ nav.navbar.navbar-light.bg-faded.navbar-static-top{
   margin: 5px 0;
 }
 
+.dropdown-menu{
+ right: 0;
+ left: auto;
+}
 
 @media (min-width: 544px) {
     .card-columns {
