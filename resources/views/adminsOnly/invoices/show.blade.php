@@ -6,7 +6,7 @@
     
     @include("layouts.invoices.show")
 
-    <div class="text-xs-center">
+    <div class="text-center">
         <a  href="/clients/{{ $invoice->client->id }}/invoices" class="btn btn-info float-md-left"><span class="fa fa-angle-double-left"></span> Back to Client Invoices</a>
         @if(!$invoice->paid)
             <form action="/clients/{{ $invoice->client->id }}/invoices/{{ $invoice->id }}" method="post">

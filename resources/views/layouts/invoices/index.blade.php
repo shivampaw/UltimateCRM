@@ -1,7 +1,7 @@
 <div class="row">
     @foreach($invoices as $invoice)
         <div class="col-lg-4 col-sm-6">
-            <div class="card client text-xs-center">
+            <div class="card client text-center">
                 <div class="card-block">
                     <h4 class="card-title">Invoice #{{ $invoice->id }}</h4>
                     <p class="card-text">

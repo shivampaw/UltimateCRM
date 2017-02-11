@@ -9,7 +9,7 @@
 	<div class="row">
 		@foreach($clients as $client)
 			<div class="col-lg-4 col-sm-6">
-				<div class="card text-xs-center">
+				<div class="card text-center">
 					<div class="card-block">
 						<h4 class="card-title">{{ $client->name }}</h4>
 						<p class="card-text">
