@@ -8,7 +8,7 @@
 	</p>
 	<div class="row">
 		@foreach($admins as $admin)
-			<div class="col-lg-4 col-sm-6">
+			<div class="col-lg-4 col-sm-6 mt-3">
 				<div class="card admin text-center">
 					<div class="card-block">
 						<h4 class="card-title">{{ $admin->name }}</h4>

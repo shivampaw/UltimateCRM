@@ -38,6 +38,9 @@
             <button id="payInvoiceBtn" type="submit" class="btn btn-primary btn-block">Pay Invoice</button>
         </div>
     </form>
+
+    <hr />
+
     <a href="/invoices/{{ $invoice->id }}" class="btn btn-danger"><span class="fa fa-angle-double-left"></span> Back to Invoice</a>
 @endsection
 

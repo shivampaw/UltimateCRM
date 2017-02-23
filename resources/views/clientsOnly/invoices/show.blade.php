@@ -6,6 +6,8 @@
     
     @include("layouts.invoices.show")
 
+	<hr />
+
     <div class="text-center">
         <a  href="/invoices" class="btn btn-info float-md-left"><span class="fa fa-angle-double-left"></span> Back to Invoices</a>
         @if(!$invoice->paid)

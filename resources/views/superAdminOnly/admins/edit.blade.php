@@ -20,6 +20,8 @@
 	</div>
 </form>
 
+<hr />
+
 <p>
 	<a href="/admins" class="btn btn-info"><span class="fa fa-angle-double-left"></span> Back to Admins</a>
 </p>
