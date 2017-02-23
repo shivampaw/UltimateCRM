@@ -23,6 +23,12 @@
 	</div>
 </form>
 
+<hr />
+
+<p>
+    <a href="/clients/{{ $client->id }}/projects" class="btn btn-info"><span class="fa fa-angle-double-left"></span> Back to Client Projects</a>
+</p>
+
 @endsection
 
 @section('footer')

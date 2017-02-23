@@ -2,11 +2,10 @@ $('#recurring_check').click(function() {
   $('.recurring')[this.checked ? "show" : "hide"]();
 });
 
-
-
 var index = 0;
 
-$(document).on('ready', function(){
+$(document).ready(function(){
+  console.log("Adding");
   add();
 });
 

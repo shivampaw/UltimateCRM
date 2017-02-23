@@ -5,7 +5,7 @@
 @section('content')
     
     <div class="row text-center">
-		<div class="col-md-6">
+		<div class="col-md-6 mt-3">
 			<div class="card">
 				<div class="card-block">
 					<h4 class="card-title">Client Details</h4>
@@ -18,7 +18,7 @@
 			</div>
 		</div>
 
-		<div class="col-md-6">
+		<div class="col-md-6 mt-3">
 			<div class="card">
 				<div class="card-block">
 					<h4 class="card-title">Client Address</h4>
@@ -31,7 +31,7 @@
 			</div>
 		</div>
 
-		<div class="col-md-6">
+		<div class="col-md-6 mt-3">
 			<div class="card">
 				<div class="card-block">
 					<h4 class="card-title">Invoices</h4>
@@ -44,7 +44,7 @@
 			</div>
 		</div>
 
-		<div class="col-md-6">
+		<div class="col-md-6 mt-3">
 			<div class="card">
 				<div class="card-block">
 					<h4 class="card-title">Projects</h4>

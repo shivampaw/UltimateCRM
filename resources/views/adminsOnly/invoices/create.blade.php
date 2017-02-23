@@ -43,6 +43,8 @@
         </div>
     </form>
 
+    <hr />
+
     <p>
         <a href="/clients/{{ $client->id }}/invoices" class="btn btn-info"><span class="fa fa-angle-double-left"></span> Back to Client Invoices</a>
     </p>

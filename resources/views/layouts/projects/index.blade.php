@@ -1,6 +1,6 @@
 <div class="row">
     @foreach($projects as $project)
-        <div class="col-lg-4 col-sm-6">
+        <div class="col-lg-4 col-sm-6 mt-3">
             <div class="card client text-center">
                 <div class="card-block">
                     <h5 class="card-title">{{ $project->title }}</h5>

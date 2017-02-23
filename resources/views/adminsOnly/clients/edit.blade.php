@@ -28,6 +28,8 @@
 	</div>
 </form>
 
+<hr />
+
 <p>
 	<a href="/clients/{{ $client->id }}" class="btn btn-info"><span class="fa fa-angle-double-left"></span> Back to Client</a>
 </p>
