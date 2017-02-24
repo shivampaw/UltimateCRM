@@ -5,7 +5,7 @@ Master: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch=
 
 Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch=develop)](https://travis-ci.org/shivampaw/UltimateCRM)
 
-![UltimateCRM](https://i.imgur.com/UMAIxfa.png)
+![UltimateCRM](http://i.imgur.com/gIqzUe2.png)
 
 ### Features
 * The super admin (ID 1) can create and delete multiple admins
