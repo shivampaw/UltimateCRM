@@ -49,6 +49,7 @@ class ClientsController extends Controller
     public function store(StoreUserRequest $request)
     {
         DB::beginTransaction();
+        
         try {
             $user = $request->storeUser();
             $client = new Client($request->all());
