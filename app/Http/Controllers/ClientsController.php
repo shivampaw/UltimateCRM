@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Requests;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreUserRequest;
 
@@ -47,11 +48,18 @@ class ClientsController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $user = $request->storeUser();
+        DB::beginTransaction();
+        try {
+            $user = $request->storeUser();
+            $client = new Client($request->all());
+            $user->client()->save($client);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            flash('An error occurred! Check your database and email settings.', 'danger');
+            return redirect('/clients/create');
+        }
 
-        $client = new Client($request->all());
-        $user->client()->save($client);
-
+        DB::commit();
         flash('Client Created!');
         return redirect('/clients');
     }
