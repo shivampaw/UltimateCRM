@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
 use Illuminate\Console\Command;
 
 class RunInstall extends Command
@@ -38,14 +37,10 @@ class RunInstall extends Command
      */
     public function handle()
     {
-        if (User::find(1)) {
-            $this->error('The app seems to already be installed!');
-            return false;
+
+        if ( ! $this->confirm('Running this command will install this application and potentially overwrite existing data. Please ensure you have setup your .env file with valid database and email settings.') ) {
+            return;
         }
-
-        $this->info('Running this command will install this application. Please ensure you have setup your .env file with valid database and email settings.');
-
-
 
         $this->call('key:generate');
         $this->call('migrate');
