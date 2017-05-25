@@ -59,7 +59,8 @@ class StoreProjectRequest extends FormRequest
         $this->client = $this->route('client');
         $project = new Project();
         $project->title = $this->title;
-        $project->pdf_path = $this->storeUploadedFile();
+
+        $project->pdf_path = $this->pdf->store('public/project_files');
 
         $this->client->addProject($project);
         Mail::send(new NewProject($this->client, $project));
@@ -67,18 +68,4 @@ class StoreProjectRequest extends FormRequest
         return $project;
     }
 
-    /**
-     * Stores the uploaded PDF to the /project_files
-     * directory.
-     *
-     * @return string
-     */
-    protected function storeUploadedFile()
-    {
-        $fileUrlPath= '/project_files/'.$this->client->id.'/';
-        $fileUrlName = time().'.pdf';
-        $this->pdf->move(public_path().$fileUrlPath, $fileUrlName);
-
-        return $fileUrlPath.$fileUrlName;
-    }
 }

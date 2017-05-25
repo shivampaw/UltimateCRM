@@ -61,6 +61,7 @@ class ClientsController extends Controller
         }
 
         DB::commit();
+        
         flash('Client Created!');
         return redirect('/clients');
     }

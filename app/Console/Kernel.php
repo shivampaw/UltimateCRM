@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\CreateSuperAdmin::class,
         Commands\ManageRecurringInvoices::class,
+        Commands\RunInstall::class,
     ];
 
     /**

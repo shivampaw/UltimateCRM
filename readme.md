@@ -37,11 +37,7 @@ Now run `composer install` and make sure you have composer installed on your ser
 
 Then setup your database and open the `.env.example` file. Rename this file to `.env` and enter details for your site, database, stripe and email integration.
 
-Run `php artisan key:generate` from the root project folder.
-
-Run `php artisan migrate` from the root project folder. This will create the database tables for you.
-
-Now you can setup your Super Admin account by running `php artisan super_admin:create` which will walk you through creating the account.
+Run `php artisan app:install` which will install the app for you by creating the migrations, sorting out file permissions and walking you through creating the super admin account.
 
 You also need to add a crontab with the following details: `* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1` Edit the /path/to/artisan to your actual artisan path. Artisan is the file in the root directory of the project. You should be able to do this by logging into your server via SSH and running `crontab -e`. Then just paste the above line correctly. **This step is optional and only required if you want to use recurring invoices**.
 

@@ -8,8 +8,8 @@
 	@endif
 </p>
 <p>Below you can see the PDF containing the project details.</p>
-<object data="{{ url('/') }}{{ $project->pdf_path }}" style="width: 100%; height: 600px;" type="application/pdf">
-    <embed src="{{ url('/') }}{{ $project->pdf_path }}" style="width: 100%; height: 600px;" type="application/pdf" />
+<object data="{{ Storage::url($project->pdf_path) }}" style="width: 100%; height: 600px;" type="application/pdf">
+    <embed src="{{ Storage::url($project->pdf_path) }}" style="width: 100%; height: 600px;" type="application/pdf" />
 </object>
 
 <hr />

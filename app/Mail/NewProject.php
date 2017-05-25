@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NewProject extends Mailable
@@ -36,7 +37,7 @@ class NewProject extends Mailable
                     ->with('client', $this->client)
                     ->with('project', $this->project)
                     ->to($this->client->email, $this->client->name)
-                    ->attach(public_path().$this->project->pdf_path)
+                    ->attachData(Storage::get($this->project->pdf_path), 'project.pdf')
                     ->subject('['.$this->client->name.'] New Project Created');
     }
 }

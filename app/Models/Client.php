@@ -47,7 +47,7 @@ class Client extends Model
             $client->invoices()->delete();
             $client->projects()->delete();
             $client->recurringInvoices()->delete();
-            User::find($client->user_id)->delete();
+            $client->user->delete();
         });
     }
 }
