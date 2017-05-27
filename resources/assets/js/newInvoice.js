@@ -37,10 +37,14 @@ new Vue({
         axios.post(e.target.action, this.$data)
             .then(success => window.location.href = "../invoices")
             .catch(failure => {
-              var errorsArray = failure.response.data;
-              Object.keys(errorsArray).forEach(error => {
-                this.errors.push(errorsArray[error][0]);
-              });
+              if (failure.response.status >= 500) {
+                this.errors.push("Something weird went wrong...Please try again later or contact the admin.");
+              } else {
+                var errorsArray = failure.response.data;
+                Object.keys(errorsArray).forEach(error => {
+                  this.errors.push(errorsArray[error][0]);
+                });
+              }
             });
       }
     },

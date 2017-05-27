@@ -16,7 +16,7 @@ class ManageRecurringInvoices extends Command
      *
      * @var string
      */
-    protected $signature = 'manage_invoices';
+    protected $signature = 'invocies:recurring';
 
     /**
      * The console command description.

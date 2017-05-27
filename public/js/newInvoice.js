@@ -117,10 +117,14 @@ new Vue({
         axios.post(e.target.action, this.$data).then(function (success) {
           return window.location.href = "../invoices";
         }).catch(function (failure) {
-          var errorsArray = failure.response.data;
-          Object.keys(errorsArray).forEach(function (error) {
-            _this.errors.push(errorsArray[error][0]);
-          });
+          if (failure.response.status >= 500) {
+            _this.errors.push("Something weird went wrong...Please try again later or contact the admin.");
+          } else {
+            var errorsArray = failure.response.data;
+            Object.keys(errorsArray).forEach(function (error) {
+              _this.errors.push(errorsArray[error][0]);
+            });
+          }
         });
       }
     },
