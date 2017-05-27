@@ -30,7 +30,6 @@ class InvoicesController extends Controller
         $request->storeInvoice();
 
         flash('Invoice Created!');
-        return redirect('/clients/'.$client->id);
     }
 
     public function show(Client $client, Invoice $invoice)

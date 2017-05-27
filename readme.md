@@ -26,6 +26,8 @@ This CRM runs with Laravel 5.4 for which the requirements are as follows:
 * Mbstring PHP Extension
 * Tokenizer PHP Extension
 * XML PHP Extension
+* Composer Installed
+* NPM & Node Installed
 
 ### Installation
 To install run the following commands in a working directory:
@@ -34,6 +36,7 @@ To install run the following commands in a working directory:
 You will then need to change your web server root to the public directory. Contact your host for help if you need it.
 
 Now run `composer install` and make sure you have composer installed on your server!
+Also run `npm run production` to generate the asset files in production mode. You will need NPM and Node installed!
 
 Then setup your database and open the `.env.example` file. Rename this file to `.env` and enter details for your site, database, stripe and email integration.
 

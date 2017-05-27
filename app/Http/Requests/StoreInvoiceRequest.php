@@ -34,8 +34,8 @@ class StoreInvoiceRequest extends FormRequest
     {
         return [
             'due_date'           => 'date|required',
-            'recurring_date'     => 'required_with:recurring',
-            'recurring_due_date' => 'required_with:recurring',
+            'recurring_date'     => 'required_if:recurringChecked,true',
+            'recurring_due_date' => 'required_if:recurringChecked,true',
             'project_id'         => [
                 'nullable',
                 Rule::exists('projects', 'id')->where(function ($query) {
@@ -54,10 +54,10 @@ class StoreInvoiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'project_id.exists'                => 'The Project ID you entered does not exist for this user.',
-            'due_date.required'                => 'You must enter a Due Date',
-            'recurring_date.required_with'     => 'You need to enter a Recurring Date if you want this invoice to recur.',
-            'recurring_due_date.required_with' => 'You need to enter a Recurring Due Date if you want this invoice to recur.',
+            'project_id.exists'                 => 'The Project ID you entered does not exist for this user.',
+            'due_date.required'                 => 'You must enter a Due Date.',
+            'recurring_date.required_if'        => 'You need to enter a Recurring Date if you want this invoice to recur.',
+            'recurring_due_date.required_if'    => 'You need to enter a Recurring Due Date if you want this invoice to recur.',
         ];
     }
 
@@ -69,22 +69,22 @@ class StoreInvoiceRequest extends FormRequest
     public function storeInvoice()
     {
         $invoice = new Invoice();
-        $invoice->item_details = json_encode($this->item_details);
+        $invoice->item_details = json_encode($this->invoiceItems);
         $invoice->due_date = $this->due_date;
         $invoice->paid = false;
         $invoice->notes = $this->notes;
         $invoice->project_id = ($this->project_id) ?: null;
         $invoice->total = 0;
-        foreach ($this->item_details as $item) {
+        foreach ($this->invoiceItems as $item) {
             $invoice->total += $item['quantity'] * $item['price'];
         }
         $invoice->total = $invoice->total * 100;
 
         $this->client->addInvoice($invoice);
 
-        if ($this->has('recurring')):
+        if ($this->recurringChecked) {
             $this->recurInvoice($invoice->id, $this->recurring_date, $this->recurring_due_date);
-        endif;
+        }
 
         Mail::send(new NewInvoice($this->client, $invoice));
 
