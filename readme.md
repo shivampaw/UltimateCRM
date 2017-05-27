@@ -12,7 +12,7 @@ Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch
 * Admins can create and manage clients
 * Admins can create invoices and projects for clients
 * Clients can view and pay invoice through Stripe integration
-* Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid.
+* Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid or becomes overdue.
 
 **If you have any feature requests then just [open an issue](https://github.com/shivampaw/UltimateCRM/issues/new) and let us know!**
 
@@ -42,7 +42,7 @@ Then setup your database and open the `.env.example` file. Rename this file to `
 
 Run `php artisan app:install` which will install the app for you by creating the migrations, sorting out file permissions and walking you through creating the super admin account.
 
-You also need to add a crontab with the following details: `* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1` Edit the /path/to/artisan to your actual artisan path. Artisan is the file in the root directory of the project. You should be able to do this by logging into your server via SSH and running `crontab -e`. Then just paste the above line correctly. **This step is optional and only required if you want to use recurring invoices**.
+You also need to add a crontab with the following details: `* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1` Edit the /path/to/artisan to your actual artisan path. Artisan is the file in the root directory of the project. You should be able to do this by logging into your server via SSH and running `crontab -e`. Then just paste the above line correctly.
 
 You should then be able to access UltimateCRM easily!
 
