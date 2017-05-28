@@ -51,7 +51,7 @@ class ClientsOnlyController extends Controller
                 'amount'        => $invoice->total,
                 'description'   => config('app.name').' - Invoice #'.$invoice->id,
                 'source'        => $request->stripeToken,
-                'currency'      => 'gbp',
+                'currency'      => strtolower(config('crm.currency')),
                 'receipt_email' => $client->email,
             ]);
 

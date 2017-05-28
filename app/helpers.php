@@ -19,5 +19,5 @@ function formatInvoiceTotal($number)
 	$numberFormatter = new \NumberFormatter('en_GB', \NumberFormatter::CURRENCY);
 	$moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
 
-	return $moneyFormatter->format($money); // outputs $1.00
+	return $moneyFormatter->format($money);
 }
