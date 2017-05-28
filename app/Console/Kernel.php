@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('invoices:recurring')->hourly();
-        $schedule->command('invoices:overdue')->hourly();
+        $schedule->command('invoices:overdue')->daily();
     }
     /**
      * Register the Closure based commands for the application.

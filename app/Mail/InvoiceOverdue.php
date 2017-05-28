@@ -29,9 +29,11 @@ class InvoiceOverdue extends Mailable
      */
     public function build()
     {
+        $diffInDays = $this->invoice->due_date->diffInDays();
         return $this->view('emails.invoices.overdue')
                     ->with('client', $this->client)
                     ->with('invoice', $this->invoice)
+                    ->with('overdueDays', $diffInDays)
                     ->subject('['.$this->client->name.'] Invoice #'.$this->invoice->id.' Is Now Overdue')
                     ->to($this->client->email, $this->client->name);
     }
