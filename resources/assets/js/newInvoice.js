@@ -3,11 +3,11 @@ new Vue({
 
   data: {
     invoiceItems: [
-      {
-        description: null,
-        quantity: null,
-        price: null,
-      }
+    {
+      description: null,
+      quantity: null,
+      price: null,
+    }
     ],
     due_date: null,
     project_id: null,
@@ -35,17 +35,17 @@ new Vue({
         return;
       } else {
         axios.post(e.target.action, this.$data)
-            .then(success => window.location.href = "../invoices")
-            .catch(failure => {
-              if (failure.response.status >= 500) {
-                this.errors.push("Something weird went wrong...Please try again later or contact the admin.");
-              } else {
-                var errorsArray = failure.response.data;
-                Object.keys(errorsArray).forEach(error => {
-                  this.errors.push(errorsArray[error][0]);
-                });
-              }
+        .then(success => window.location.href = "../invoices")
+        .catch(failure => {
+          if (failure.response.status >= 500) {
+            this.errors.push("Something weird went wrong...Please try again later or contact the admin.");
+          } else {
+            var errorsArray = failure.response.data;
+            Object.keys(errorsArray).forEach(error => {
+              this.errors.push(errorsArray[error][0]);
             });
+          }
+        });
       }
     },
 
@@ -76,5 +76,17 @@ new Vue({
       }
     },
   },
+
+  created() {
+    let name = "project_id";
+    let url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    this.project_id = decodeURIComponent(results[2].replace(/\+/g, " "));
+    console.log(this.project_id);
+  }
 
 });

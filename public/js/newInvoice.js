@@ -153,8 +153,19 @@ new Vue({
         this.errors.push("You cannot remove your only item");
       }
     }
-  }
+  },
 
+  created: function created() {
+    var name = "project_id";
+    var url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    this.project_id = decodeURIComponent(results[2].replace(/\+/g, " "));
+    console.log(this.project_id);
+  }
 });
 
 /***/ })

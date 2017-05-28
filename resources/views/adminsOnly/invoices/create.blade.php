@@ -33,7 +33,7 @@
                         <input type="number" class="form-control" placeholder="Quantity" v-model="invoiceItem.quantity" required>
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" placeholder="Price" v-model="invoiceItem.price" required>
+                        <input type="number" class="form-control" placeholder="Price" step="0.01" v-model="invoiceItem.price" required>
                     </div>
                 </div>
                 <a class="text-danger" @click="removeInvoiceItem(i)">Remove Item</a>

@@ -2,7 +2,6 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-
 (function() {
  
   var laravel = {

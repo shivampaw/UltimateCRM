@@ -1,5 +1,10 @@
     <div id="invoice">
         <div class="row">
+            @if($invoice->due_date->isPast())
+                <div class="col-12 text-center text-danger">
+                    <h3>Payment Overdue</h3>
+                </div>
+            @endif
             <div class="col-sm-6 text-center text-sm-left">
                 <strong>Billed To</strong><br />
                 {{ $invoice->client->name }}<br />
