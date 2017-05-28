@@ -13,7 +13,8 @@
         "stripe/stripe-php": "3.*",
         "laravel/tinker": "^1.0",
         "laravel/browser-kit-testing": "^1.0",
-        "laravel/dusk": "^1.0"
+        "laravel/dusk": "^1.0",
+        "moneyphp/money": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

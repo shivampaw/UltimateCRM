@@ -7,7 +7,9 @@ use App\Models\Invoice;
 use App\Mail\NewInvoice;
 use Illuminate\Validation\Rule;
 use App\Models\RecurringInvoice;
+use Money\Currencies\ISOCurrencies;
 use Illuminate\Support\Facades\Mail;
+use Money\Parser\DecimalMoneyParser;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreInvoiceRequest extends FormRequest
@@ -78,8 +80,12 @@ class StoreInvoiceRequest extends FormRequest
         foreach ($this->invoiceItems as $item) {
             $invoice->total += $item['quantity'] * $item['price'];
         }
-        $invoice->total = $invoice->total * 100;
+        $currencies = new ISOCurrencies();
+        $moneyParser = new DecimalMoneyParser($currencies);
+        $money = $moneyParser->parse((string) $invoice->total, config('crm.currency'));
 
+        $invoice->total = $money->getAmount();
+        
         $this->client->addInvoice($invoice);
 
         if ($this->recurringChecked) {
