@@ -26,6 +26,7 @@ This CRM runs with Laravel 5.4 for which the requirements are as follows:
 * Mbstring PHP Extension
 * Tokenizer PHP Extension
 * XML PHP Extension
+* PHP INTL Extension
 * Composer Installed
 * NPM & Node Installed
 
