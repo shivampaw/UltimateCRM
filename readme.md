@@ -51,6 +51,7 @@ You should then be able to access UltimateCRM easily!
 To upgrade run the following commands:
 `git pull`
 `composer install`
+`npm run production`
 `php artisan migrate`
 This should have you already to go in most versions. If additional steps are required they will be specified in the version release.
 
