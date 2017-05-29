@@ -41,7 +41,7 @@ class ManageOverdueInvoices extends Command
      */
     public function handle()
     {
-        $overdueInvoices = Invoice::whereDate('due_date', '<', Carbon::today())
+        $overdueInvoices = Invoice::whereDate('due_date', '<', Carbon::today()->toDateString())
                                     ->where('paid', false)
                                     ->where('overdue_notification_sent', false)
                                     ->get();
