@@ -76,6 +76,7 @@ class StoreInvoiceRequest extends FormRequest
         $invoice->paid = false;
         $invoice->notes = $this->notes;
         $invoice->project_id = ($this->project_id) ?: null;
+        $invoice->overdue_notification_sent = false;
         $invoice->total = 0;
         foreach ($this->invoiceItems as $item) {
             $invoice->total += $item['quantity'] * $item['price'];
