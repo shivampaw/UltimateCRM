@@ -9,6 +9,7 @@ before_script:
   - composer install
   - npm run build
   - cp .env.example .env
-  - php artisan migrate
+  - php artisan key:generate -f
+  - php artisan migrate -f
 
 script: vendor/bin/phpunit --configuration phpunit.xml
