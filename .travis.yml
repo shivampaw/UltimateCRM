@@ -10,6 +10,5 @@ before_script:
   - npm run build
   - cp .env.example .env
   - php artisan key:generate --force
-  - php artisan migrate --force
 
 script: vendor/bin/phpunit --configuration phpunit.xml
