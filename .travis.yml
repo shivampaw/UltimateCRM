@@ -7,7 +7,8 @@ php:
 
 before_script: 
   - composer install
+  - npm run build
   - cp .env.example .env
-  - php artisan key:generate
+  - php artisan app:install
 
 script: vendor/bin/phpunit --configuration phpunit.xml

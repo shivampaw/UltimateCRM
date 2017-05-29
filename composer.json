@@ -14,7 +14,8 @@
         "laravel/tinker": "^1.0",
         "laravel/browser-kit-testing": "^1.0",
         "laravel/dusk": "^1.0",
-        "moneyphp/money": "^3.0"
+        "moneyphp/money": "^3.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -38,7 +39,7 @@
     "autoload-dev": {
         "classmap": [
             "tests/TestCase.php",
-            "tests/BrowserKitTest.php"
+            "tests/Traits"
         ]
     },
     "scripts": {
