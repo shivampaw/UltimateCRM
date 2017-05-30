@@ -53,10 +53,6 @@ class AdminTest extends DuskTestCase
             ->assertSee($admin->name)
             ->assertSee($admin->email)
             ->logout();
-            
-            Mail::assertSent(NewUser::class, function ($mail) use ($admin) {
-                return $mail->hasTo($admin->email);
-            });
         });
     }
 
