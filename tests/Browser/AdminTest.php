@@ -101,8 +101,7 @@ class AdminTest extends DuskTestCase
                     ->type('#notes', $this->faker->paragraphs(1))
                     ->press('Create Invoice');
 
-            $browser->visit('/clients'.$this->client->id.'/invoices')
-                    ->dump()
+            $browser->visit('/clients/'.$this->client->id.'/invoices')
                     ->assertSee('Invoice Created!');
         });
     }
