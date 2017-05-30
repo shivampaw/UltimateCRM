@@ -48,9 +48,7 @@ class StoreUserRequest extends FormRequest
             'is_admin' => $admin
         ]);
 
-        if (config('app.env') !== 'testing') {
-            Mail::send(new NewUser($user, $password));
-        }
+        Mail::send(new NewUser($user, $password));
 
         return $user;
     }
