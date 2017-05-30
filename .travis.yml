@@ -10,6 +10,8 @@ before_script:
     - sh -e /etc/init.d/xvfb start
     - ./vendor/laravel/dusk/bin/chromedriver-linux &
     - cp .env.testing .env
+    - composer install
+    - npm run build
     - php artisan serve &
 
-script: vendor/bin/phpunit --configuration phpunit.xml
+script: php artisan dusk
