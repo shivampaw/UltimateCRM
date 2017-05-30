@@ -12,6 +12,7 @@ before_script:
     - cp .env.testing .env
     - composer install
     - npm run build
+    - touch database/testing.sqlite
     - php artisan serve &
 
 script: php artisan dusk
