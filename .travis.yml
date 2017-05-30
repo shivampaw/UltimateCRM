@@ -17,7 +17,6 @@ before_script:
     - ./vendor/laravel/dusk/bin/chromedriver-linux &
     - cp .env.testing .env
     - composer install
-    - npm run production
     - touch database/testing.sqlite
     - php artisan serve &
 
