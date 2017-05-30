@@ -12,7 +12,4 @@ before_script:
     - cp .env.testing .env
     - php artisan serve &
 
-script:
-    - php artisan dusk
-
-# script: vendor/bin/phpunit --configuration phpunit.xml
+script: vendor/bin/phpunit --configuration phpunit.xml
