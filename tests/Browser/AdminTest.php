@@ -19,13 +19,10 @@ class AdminTest extends DuskTestCase
     {
         parent::setUp();
         $this->faker = Factory::create();
-
         $this->admin = factory(User::class)->create([
                 'is_admin'  => true,
                 'password'  => bcrypt('secret'),
             ]);
-
-        $this->client = factory(Client::class)->create();
     }
 
     public function test_admin_login()
@@ -84,24 +81,6 @@ class AdminTest extends DuskTestCase
                 ->press('Add Client')
                 ->assertPathIs('/clients')
                 ->assertSee($client['name']);
-        });
-    }
-
-    public function test_admin_can_create_client_invoice()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs($this->admin)
-                    ->visit('/clients/'.$this->client->id.'/invoices/create')
-                    ->pause(2000)
-                    ->keys('input[placeholder="Due Date"]', '21042099')
-                    ->type('input[placeholder="Description"]', $this->faker->sentence(3))
-                    ->type('input[placeholder="Quantity"]', $this->faker->randomDigit)
-                    ->type('input[placeholder="Price"]', $this->faker->randomFloat(2, 5, 500))
-                    ->type('#notes', $this->faker->paragraphs(1))
-                    ->press('Create Invoice')
-                    ->visit('/clients/'.$this->client->id.'/invoices')
-                    ->dump()
-                    ->assertSee('Invoice Created!');
         });
     }
 }
