@@ -67,5 +67,4 @@ class StoreProjectRequest extends FormRequest
 
         return $project;
     }
-
 }

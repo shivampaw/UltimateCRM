@@ -15,7 +15,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AdminTest extends DuskTestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -70,9 +69,9 @@ class AdminTest extends DuskTestCase
             ]);
 
             $client = [
-                'name'  => $this->faker->name,
-                'email' => $this->faker->email,
-                'number' => $this->faker->phoneNumber,
+                'name'    => $this->faker->name,
+                'email'   => $this->faker->email,
+                'number'  => $this->faker->phoneNumber,
                 'address' => $this->faker->address,
             ];
 
@@ -99,9 +98,9 @@ class AdminTest extends DuskTestCase
                     ->type('input[placeholder="Quantity"]', $this->faker->randomDigit)
                     ->type('input[placeholder="Price"]', $this->faker->randomFloat(2, 5, 500))
                     ->type('#notes', $this->faker->paragraphs(1))
-                    ->press('Create Invoice');
-
-            $browser->visit('/clients/'.$this->client->id.'/invoices')
+                    ->press('Create Invoice')
+                    ->visit('/clients/'.$this->client->id.'/invoices')
+                    ->dump()
                     ->assertSee('Invoice Created!');
         });
     }

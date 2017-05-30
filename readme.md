@@ -69,7 +69,7 @@ We will add common issues here for everyone to see easily!
 
 ## Contributing
 If you would like to contribute to this project then please submit all pull requests to the `develop` branch.
-All builds are checked with Travis CI.
+All builds are checked with Travis CI and the tests are run with Laravel Dusk.
 Please ensure your coding standard matches PSR-2. You can do so by running the following commands:
 
 #### Install PHP-CS-Fixer

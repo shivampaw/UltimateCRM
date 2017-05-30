@@ -14,10 +14,10 @@ function flash($message, $level = 'success')
 function formatInvoiceTotal($number)
 {
     $money = new Money($number, new Currency(config('crm.currency')));
-	$currencies = new ISOCurrencies();
+    $currencies = new ISOCurrencies();
 
-	$numberFormatter = new \NumberFormatter('en_GB', \NumberFormatter::CURRENCY);
-	$moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+    $numberFormatter = new \NumberFormatter('en_GB', \NumberFormatter::CURRENCY);
+    $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
 
-	return $moneyFormatter->format($money);
+    return $moneyFormatter->format($money);
 }

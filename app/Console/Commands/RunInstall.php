@@ -37,8 +37,7 @@ class RunInstall extends Command
      */
     public function handle()
     {
-
-        if ( ! $this->confirm('Running this command will install this application and potentially overwrite existing data. Please ensure you have setup your .env file with valid database and email settings.') ) {
+        if (! $this->confirm('Running this command will install this application and potentially overwrite existing data. Please ensure you have setup your .env file with valid database and email settings.')) {
             return;
         }
 

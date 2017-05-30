@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Traits;
+
 use DatabaseSeeder;
 
 trait InitialiseDatabase
@@ -21,7 +22,7 @@ trait InitialiseDatabase
             touch($db->getDatabaseName());
         }
 
-        copy($db->getDatabaseName(), $db->getDatabaseName() . static::$backupExtension);
+        copy($db->getDatabaseName(), $db->getDatabaseName().static::$backupExtension);
         unlink($db->getDatabaseName());
         touch($db->getDatabaseName());
 
@@ -40,8 +41,8 @@ trait InitialiseDatabase
             $this->refreshApplication();
         }
         $db = $this->app->make('db')->connection();
-        copy($db->getDatabaseName() . static::$backupExtension,
+        copy($db->getDatabaseName().static::$backupExtension,
             $db->getDatabaseName());
-        unlink($db->getDatabaseName() . static::$backupExtension);
+        unlink($db->getDatabaseName().static::$backupExtension);
     }
 }

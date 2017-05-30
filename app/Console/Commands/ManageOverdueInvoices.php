@@ -46,7 +46,7 @@ class ManageOverdueInvoices extends Command
                                     ->where('overdue_notification_sent', false)
                                     ->get();
 
-        foreach($overdueInvoices as $invoice) {
+        foreach ($overdueInvoices as $invoice) {
             Mail::send(new InvoiceOverdue($invoice->client, $invoice));
             $invoice->overdue_notification_sent = true;
             $invoice->save();

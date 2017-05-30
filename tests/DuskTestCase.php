@@ -17,6 +17,7 @@ abstract class DuskTestCase extends BaseTestCase
      * Prepare for Dusk test execution.
      *
      * @beforeClass
+     *
      * @return void
      */
     public static function prepare()
@@ -39,6 +40,6 @@ abstract class DuskTestCase extends BaseTestCase
     public function setUpTraits()
     {
         $this->backupDatabase();
-        parent::setUpTraits(); 
+        parent::setUpTraits();
     }
 }

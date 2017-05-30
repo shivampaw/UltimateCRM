@@ -26,7 +26,7 @@ class AddOverdueNotificationSentColumnToInvoices extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColumn('overdue_notification_sent'); 
+            $table->dropColumn('overdue_notification_sent');
         });
     }
 }
