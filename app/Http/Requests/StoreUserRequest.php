@@ -28,8 +28,8 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name'   => 'required',
-            'email'  => 'required|email|unique:clients|unique:users',
-            'number' => 'nullable|numeric'
+            'number' => 'nullable',
+            'email'  => 'required|email|unique:users|unique:clients',
         ];
     }
 

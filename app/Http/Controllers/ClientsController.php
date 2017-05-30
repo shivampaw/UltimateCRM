@@ -56,7 +56,7 @@ class ClientsController extends Controller
             $user->client()->save($client);
         } catch (\Exception $e) {
             DB::rollBack();
-            flash('An error occurred! Check your database and email settings.', 'danger');
+            flash('An error occurred! Check your database and email settings. '.$e->getMessage(), 'danger');
             return redirect('/clients/create');
         }
 

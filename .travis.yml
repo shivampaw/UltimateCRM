@@ -5,10 +5,14 @@ php:
     - '7.1'
     - nightly
 
-before_script: 
-  - composer install
-  - npm run build
-  - cp .env.example .env
-  - php artisan key:generate --force
+before_script:
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
+    - ./vendor/laravel/dusk/bin/chromedriver-linux &
+    - cp .env.testing .env
+    - php artisan serve &
 
-script: vendor/bin/phpunit --configuration phpunit.xml
+script:
+    - php artisan dusk
+
+# script: vendor/bin/phpunit --configuration phpunit.xml

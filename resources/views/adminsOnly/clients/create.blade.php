@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label for="number" class="sr-only">Contact Number</label>
-            <input type="number" class="form-control" name="number" id="number" placeholder="Contact Number" value="{{ old('number') }}">
+            <input type="text" class="form-control" name="number" id="number" placeholder="Contact Number" value="{{ old('number') }}">
         </div>
         <div class="form-group">
             <label for="address" class="sr-only">Address</label>

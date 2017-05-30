@@ -9,11 +9,12 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "doctrine/dbal": "^2.5",
+        "laravel/dusk": "^1.1",
         "laravel/framework": "5.4.*",
-        "stripe/stripe-php": "3.*",
         "laravel/tinker": "^1.0",
         "moneyphp/money": "^3.0",
-        "doctrine/dbal": "^2.5"
+        "stripe/stripe-php": "3.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

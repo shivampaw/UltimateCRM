@@ -17,7 +17,7 @@ use App\Models\Client;
 $factory->define(User::class, function (Faker\Generator $faker) {
     return [
         'name'           => $faker->name,
-        'email'          => $faker->safeEmail,
+        'email'          => $faker->unique()->safeEmail,
         'password'       => bcrypt(str_random(10)),
         'is_admin'		 => false,
         'remember_token' => str_random(10),
