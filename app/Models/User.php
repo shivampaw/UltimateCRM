@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'is_admin',
+        'name', 'email', 'password', 'role', 'is_admin', 'id',
     ];
 
     /**
@@ -26,7 +26,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+
     /**
      * Returns true if the user is an admin and
      * false if not.

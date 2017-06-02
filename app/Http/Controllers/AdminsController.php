@@ -72,9 +72,11 @@ class AdminsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param User                     $admin
      *
      * @return \Illuminate\Http\Response
+     * @internal param int $id
+     *
      */
     public function update(Request $request, User $admin)
     {
@@ -93,6 +95,10 @@ class AdminsController extends Controller
      */
     public function destroy($id)
     {
+        if ($id == 1) {
+            dd("Nobody, and I mean nobody, can delete the super admin.");
+        }
+
         User::where('is_admin', 1)->findOrFail($id)->delete();
         flash('Admin Deleted!');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\InvoicePaid;
+use App\Mail\ProjectAccepted;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,6 +99,8 @@ class ClientsOnlyController extends Controller
         $project->accepted = true;
         $project->accepted_at = Carbon::now();
         $project->save();
+
+        Mail::send(new ProjectAccepted($project->client, $project));
 
         flash('Project Accepted');
 

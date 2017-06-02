@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 
 class CreateSuperAdmin extends Command
 {
+
     /**
      * The name and signature of the console command.
      *
@@ -40,6 +41,7 @@ class CreateSuperAdmin extends Command
     {
         if (User::find(1)) {
             $this->error('The Super Admin (user with ID 1) already exists!');
+
             return false;
         }
 
@@ -53,7 +55,8 @@ class CreateSuperAdmin extends Command
             'email'    => $email,
             'name'     => $name,
             'password' => bcrypt($password),
-            'is_admin' => true
+            'is_admin' => true,
+            'id'       => 1,
         ]);
     }
 }
