@@ -24,7 +24,7 @@ class Project extends Model
     {
         parent::boot();
         static::deleting(function ($project) {
-            $project->invoices()->each->delete();
+            $project->invoices->each->delete();
             Storage::delete($project->pdf_path);
         });
     }
