@@ -44,7 +44,7 @@ class Client extends Model
         parent::boot();
         static::deleting(function ($client) {
             $client->invoices()->delete();
-            $client->projects()->each->delete();
+            $client->projects->each->delete();
             $client->recurringInvoices()->delete();
             $client->user->delete();
         });
