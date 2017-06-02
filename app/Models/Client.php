@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Invoice;
-use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+
     protected $fillable = ['name', 'email', 'number', 'address', 'stripe_customer_id'];
 
     public function invoices()
@@ -39,13 +38,13 @@ class Client extends Model
     {
         return $this->projects()->save($project);
     }
-    
+
     protected static function boot()
     {
         parent::boot();
         static::deleting(function ($client) {
             $client->invoices()->delete();
-            $client->projects()->delete();
+            $client->projects()->each->delete();
             $client->recurringInvoices()->delete();
             $client->user->delete();
         });

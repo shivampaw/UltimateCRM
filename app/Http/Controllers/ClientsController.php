@@ -23,7 +23,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Client::paginate(9);
+        $clients = Client::with(['invoices', 'projects'])->paginate(9);
 
         return view('adminsOnly.clients.index', compact('clients'));
     }
@@ -41,7 +41,7 @@ class ClientsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param StoreUserRequest|Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -76,6 +76,8 @@ class ClientsController extends Controller
      */
     public function show(Client $client)
     {
+        $client->load(['invoices', 'projects']);
+
         return view('adminsOnly.clients.show', compact('client'));
     }
 

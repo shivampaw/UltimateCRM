@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
+
     protected $dates = ['created_at', 'updated_at', 'accepted_at'];
 
     public function client()
@@ -19,12 +20,11 @@ class Project extends Model
         return $this->hasMany(Invoice::class);
     }
 
-
     protected static function boot()
     {
         parent::boot();
         static::deleting(function ($project) {
-            $project->invoices()->delete();
+            $project->invoices()->each->delete();
             Storage::delete($project->pdf_path);
         });
     }
