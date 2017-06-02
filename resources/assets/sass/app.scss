@@ -1,9 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans|Lato:400|Lato:700);
-
-
 // Custom Variables
 @import "variables";
-
 // Need to import bootstrap here
 @import "node_modules/bootstrap/scss/bootstrap";
 
@@ -11,31 +8,62 @@
 /*--------------------------------------------------------------
 # Typography
 --------------------------------------------------------------*/
-body{
+body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   color: black;
+  word-break: break-all;
   line-height: 1.5 !important;
 }
 
-h1, .h1 { font-size: 32px; } 
-h2, .h2 { font-size: 26px; } 
-h3, .h3 { font-size: 22px; } 
-h4, .h4 { font-size: 20px; } 
-h5, .h5 { font-size: 18px; } 
-h6, .h6 { font-size: 16px; } 
-
-@media screen and (max-width: 767px){ 
-    h1, .h1 { font-size: 30px; } 
-    h2, .h2 { font-size: 24px; } 
-    h3, .h3 { font-size: 20px; } 
-    h4, .h4 { font-size: 18px; } 
-    h5, .h5 { font-size: 17px; } 
-    h6, .h6 { font-size: 16px; } 
+h1, .h1 {
+  font-size: 32px;
 }
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+
+h2, .h2 {
+  font-size: 26px;
+}
+
+h3, .h3 {
+  font-size: 22px;
+}
+
+h4, .h4 {
+  font-size: 20px;
+}
+
+h5, .h5 {
+  font-size: 18px;
+}
+
+h6, .h6 {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 767px) {
+  h1, .h1 {
+    font-size: 30px;
+  }
+  h2, .h2 {
+    font-size: 24px;
+  }
+  h3, .h3 {
+    font-size: 20px;
+  }
+  h4, .h4 {
+    font-size: 18px;
+  }
+  h5, .h5 {
+    font-size: 17px;
+  }
+  h6, .h6 {
+    font-size: 16px;
+  }
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
   font-family: 'Lato', sans-serif;
-  line-height : 1.4 !important;
+  line-height: 1.4 !important;
 }
 
 input[type="date"]:before {
@@ -50,37 +78,36 @@ input[type="date"]:valid:before {
 }
 
 .fa-btn {
-    margin-right: 6px;
+  margin-right: 6px;
 }
 
-nav.navbar.navbar-light.bg-faded.navbar-static-top{
-	margin-bottom: 20px;
+nav.navbar.navbar-light.bg-faded.navbar-static-top {
+  margin-bottom: 20px;
 }
 
-.invoice_item input{
+.invoice_item input {
   margin: 5px 0;
 }
 
-.dropdown-menu{
- right: 0;
- left: auto;
+.dropdown-menu {
+  right: 0;
+  left: auto;
 }
 
 @media (min-width: 544px) {
-    .card-columns {
-        -webkit-column-count: 1;
-        -moz-column-count: 1;
-        column-count: 1;
-    }
+  .card-columns {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+  }
 }
 
-
 @media (min-width: 768px) {
-    .card-columns {
-        -webkit-column-count: 2;
-        -moz-column-count: 2;
-        column-count: 2;
-    }
+  .card-columns {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
 }
 
 @media (min-width: 992px) {
@@ -91,26 +118,28 @@ nav.navbar.navbar-light.bg-faded.navbar-static-top{
   }
 }
 
-div#invoice .row{
+div#invoice .row {
   border-bottom: 1px solid #aaa;
   padding: 15px 0;
 }
-div#invoice .row:last-of-type{
+
+div#invoice .row:last-of-type {
   border-bottom: none;
 }
-.invoice_break{
+
+.invoice_break {
   margin: 10px;
 }
 
-div.col_row{
+div.col_row {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-.custom-file{
+.custom-file {
   width: 100%;
 }
 
-.recurring{
+.recurring {
   display: none;
 }

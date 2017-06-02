@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
-use App\Models\User;
-use App\Http\Requests;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class AdminsController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -23,7 +23,8 @@ class AdminsController extends Controller
      */
     public function index()
     {
-        $admins = User::where('is_admin', 1)->get();
+        $admins = User::where('is_admin', 1)->paginate(9);
+
         return view('superAdminOnly.admins.index', compact('admins'));
     }
 
@@ -49,6 +50,7 @@ class AdminsController extends Controller
         $user = $request->storeUser(null, null, null, true);
 
         flash('Admin Created!');
+
         return redirect('/admins');
     }
 
@@ -62,6 +64,7 @@ class AdminsController extends Controller
     public function edit($id)
     {
         $admin = User::where('is_admin', 1)->findOrFail($id);
+
         return view('superAdminOnly.admins.edit', compact('admin'));
     }
 
@@ -76,7 +79,8 @@ class AdminsController extends Controller
     public function update(Request $request, User $admin)
     {
         $admin->update($request->all());
-        flash('Admin ('.$admin->name.') Updated!');
+        flash('Admin (' . $admin->name . ') Updated!');
+
         return redirect('/admins');
     }
 
@@ -91,6 +95,7 @@ class AdminsController extends Controller
     {
         User::where('is_admin', 1)->findOrFail($id)->delete();
         flash('Admin Deleted!');
+
         return redirect('/admins');
     }
 }

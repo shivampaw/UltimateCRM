@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Http\Requests;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreUserRequest;
 
 class ClientsController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,7 +23,8 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::paginate(9);
+
         return view('adminsOnly.clients.index', compact('clients'));
     }
 
@@ -49,7 +48,7 @@ class ClientsController extends Controller
     public function store(StoreUserRequest $request)
     {
         DB::beginTransaction();
-        
+
         try {
             $user = $request->storeUser();
             $client = new Client($request->all());
@@ -57,12 +56,14 @@ class ClientsController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             flash('An error occurred! Check your database and email settings.', 'danger');
+
             return redirect('/clients/create');
         }
 
         DB::commit();
-        
+
         flash('Client Created!');
+
         return redirect('/clients');
     }
 
@@ -104,7 +105,8 @@ class ClientsController extends Controller
         $client->user->update($request->all());
 
         flash('Client Updated!');
-        return redirect('/clients/'.$client->id);
+
+        return redirect('/clients/' . $client->id);
     }
 
     /**
@@ -118,6 +120,7 @@ class ClientsController extends Controller
     {
         $client->delete();
         flash('Client Deleted!');
+
         return redirect('/clients');
     }
 }
