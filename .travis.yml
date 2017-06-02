@@ -1,9 +1,6 @@
-sudo: required
 language: php
-dist: trusty
 
 php:
-    - '5.6'
     - '7.0'
     - '7.1'
 
@@ -11,12 +8,8 @@ install:
     - travis_retry composer install --no-interaction
 
 before_script:
-    - export DISPLAY=:99.0
-    - sh -e /etc/init.d/xvfb start
-    - ./vendor/laravel/dusk/bin/chromedriver-linux &
     - cp .env.testing .env
     - composer install
-    - touch database/testing.sqlite
-    - php artisan serve &
+    - php artisan key:generat
 
-script: php artisan dusk
+script: vendor/bin/phpunit --configuration phpunit.xml
