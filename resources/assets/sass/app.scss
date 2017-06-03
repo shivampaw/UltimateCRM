@@ -12,7 +12,6 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   color: black;
-  word-break: break-all;
   line-height: 1.5 !important;
 }
 
@@ -142,4 +141,10 @@ div.col_row {
 
 .recurring {
   display: none;
+}
+
+@media print {
+  * {
+    font-weight: normal !important;
+  }
 }

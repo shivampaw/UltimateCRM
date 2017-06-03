@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class PagesController extends Controller
@@ -16,7 +12,6 @@ class PagesController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -43,16 +38,16 @@ class PagesController extends Controller
         $rules = [
             'currentPassword' => 'required',
             'password'        => 'required|same:confirmPassword|min:6',
-            'confirmPassword' => 'required'
+            'confirmPassword' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
 
         $validator->after(function ($validator) use ($request) {
             $check = Auth::validate([
-                'email'    => Auth::user()->email,
-                'password' => $request->currentPassword
-            ]);
-            if (!$check) :
+                                        'email'    => Auth::user()->email,
+                                        'password' => $request->currentPassword,
+                                    ]);
+            if (! $check) :
                 $validator->errors()->add('current_password', 'Your current password is incorrect.');
             endif;
         });
@@ -61,8 +56,10 @@ class PagesController extends Controller
             Auth::user()->password = Hash::make($request->password);
             Auth::user()->save();
             flash('Your password was updated!');
+
             return back();
         }
+
         return back()->withErrors($validator);
     }
 }

@@ -2,15 +2,16 @@
 
 namespace App\Http\Requests;
 
-use Carbon\Carbon;
-use App\Models\Invoice;
 use App\Mail\NewInvoice;
-use Illuminate\Validation\Rule;
+use App\Models\Client;
+use App\Models\Invoice;
 use App\Models\RecurringInvoice;
-use Money\Currencies\ISOCurrencies;
-use Illuminate\Support\Facades\Mail;
-use Money\Parser\DecimalMoneyParser;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
+use Money\Currencies\ISOCurrencies;
+use Money\Parser\DecimalMoneyParser;
 
 class StoreInvoiceRequest extends FormRequest
 {
@@ -23,7 +24,6 @@ class StoreInvoiceRequest extends FormRequest
      */
     public function authorize()
     {
-        $this->client = $this->route('client');
         return true;
     }
 
@@ -43,7 +43,7 @@ class StoreInvoiceRequest extends FormRequest
                 Rule::exists('projects', 'id')->where(function ($query) {
                     $query->where('client_id', $this->client->id);
                 }),
-            ]
+            ],
         ];
     }
 
@@ -56,20 +56,21 @@ class StoreInvoiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'project_id.exists'                 => 'The Project ID you entered does not exist for this user.',
-            'due_date.required'                 => 'You must enter a Due Date.',
-            'recurring_date.required_if'        => 'You need to enter a Recurring Date if you want this invoice to recur.',
-            'recurring_due_date.required_if'    => 'You need to enter a Recurring Due Date if you want this invoice to recur.',
+            'project_id.exists'              => 'The Project ID you entered does not exist for this user.',
+            'due_date.required'              => 'You must enter a Due Date.',
+            'recurring_date.required_if'     => 'You need to enter a Recurring Date if you want this invoice to recur.',
+            'recurring_due_date.required_if' => 'You need to enter a Recurring Due Date if you want this invoice to recur.',
         ];
     }
 
     /**
      * Main method to be called from controller.
      *
-     * @return App\Models\Invoice
+     * @return \App\Models\Invoice
      */
     public function storeInvoice()
     {
+        $this->client = Client::find($this->route('client'));
         $invoice = new Invoice();
         $invoice->item_details = json_encode($this->invoiceItems);
         $invoice->due_date = $this->due_date;
@@ -86,7 +87,7 @@ class StoreInvoiceRequest extends FormRequest
         $money = $moneyParser->parse((string) $invoice->total, config('crm.currency'));
 
         $invoice->total = $money->getAmount();
-        
+
         $this->client->addInvoice($invoice);
 
         if ($this->recurringChecked) {

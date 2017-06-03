@@ -48,12 +48,27 @@ class ProjectTest extends TestCase
          */
         Storage::assertExists($project->pdf_path);
         $this->delete('/clients/' . $client->id . '/projects/' . $project->id);
-        $this->assertEquals(0, $client->projects->count());
+
+        $this->delete('/clients/' . $client->id . '/projects' . $project->id);
         Storage::assertMissing($project->pdf_path);
     }
 
     /** @test */
-    public function client_can_view_their_projects()
+    public function client_can_view_all_their_projects()
+    {
+        $project = create(Project::class);
+
+        $this->signIn($project->client->user)
+             ->get('/projects')
+             ->assertSee($project->title)
+             ->assertStatus(200);
+
+        $project->delete();
+        Storage::assertMissing($project->pdf_path);
+    }
+
+    /** @test */
+    public function client_can_view_a_single_project()
     {
         $project = create(Project::class);
 

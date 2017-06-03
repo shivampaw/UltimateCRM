@@ -48,7 +48,6 @@ $factory->define(Invoice::class, function (Faker\Generator $faker) {
         'description' => $faker->sentence(),
         'quantity'    => $faker->numberBetween(1, 10),
         'price'       => $faker->randomFloat(2, 50, 500),
-
     ];
     $invoice_items = json_encode([$invoiceItem]);
 
