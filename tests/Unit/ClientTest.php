@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
@@ -29,5 +30,17 @@ class ClientTest extends TestCase
         ], 2);
 
         $this->assertEquals(2, $client->invoices->count());
+    }
+
+    /** @test */
+    public function client_has_many_projects()
+    {
+        $client = create(Client::class);
+
+        create(Project::class, [
+            'client_id' => $client->id,
+        ], 2);
+
+        $this->assertEquals(2, $client->projects->count());
     }
 }

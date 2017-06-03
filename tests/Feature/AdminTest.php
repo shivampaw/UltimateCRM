@@ -13,6 +13,7 @@ class AdminTest extends TestCase
     use DatabaseMigrations;
 
     protected $admin;
+
     protected $faker;
 
     public function setUp()
@@ -43,11 +44,11 @@ class AdminTest extends TestCase
          * Non auth tests (guests & non admins)
          */
         $this->post('/clients')
-            ->assertRedirect('/login');
+             ->assertRedirect('/login');
 
         $this->signIn()
-            ->post('/clients')
-            ->assertStatus(403);
+             ->post('/clients')
+             ->assertStatus(403);
 
         $this->assertDatabaseMissing('clients', $client);
 
@@ -55,8 +56,8 @@ class AdminTest extends TestCase
          * Auth test (admins)
          */
         $this->signIn($this->admin)
-            ->post('/clients', $client)
-            ->assertRedirect('/clients');
+             ->post('/clients', $client)
+             ->assertRedirect('/clients');
 
         $this->assertDatabaseHas('clients', $client);
     }
@@ -70,11 +71,11 @@ class AdminTest extends TestCase
          * Non auth tests (guests & non admins)
          */
         $this->delete('/clients/1')
-            ->assertRedirect('/login');
+             ->assertRedirect('/login');
 
         $this->signIn()
-            ->delete('/clients/'.$client->id)
-            ->assertStatus(403);
+             ->delete('/clients/' . $client->id)
+             ->assertStatus(403);
 
         $this->assertDatabaseHas('clients', $client->toArray());
 
@@ -82,8 +83,8 @@ class AdminTest extends TestCase
          * Auth test (admins)
          */
         $this->signIn($this->admin)
-            ->delete('/clients/'.$client->id)
-            ->assertRedirect('/clients');
+             ->delete('/clients/' . $client->id)
+             ->assertRedirect('/clients');
 
         $this->assertDatabaseMissing('clients', $client->toArray());
     }

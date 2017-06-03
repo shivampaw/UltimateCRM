@@ -28,7 +28,7 @@ class ProjectTest extends TestCase
     /** @test */
     public function admins_can_create_and_delete_projects()
     {
-        /**
+        /*
          * Create the client and the project.
          */
         $client = create(Client::class);
