@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Mail\InvoicePaid;
 use App\Mail\ProjectAccepted;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Stripe\Charge;
+use Stripe\Error\Base;
 use Stripe\Stripe;
 
 class ClientsOnlyController extends Controller
@@ -49,12 +51,12 @@ class ClientsOnlyController extends Controller
 
         try {
             $charge = Charge::create([
-                'amount'        => $invoice->total,
-                'description'   => config('app.name').' - Invoice #'.$invoice->id,
-                'source'        => $request->stripeToken,
-                'currency'      => strtolower(config('crm.currency')),
-                'receipt_email' => $client->email,
-            ]);
+                                         'amount'        => $invoice->total,
+                                         'description'   => config('app.name') . ' - Invoice #' . $invoice->id,
+                                         'source'        => $request->stripeToken,
+                                         'currency'      => strtolower(config('crm.currency')),
+                                         'receipt_email' => $client->email,
+                                     ]);
 
             $invoice->stripe_charge_id = $charge->id;
             $invoice->paid = true;
@@ -65,8 +67,8 @@ class ClientsOnlyController extends Controller
 
             flash('Invoice Paid!');
 
-            return redirect('/invoices/'.$id);
-        } catch (\Stripe\Error\Base $e) {
+            return redirect('/invoices/' . $id);
+        } catch (Base $e) {
             flash($e->getMessage(), 'danger');
 
             return back();
@@ -103,6 +105,6 @@ class ClientsOnlyController extends Controller
 
         flash('Project Accepted');
 
-        return redirect('/projects/'.$project->id);
+        return redirect('/projects/' . $project->id);
     }
 }

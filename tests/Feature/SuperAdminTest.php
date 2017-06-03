@@ -12,6 +12,7 @@ class SuperAdminTest extends TestCase
     use DatabaseMigrations;
 
     protected $admin;
+
     protected $faker;
 
     public function setUp()
@@ -30,27 +31,12 @@ class SuperAdminTest extends TestCase
     {
         $admin = [
             'name'  => $this->faker->name,
-            'email' => $this->faker->email,
+            'email' => $this->faker->safeEmail,
         ];
 
-        /*
-         * Non auth tests (guests & non super admin)
-         */
-        $this->post('/admins', [])
-            ->assertRedirect('/login');
-
-        $this->signIn()
-            ->post('/admins', [])
-            ->assertStatus(403);
-
-        $this->assertDatabaseMissing('users', $admin);
-
-        /*
-         * Auth tests (super admin)
-         */
         $this->signIn($this->admin)
-            ->post('/admins', $admin)
-            ->assertRedirect('/admins');
+             ->post('/admins', $admin)
+             ->assertRedirect('/admins');
 
         $this->assertDatabaseHas('users', $admin);
     }
@@ -62,24 +48,9 @@ class SuperAdminTest extends TestCase
             'is_admin' => true,
         ]);
 
-        /*
-         * Non auth tests (guests & non super admin)
-         */
-        $this->delete('/admins/1')
-            ->assertRedirect('/login');
-
-        $this->signIn()
-            ->delete('/admins/'.$admin->id)
-            ->assertStatus(403);
-
-        $this->assertDatabaseHas('users', $admin->toArray());
-
-        /*
-         * Auth tests (super admin)
-         */
         $this->signIn($this->admin)
-            ->delete('/admins/'.$admin->id)
-            ->assertRedirect('/admins');
+             ->delete('/admins/' . $admin->id)
+             ->assertRedirect('/admins');
 
         $this->assertDatabaseMissing('users', $admin->toArray());
     }

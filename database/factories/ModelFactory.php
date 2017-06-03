@@ -7,6 +7,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Money\Currencies\ISOCurrencies;
+use Money\Parser\DecimalMoneyParser;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,14 +45,20 @@ $factory->define(Client::class, function (Faker\Generator $faker) {
 
 $factory->define(Invoice::class, function (Faker\Generator $faker) {
     $invoiceItem = [
-        'description' => $faker->sentence(3),
-        'quantity'    => $faker->randomDigit,
-        'price'       => $faker->randomFloat(0, 50, 500),
+        'description' => $faker->sentence(),
+        'quantity'    => $faker->numberBetween(1, 10),
+        'price'       => $faker->randomFloat(2, 50, 500),
 
     ];
     $invoice_items = json_encode([$invoiceItem]);
 
     $total = $invoiceItem['quantity'] * $invoiceItem['price'];
+
+    $currencies = new ISOCurrencies();
+    $moneyParser = new DecimalMoneyParser($currencies);
+    $money = $moneyParser->parse((string) $total, config('crm.currency'));
+
+    $total = $money->getAmount();
 
     return [
         'client_id'    => create(Client::class)->id,

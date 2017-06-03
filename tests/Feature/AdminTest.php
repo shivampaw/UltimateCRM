@@ -31,7 +31,7 @@ class AdminTest extends TestCase
     }
 
     /** @test */
-    public function only_admins_can_create_client()
+    public function admins_can_create_client()
     {
         $client = [
             'name'    => $this->faker->name,
@@ -40,21 +40,6 @@ class AdminTest extends TestCase
             'address' => $this->faker->address,
         ];
 
-        /*
-         * Non auth tests (guests & non admins)
-         */
-        $this->post('/clients')
-             ->assertRedirect('/login');
-
-        $this->signIn()
-             ->post('/clients')
-             ->assertStatus(403);
-
-        $this->assertDatabaseMissing('clients', $client);
-
-        /*
-         * Auth test (admins)
-         */
         $this->signIn($this->admin)
              ->post('/clients', $client)
              ->assertRedirect('/clients');
@@ -63,25 +48,10 @@ class AdminTest extends TestCase
     }
 
     /** @test */
-    public function only_admins_can_delete_client()
+    public function admins_can_delete_client()
     {
         $client = create(Client::class);
-
-        /*
-         * Non auth tests (guests & non admins)
-         */
-        $this->delete('/clients/1')
-             ->assertRedirect('/login');
-
-        $this->signIn()
-             ->delete('/clients/' . $client->id)
-             ->assertStatus(403);
-
-        $this->assertDatabaseHas('clients', $client->toArray());
-
-        /*
-         * Auth test (admins)
-         */
+        
         $this->signIn($this->admin)
              ->delete('/clients/' . $client->id)
              ->assertRedirect('/clients');

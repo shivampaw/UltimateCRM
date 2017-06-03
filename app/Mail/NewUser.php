@@ -2,22 +2,23 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NewUser extends Mailable
 {
     use Queueable, SerializesModels;
+
     protected $user;
+
     protected $password;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param $user
+     * @param $password
      */
     public function __construct($user, $password)
     {
@@ -32,10 +33,10 @@ class NewUser extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.users.'.strtolower(($this->user->is_admin) ? 'Admin' : 'Client'))
+        return $this->view('emails.users.' . strtolower(($this->user->is_admin) ? 'Admin' : 'Client'))
                     ->with('user', $this->user)
                     ->with('password', $this->password)
                     ->to($this->user->email, $this->user->name)
-                    ->subject('['.$this->user->name.'] Your New '.($this->user->is_admin ? 'Admin' : 'Client').' Account');
+                    ->subject('[' . $this->user->name . '] Your New ' . ($this->user->is_admin ? 'Admin' : 'Client') . ' Account');
     }
 }

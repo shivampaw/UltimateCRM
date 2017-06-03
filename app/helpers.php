@@ -1,9 +1,9 @@
 <?php
 
-use Money\Money;
-use Money\Currency;
 use Money\Currencies\ISOCurrencies;
+use Money\Currency;
 use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
 
 function flash($message, $level = 'success')
 {

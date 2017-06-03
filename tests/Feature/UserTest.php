@@ -18,7 +18,6 @@ class UserTest extends TestCase
             'email'    => $user->email,
             'password' => 'secret',
         ]);
-
         $this->seeIsAuthenticated();
     }
 

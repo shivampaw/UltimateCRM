@@ -6,11 +6,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NewProject extends Mailable
 {
     protected $client;
+
     protected $project;
 
     use Queueable, SerializesModels;
@@ -18,7 +18,8 @@ class NewProject extends Mailable
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param $client
+     * @param $project
      */
     public function __construct($client, $project)
     {
@@ -38,6 +39,6 @@ class NewProject extends Mailable
                     ->with('project', $this->project)
                     ->to($this->client->email, $this->client->name)
                     ->attachData(Storage::get($this->project->pdf_path), 'project.pdf')
-                    ->subject('['.$this->client->name.'] New Project Created');
+                    ->subject('[' . $this->client->name . '] New Project Created');
     }
 }
