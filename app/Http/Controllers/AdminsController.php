@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class AdminsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -75,13 +74,13 @@ class AdminsController extends Controller
      * @param User                     $admin
      *
      * @return \Illuminate\Http\Response
-     * @internal param int $id
      *
+     * @internal param int $id
      */
     public function update(Request $request, User $admin)
     {
         $admin->update($request->all());
-        flash('Admin (' . $admin->name . ') Updated!');
+        flash('Admin ('.$admin->name.') Updated!');
 
         return redirect('/admins');
     }
@@ -96,7 +95,7 @@ class AdminsController extends Controller
     public function destroy($id)
     {
         if ($id == 1) {
-            dd("Nobody, and I mean nobody, can delete the super admin.");
+            dd('Nobody, and I mean nobody, can delete the super admin.');
         }
 
         User::where('is_admin', 1)->findOrFail($id)->delete();

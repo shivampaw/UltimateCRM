@@ -7,7 +7,6 @@ use Tests\Traits\CreatesApplication;
 
 abstract class TestCase extends BaseTestCase
 {
-
     use CreatesApplication;
 
     protected function signIn($user = null)

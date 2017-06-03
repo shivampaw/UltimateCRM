@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class SuperAdminTest extends TestCase
 {
-
     use DatabaseMigrations;
 
     protected $admin;
@@ -34,7 +33,7 @@ class SuperAdminTest extends TestCase
             'email' => $this->faker->email,
         ];
 
-        /**
+        /*
          * Non auth tests (guests & non super admin)
          */
         $this->post('/admins', [])
@@ -46,7 +45,7 @@ class SuperAdminTest extends TestCase
 
         $this->assertDatabaseMissing('users', $admin);
 
-        /**
+        /*
          * Auth tests (super admin)
          */
         $this->signIn($this->admin)
@@ -54,7 +53,6 @@ class SuperAdminTest extends TestCase
             ->assertRedirect('/admins');
 
         $this->assertDatabaseHas('users', $admin);
-
     }
 
     /** @test */
@@ -64,23 +62,23 @@ class SuperAdminTest extends TestCase
             'is_admin' => true,
         ]);
 
-        /**
+        /*
          * Non auth tests (guests & non super admin)
          */
         $this->delete('/admins/1')
             ->assertRedirect('/login');
 
         $this->signIn()
-            ->delete('/admins/' . $admin->id)
+            ->delete('/admins/'.$admin->id)
             ->assertStatus(403);
 
         $this->assertDatabaseHas('users', $admin->toArray());
 
-        /**
+        /*
          * Auth tests (super admin)
          */
         $this->signIn($this->admin)
-            ->delete('/admins/' . $admin->id)
+            ->delete('/admins/'.$admin->id)
             ->assertRedirect('/admins');
 
         $this->assertDatabaseMissing('users', $admin->toArray());

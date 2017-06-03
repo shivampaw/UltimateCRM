@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectAccepted extends Mailable
 {
-
     protected $client;
+
     protected $project;
 
     use Queueable, SerializesModels;
@@ -40,11 +40,6 @@ class ProjectAccepted extends Mailable
             $this->cc($superAdmin->email, $superAdmin->name);
         }
 
-        return $this->view('emails.projects.accepted')
-            ->with('client', $this->client)
-            ->with('project', $this->project)
-            ->subject('[' . $this->client->name . '] ' . $this->project->title . ' Has Been Accepted')
-            ->attachData(Storage::get($this->project->pdf_path), 'project.pdf')
-            ->to($this->client->email, $this->client->name);
+        return $this->view('emails.projects.accepted')->with('client', $this->client)->with('project', $this->project)->subject('['.$this->client->name.'] '.$this->project->title.' Has Been Accepted')->attachData(Storage::get($this->project->pdf_path), 'project.pdf')->to($this->client->email, $this->client->name);
     }
 }

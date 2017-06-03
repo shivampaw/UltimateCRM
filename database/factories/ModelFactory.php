@@ -2,8 +2,11 @@
 
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\Project;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,25 +42,32 @@ $factory->define(Client::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(Invoice::class, function (Faker\Generator $faker) {
-    $client = create(Client::class);
+    $invoiceItem = [
+        'description' => $faker->sentence(3),
+        'quantity'    => $faker->randomDigit,
+        'price'       => $faker->randomFloat(0, 50, 500),
 
-    $invoiceItem = array(
-        "description" => $faker->sentence(3),
-        "quantity"    => $faker->randomDigit,
-        "price"       => $faker->randomFloat(2, 50, 500),
-
-    );
-
-    $invoice_items = json_encode([
-        $invoiceItem,
-    ]);
+    ];
+    $invoice_items = json_encode([$invoiceItem]);
 
     $total = $invoiceItem['quantity'] * $invoiceItem['price'];
 
     return [
-        'client_id'    => $client->id,
+        'client_id'    => create(Client::class)->id,
         'due_date'     => Carbon::tomorrow(),
         'total'        => $total,
         'item_details' => $invoice_items,
+        'project_id'   => null,
+    ];
+});
+
+$factory->define(Project::class, function (Faker\Generator $faker) {
+    $file = UploadedFile::fake()->create('project.pdf', 200);
+    $path = Storage::put('public/project_files', $file);
+
+    return [
+        'title'     => $faker->sentence(),
+        'client_id' => create(Client::class)->id,
+        'pdf_path'  => $path,
     ];
 });

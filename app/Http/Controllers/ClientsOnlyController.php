@@ -13,7 +13,6 @@ use Stripe\Stripe;
 
 class ClientsOnlyController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -51,7 +50,7 @@ class ClientsOnlyController extends Controller
         try {
             $charge = Charge::create([
                 'amount'        => $invoice->total,
-                'description'   => config('app.name') . ' - Invoice #' . $invoice->id,
+                'description'   => config('app.name').' - Invoice #'.$invoice->id,
                 'source'        => $request->stripeToken,
                 'currency'      => strtolower(config('crm.currency')),
                 'receipt_email' => $client->email,
@@ -66,7 +65,7 @@ class ClientsOnlyController extends Controller
 
             flash('Invoice Paid!');
 
-            return redirect('/invoices/' . $id);
+            return redirect('/invoices/'.$id);
         } catch (\Stripe\Error\Base $e) {
             flash($e->getMessage(), 'danger');
 
@@ -104,6 +103,6 @@ class ClientsOnlyController extends Controller
 
         flash('Project Accepted');
 
-        return redirect('/projects/' . $project->id);
+        return redirect('/projects/'.$project->id);
     }
 }

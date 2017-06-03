@@ -12,7 +12,6 @@
     <embed src="{{ Storage::url($project->pdf_path) }}" style="width: 100%; height: 600px;"
            type="application/pdf"></embed>
 </object>
-
     <hr/>
 
     <h2>Project Invoices </h2>

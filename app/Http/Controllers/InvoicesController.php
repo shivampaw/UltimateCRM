@@ -8,7 +8,6 @@ use App\Models\Invoice;
 
 class InvoicesController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -47,6 +46,6 @@ class InvoicesController extends Controller
         $client->invoices()->findOrFail($invoice->id)->delete();
         flash('Invoice Deleted!');
 
-        return redirect('/clients/' . $client->id . '/invoices');
+        return redirect('/clients/'.$client->id.'/invoices');
     }
 }

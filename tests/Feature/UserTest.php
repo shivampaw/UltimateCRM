@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-
     use DatabaseMigrations;
 
     /** @test */

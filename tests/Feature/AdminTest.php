@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class AdminTest extends TestCase
 {
-
     use DatabaseMigrations;
 
     protected $admin;
@@ -40,7 +39,7 @@ class AdminTest extends TestCase
             'address' => $this->faker->address,
         ];
 
-        /**
+        /*
          * Non auth tests (guests & non admins)
          */
         $this->post('/clients')
@@ -52,7 +51,7 @@ class AdminTest extends TestCase
 
         $this->assertDatabaseMissing('clients', $client);
 
-        /**
+        /*
          * Auth test (admins)
          */
         $this->signIn($this->admin)
@@ -67,26 +66,25 @@ class AdminTest extends TestCase
     {
         $client = create(Client::class);
 
-        /**
+        /*
          * Non auth tests (guests & non admins)
          */
         $this->delete('/clients/1')
             ->assertRedirect('/login');
 
         $this->signIn()
-            ->delete('/clients/' . $client->id)
+            ->delete('/clients/'.$client->id)
             ->assertStatus(403);
 
         $this->assertDatabaseHas('clients', $client->toArray());
 
-        /**
+        /*
          * Auth test (admins)
          */
         $this->signIn($this->admin)
-            ->delete('/clients/' . $client->id)
+            ->delete('/clients/'.$client->id)
             ->assertRedirect('/clients');
 
         $this->assertDatabaseMissing('clients', $client->toArray());
     }
-
 }

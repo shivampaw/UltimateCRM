@@ -8,7 +8,6 @@ use App\Models\Project;
 
 class ProjectsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -42,7 +41,6 @@ class ProjectsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreProjectRequest|\Illuminate\Http\Request $request
-     *
      * @param Client                                       $client
      *
      * @return \Illuminate\Http\Response
@@ -53,7 +51,7 @@ class ProjectsController extends Controller
 
         flash('The project has been created!');
 
-        return redirect('/clients/' . $client->id . '/projects');
+        return redirect('/clients/'.$client->id.'/projects');
     }
 
     /**
@@ -83,6 +81,6 @@ class ProjectsController extends Controller
 
         flash('Project Deleted!');
 
-        return redirect('/clients/' . $client->id . '/projects');
+        return redirect('/clients/'.$client->id.'/projects');
     }
 }

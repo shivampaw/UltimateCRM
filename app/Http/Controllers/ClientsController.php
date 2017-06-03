@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class ClientsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -108,7 +107,7 @@ class ClientsController extends Controller
 
         flash('Client Updated!');
 
-        return redirect('/clients/' . $client->id);
+        return redirect('/clients/'.$client->id);
     }
 
     /**

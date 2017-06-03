@@ -2,15 +2,15 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Project;
 use App\Mail\NewProject;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Mail;
 
 class StoreProjectRequest extends FormRequest
 {
     protected $client;
-   
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -30,7 +30,7 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'pdf'   => 'required|file|mimes:pdf',
-            'title' => 'required'
+            'title' => 'required',
         ];
     }
 
@@ -52,7 +52,7 @@ class StoreProjectRequest extends FormRequest
      * Main method to be called to initiate save
      * for project.
      *
-     * @return App\Models\Project
+     * @return \App\Models\Project
      */
     public function storeProject()
     {
