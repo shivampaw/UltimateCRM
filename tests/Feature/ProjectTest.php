@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Mail\NewProject;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -33,6 +35,8 @@ class ProjectTest extends TestCase
          */
         $client = create(Client::class);
 
+        Mail::fake();
+
         $this->signIn($this->admin)
              ->post('/clients/' . $client->id . '/projects', [
                  'pdf'   => UploadedFile::fake()->create('project.pdf', 200),
@@ -41,6 +45,11 @@ class ProjectTest extends TestCase
              ->assertRedirect('/clients/' . $client->id . '/projects');
 
         $project = $client->projects()->first();
+
+        Mail::assertSent(NewProject::class, function ($mail) use ($client) {
+            return $mail->hasTo($client->email);
+        });
+
         /*
          * Make sure the project has been uploaded
          * then delete it and make sure it has been

@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Mail\NewInvoice;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class InvoiceTest extends TestCase
@@ -36,11 +38,18 @@ class InvoiceTest extends TestCase
                 'price'       => 302.20,
             ],
         ];
+
+        Mail::fake();
+
         $this->signIn($this->admin)
              ->post('/clients/' . $client->id . '/invoices', [
                  'due_date'     => Carbon::tomorrow(),
                  'invoiceItems' => $invoiceItems,
              ]);
+
+        Mail::assertSent(NewInvoice::class, function ($mail) use ($client) {
+            return $mail->hasTo($client->email);
+        });
 
         $invoice = $client->invoices()->first();
         $this->assertDatabaseHas('invoices', $invoice->toArray());

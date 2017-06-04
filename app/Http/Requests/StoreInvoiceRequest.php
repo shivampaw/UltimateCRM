@@ -94,7 +94,7 @@ class StoreInvoiceRequest extends FormRequest
             $this->recurInvoice($invoice->id, $this->recurring_date, $this->recurring_due_date);
         }
 
-        Mail::send(new NewInvoice($this->client, $invoice));
+        Mail::to($this->client->email, $this->client->name)->send(new NewInvoice($this->client, $invoice));
 
         return $invoice;
     }

@@ -37,7 +37,6 @@ class NewProject extends Mailable
         return $this->view('emails.projects.new')
                     ->with('client', $this->client)
                     ->with('project', $this->project)
-                    ->to($this->client->email, $this->client->name)
                     ->attachData(Storage::get($this->project->pdf_path), 'project.pdf')
                     ->subject('[' . $this->client->name . '] New Project Created');
     }

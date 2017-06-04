@@ -34,9 +34,10 @@ class NewUser extends Mailable
     public function build()
     {
         return $this->view('emails.users.' . strtolower(($this->user->is_admin) ? 'Admin' : 'Client'))
-                    ->with('user', $this->user)
-                    ->with('password', $this->password)
-                    ->to($this->user->email, $this->user->name)
+                    ->with([
+                               'user'     => $this->user,
+                               'password' => $this->password,
+                           ])
                     ->subject('[' . $this->user->name . '] Your New ' . ($this->user->is_admin ? 'Admin' : 'Client') . ' Account');
     }
 }
