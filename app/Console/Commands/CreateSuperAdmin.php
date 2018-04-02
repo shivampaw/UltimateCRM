@@ -51,11 +51,14 @@ class CreateSuperAdmin extends Command
         $password = $this->secret('What is the password for the super admin? (You won\'t be able to see what you are typing)');
 
         User::create([
-            'email'    => $email,
-            'name'     => $name,
+            'email' => $email,
+            'name' => $name,
             'password' => bcrypt($password),
             'is_admin' => true,
-            'id'       => 1,
+            'id' => 1,
         ]);
+
+        $this->info('Super Admin created.');
+        return true;
     }
 }

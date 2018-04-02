@@ -9,15 +9,4 @@
     @else
         @include('layouts.dashboard.client')
     @endif
-    @if($user->isSuperAdmin())
-        <p>You are a super admin (ID = 1)</p>
-    @else
-        <p>You are not a super admin (ID != 1)</p>
-    @endif
-
-    @if($user->isAdmin())
-        <p>You are a normal admin</p>
-    @else
-        <p>You are not an admin either.</p>
-    @endif
 @endsection

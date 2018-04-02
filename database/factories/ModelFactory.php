@@ -23,10 +23,10 @@ use Money\Parser\DecimalMoneyParser;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
     return [
-        'name'           => $faker->name,
-        'email'          => $faker->unique()->safeEmail,
-        'password'       => bcrypt('secret'),
-        'is_admin'       => false,
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => bcrypt('secret'),
+        'is_admin' => false,
         'remember_token' => str_random(10),
     ];
 });
@@ -35,10 +35,10 @@ $factory->define(Client::class, function (Faker\Generator $faker) {
     $user = create(User::class);
 
     return [
-        'name'    => $faker->name,
+        'name' => $faker->name,
         'user_id' => $user->id,
-        'email'   => $user->email,
-        'number'  => $faker->phoneNumber,
+        'email' => $user->email,
+        'number' => $faker->phoneNumber,
         'address' => $faker->address,
     ];
 });
@@ -46,8 +46,8 @@ $factory->define(Client::class, function (Faker\Generator $faker) {
 $factory->define(Invoice::class, function (Faker\Generator $faker) {
     $invoiceItem = [
         'description' => $faker->sentence(),
-        'quantity'    => $faker->numberBetween(1, 10),
-        'price'       => $faker->randomFloat(2, 50, 500),
+        'quantity' => $faker->numberBetween(1, 10),
+        'price' => $faker->randomFloat(2, 50, 500),
     ];
     $invoice_items = json_encode([$invoiceItem]);
 
@@ -55,16 +55,16 @@ $factory->define(Invoice::class, function (Faker\Generator $faker) {
 
     $currencies = new ISOCurrencies();
     $moneyParser = new DecimalMoneyParser($currencies);
-    $money = $moneyParser->parse((string) $total, config('crm.currency'));
+    $money = $moneyParser->parse((string)$total, config('crm.currency'));
 
     $total = $money->getAmount();
 
     return [
-        'client_id'    => create(Client::class)->id,
-        'due_date'     => Carbon::tomorrow(),
-        'total'        => $total,
+        'client_id' => create(Client::class)->id,
+        'due_date' => Carbon::tomorrow(),
+        'total' => $total,
         'item_details' => $invoice_items,
-        'project_id'   => null,
+        'project_id' => null,
     ];
 });
 
@@ -73,8 +73,8 @@ $factory->define(Project::class, function (Faker\Generator $faker) {
     $path = Storage::put('public/project_files', $file);
 
     return [
-        'title'     => $faker->sentence(),
+        'title' => $faker->sentence(),
         'client_id' => create(Client::class)->id,
-        'pdf_path'  => $path,
+        'pdf_path' => $path,
     ];
 });
