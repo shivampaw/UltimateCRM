@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use App\Mail\NewUser;
-use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Mail;
 
 class StoreUserRequest extends FormRequest
 {
@@ -28,29 +28,27 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name'   => 'required',
-            'email'  => 'required|email|unique:clients|unique:users',
-            'number' => 'nullable|numeric'
+            'number' => 'nullable',
+            'email'  => 'required|email|unique:users',
         ];
     }
 
     /**
      * Create a user and save it to databse.
      *
-     * @return App\Models\User
+     * @return \App\Models\User
      */
     public function storeUser($name = null, $email = null, $password = null, $admin = false)
     {
         $password = $password ?: str_random(10);
         $user = User::create([
-            'name'     => ($name) ?: $this->name,
-            'email'    => ($email) ?: $this->email,
-            'password' => bcrypt($password),
-            'is_admin' => $admin
-        ]);
+                                 'name'     => ($name) ?: $this->name,
+                                 'email'    => ($email) ?: $this->email,
+                                 'password' => bcrypt($password),
+                                 'is_admin' => $admin,
+                             ]);
 
-        if (config('app.env') !== 'testing') {
-            Mail::send(new NewUser($user, $password));
-        }
+        Mail::to($user->email, $user->name)->send(new NewUser($user, $password));
 
         return $user;
     }

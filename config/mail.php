@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     /*
@@ -55,7 +57,8 @@ return [
     |
     */
 
-    'from' => ['address' => 'shivam@shivampaw.com', 'name' => 'Shivam Paw'],
+    'from' => ['address' => env('MAIL_FROM_EMAIL', ''), 'name' => env('MAIL_FROM_NAME', '')],
+
 
     /*
     |--------------------------------------------------------------------------

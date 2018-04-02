@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
@@ -19,13 +19,12 @@ class Project extends Model
         return $this->hasMany(Invoice::class);
     }
 
-
     protected static function boot()
     {
         parent::boot();
         static::deleting(function ($project) {
-            $project->invoices()->delete();
-            File::delete(public_path().$project->pdf_path);
+            $project->invoices->each->delete();
+            Storage::delete($project->pdf_path);
         });
     }
 }

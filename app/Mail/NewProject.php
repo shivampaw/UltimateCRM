@@ -5,11 +5,12 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Storage;
 
 class NewProject extends Mailable
 {
     protected $client;
+
     protected $project;
 
     use Queueable, SerializesModels;
@@ -17,7 +18,8 @@ class NewProject extends Mailable
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param $client
+     * @param $project
      */
     public function __construct($client, $project)
     {
@@ -35,8 +37,7 @@ class NewProject extends Mailable
         return $this->view('emails.projects.new')
                     ->with('client', $this->client)
                     ->with('project', $this->project)
-                    ->to($this->client->email, $this->client->name)
-                    ->attach(public_path().$this->project->pdf_path)
-                    ->subject('['.$this->client->name.'] New Project Created');
+                    ->attachData(Storage::get($this->project->pdf_path), 'project.pdf')
+                    ->subject('[' . $this->client->name . '] New Project Created');
     }
 }

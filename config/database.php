@@ -52,6 +52,12 @@ return [
             'prefix'   => '',
         ],
 
+        'testing' => [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ],
+
         'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
@@ -107,23 +113,23 @@ return [
 
     'redis' => [
 
-    'client' => 'predis',
+        'client' => 'predis',
 
-    'options' => [
-        'cluster' => 'redis',
-    ],
+        'options' => [
+            'cluster' => 'redis',
+        ],
 
-    'clusters' => [
-        'default' => [
-            [
-                'host'     => env('REDIS_HOST', '127.0.0.1'),
-                'password' => env('REDIS_PASSWORD', null),
-                'port'     => env('REDIS_PORT', 6379),
-                'database' => 0,
+        'clusters' => [
+            'default' => [
+                [
+                    'host'     => env('REDIS_HOST', '127.0.0.1'),
+                    'password' => env('REDIS_PASSWORD', null),
+                    'port'     => env('REDIS_PORT', 6379),
+                    'database' => 0,
+                ],
             ],
         ],
-    ],
 
-],
+    ],
 
 ];

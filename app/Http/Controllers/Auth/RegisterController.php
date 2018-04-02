@@ -73,11 +73,11 @@ class RegisterController extends Controller
 
     public function register()
     {
-        return redirect('/');
+        abort(404);
     }
 
     public function showRegistrationForm()
     {
-        return redirect('/');
+        abort(404);
     }
 }

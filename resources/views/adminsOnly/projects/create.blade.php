@@ -19,7 +19,7 @@
 		</label>
 	</div>
 	<div class="form-group">
-		<button class="btn btn-primary">Create Project</button>
+		<button class="btn btn-success">Create Project</button>
 	</div>
 </form>
 

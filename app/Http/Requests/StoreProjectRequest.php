@@ -2,15 +2,15 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Project;
 use App\Mail\NewProject;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Mail;
 
 class StoreProjectRequest extends FormRequest
 {
     protected $client;
-   
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -30,7 +30,7 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'pdf'   => 'required|file|mimes:pdf',
-            'title' => 'required'
+            'title' => 'required',
         ];
     }
 
@@ -52,33 +52,19 @@ class StoreProjectRequest extends FormRequest
      * Main method to be called to initiate save
      * for project.
      *
-     * @return App\Models\Project
+     * @return \App\Models\Project
      */
     public function storeProject()
     {
         $this->client = $this->route('client');
         $project = new Project();
         $project->title = $this->title;
-        $project->pdf_path = $this->storeUploadedFile();
+
+        $project->pdf_path = $this->pdf->store('public/project_files');
 
         $this->client->addProject($project);
-        Mail::send(new NewProject($this->client, $project));
+        Mail::to($this->client->email, $this->client->name)->send(new NewProject($this->client, $project));
 
         return $project;
-    }
-
-    /**
-     * Stores the uploaded PDF to the /project_files
-     * directory.
-     *
-     * @return string
-     */
-    protected function storeUploadedFile()
-    {
-        $fileUrlPath= '/project_files/'.$this->client->id.'/';
-        $fileUrlName = time().'.pdf';
-        $this->pdf->move(public_path().$fileUrlPath, $fileUrlName);
-
-        return $fileUrlPath.$fileUrlName;
     }
 }

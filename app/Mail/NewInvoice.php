@@ -5,11 +5,11 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NewInvoice extends Mailable
 {
     protected $client;
+
     protected $invoice;
 
     use Queueable, SerializesModels;
@@ -35,7 +35,6 @@ class NewInvoice extends Mailable
         return $this->view('emails.invoices.new')
                     ->with('client', $this->client)
                     ->with('invoice', $this->invoice)
-                    ->to($this->client->email, $this->client->name)
-                    ->subject('['.$this->client->name.'] New Invoice Generated');
+                    ->subject('[' . $this->client->name . '] New Invoice Generated');
     }
 }

@@ -1,8 +1,13 @@
-    <div id="invoice">
+<div id="invoice">
         <div class="row">
+            @if($invoice->due_date->addDays(1)->isPast())
+                <div class="col-12 text-center text-danger">
+                    <h3>Payment Overdue</h3>
+                </div>
+            @endif
             <div class="col-sm-6 text-center text-sm-left">
-                <strong>Billed To</strong><br />
-                {{ $invoice->client->name }}<br />
+                <strong>Billed To</strong><br/>
+                {{ $invoice->client->name }}<br/>
                 {!! nl2br($invoice->client->address) !!}
             </div>
             <span class="hidden-sm-up invoice_break"></span>
@@ -47,8 +52,8 @@
                 </table>
             </div>
         </div>
-        @if($invoice->notes !== "")
-            <div class="row">
+    @if($invoice->notes !== "")
+        <div class="row">
                 <div class="col-12">
                     <h5>Notes</h5>
                 </div>
@@ -56,5 +61,5 @@
                     <p>{{ $invoice->notes }}</p>
                 </div>
             </div>
-        @endif
+    @endif
     </div>

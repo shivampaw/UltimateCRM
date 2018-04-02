@@ -1,5 +1,10 @@
 <?php
 
+use Money\Currencies\ISOCurrencies;
+use Money\Currency;
+use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
+
 function flash($message, $level = 'success')
 {
     session()->flash('status', $message);
@@ -8,5 +13,11 @@ function flash($message, $level = 'success')
 
 function formatInvoiceTotal($number)
 {
-    return config('crm.currency').number_format($number/100, 2);
+    $money = new Money($number, new Currency(config('crm.currency')));
+    $currencies = new ISOCurrencies();
+
+    $numberFormatter = new \NumberFormatter('en_GB', \NumberFormatter::CURRENCY);
+    $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+
+    return $moneyFormatter->format($money);
 }

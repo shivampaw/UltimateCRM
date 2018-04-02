@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Http\Requests;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreUserRequest;
+use Illuminate\Support\Facades\DB;
 
 class ClientsController extends Controller
 {
@@ -24,7 +22,8 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::with(['invoices', 'projects'])->paginate(9);
+
         return view('adminsOnly.clients.index', compact('clients'));
     }
 
@@ -41,18 +40,29 @@ class ClientsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param StoreUserRequest|Request $request
      *
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUserRequest $request)
     {
-        $user = $request->storeUser();
+        DB::beginTransaction();
 
-        $client = new Client($request->all());
-        $user->client()->save($client);
+        try {
+            $user = $request->storeUser();
+            $client = new Client($request->all());
+            $user->client()->save($client);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            flash('An error occurred! Check your database and email settings.', 'danger');
+
+            return redirect('/clients/create');
+        }
+
+        DB::commit();
 
         flash('Client Created!');
+
         return redirect('/clients');
     }
 
@@ -65,6 +75,8 @@ class ClientsController extends Controller
      */
     public function show(Client $client)
     {
+        $client->load(['invoices', 'projects']);
+
         return view('adminsOnly.clients.show', compact('client'));
     }
 
@@ -94,6 +106,7 @@ class ClientsController extends Controller
         $client->user->update($request->all());
 
         flash('Client Updated!');
+
         return redirect('/clients/'.$client->id);
     }
 
@@ -108,6 +121,7 @@ class ClientsController extends Controller
     {
         $client->delete();
         flash('Client Deleted!');
+
         return redirect('/clients');
     }
 }
