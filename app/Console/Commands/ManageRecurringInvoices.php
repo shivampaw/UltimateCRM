@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
-use App\Models\Invoice;
 use App\Mail\NewInvoice;
-use Illuminate\Console\Command;
+use App\Models\Invoice;
 use App\Models\RecurringInvoice;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
 class ManageRecurringInvoices extends Command
@@ -16,7 +16,7 @@ class ManageRecurringInvoices extends Command
      *
      * @var string
      */
-    protected $signature = 'invocies:recurring';
+    protected $signature = 'invoices:recurring';
 
     /**
      * The console command description.
@@ -43,9 +43,9 @@ class ManageRecurringInvoices extends Command
     public function handle()
     {
         $toMakeInvoices = RecurringInvoice::whereDate('next_run', '=', Carbon::today())
-                                            ->whereDate('last_run', '!=', Carbon::today())
-                                            ->get();
-        
+            ->whereDate('last_run', '!=', Carbon::today())
+            ->get();
+
         foreach ($toMakeInvoices as $completedInvoice) {
             $oldInvoice = Invoice::find($completedInvoice->invoice_id);
             $newInvoice = $oldInvoice->replicate();
