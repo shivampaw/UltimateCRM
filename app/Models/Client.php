@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Invoice;
-use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
@@ -39,15 +37,15 @@ class Client extends Model
     {
         return $this->projects()->save($project);
     }
-    
+
     protected static function boot()
     {
         parent::boot();
         static::deleting(function ($client) {
             $client->invoices()->delete();
-            $client->projects()->delete();
+            $client->projects->each->delete();
             $client->recurringInvoices()->delete();
-            User::find($client->user_id)->delete();
+            $client->user->delete();
         });
     }
 }

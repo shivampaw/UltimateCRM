@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProjectRequest;
 use App\Models\Client;
 use App\Models\Project;
-use App\Http\Requests\StoreProjectRequest;
 
 class ProjectsController extends Controller
 {
@@ -22,6 +22,8 @@ class ProjectsController extends Controller
     public function index(Client $client)
     {
         $projects = $client->projects;
+        $projects->load('invoices');
+
         return view('adminsOnly.projects.index', compact('client', 'projects'));
     }
 
@@ -38,15 +40,17 @@ class ProjectsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param StoreProjectRequest|\Illuminate\Http\Request $request
+     * @param Client                                       $client
      *
      * @return \Illuminate\Http\Response
      */
     public function store(StoreProjectRequest $request, Client $client)
     {
         $request->storeProject();
-        
+
         flash('The project has been created!');
+
         return redirect('/clients/'.$client->id.'/projects');
     }
 
@@ -59,7 +63,9 @@ class ProjectsController extends Controller
      */
     public function show(Client $client, Project $project)
     {
-        return view('adminsOnly.projects.show', compact('project'));
+        $project->load('invoices');
+
+        return view('adminsOnly.projects.show', compact(['client', 'project']));
     }
 
     /**
@@ -72,8 +78,9 @@ class ProjectsController extends Controller
     public function destroy(Client $client, Project $project)
     {
         $client->projects()->findOrFail($project->id)->delete();
-        
+
         flash('Project Deleted!');
+
         return redirect('/clients/'.$client->id.'/projects');
     }
 }

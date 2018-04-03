@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -15,7 +14,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'is_admin',
+        'name', 'email', 'password', 'role', 'is_admin', 'id',
     ];
 
     /**
@@ -35,11 +34,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        if ($this->is_admin === 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->is_admin;
     }
 
     public function isSuperAdmin()

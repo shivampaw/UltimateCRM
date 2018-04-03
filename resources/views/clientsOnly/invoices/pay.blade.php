@@ -39,21 +39,21 @@
         </div>
     </form>
 
-    <hr />
+    <hr/>
 
     <a href="/invoices/{{ $invoice->id }}" class="btn btn-danger"><span class="fa fa-angle-double-left"></span> Back to Invoice</a>
 @endsection
 
-@section('footer')  
+@section('footer')
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script>
-        (function() {
+        (function () {
             Stripe.setPublishableKey('{{ config('services.stripe.key') }}');
         })();
 
-        $(function() {
+        $(function () {
             var $form = $('#payment-form');
-            $form.submit(function(event) {
+            $form.submit(function (event) {
                 $form.find('.submit').prop('disabled', true);
                 $form.find('.payment-errors').removeClass('alert alert-danger').text("");
                 Stripe.card.createToken($form, stripeResponseHandler);
@@ -72,7 +72,8 @@
                 $form.append($('<input type="hidden" name="stripeToken">').val(token));
                 $form.get(0).submit();
             }
-        };
+        }
+        ;
 
     </script>
 @endsection

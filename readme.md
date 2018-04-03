@@ -5,27 +5,30 @@ Master: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch=
 
 Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch=develop)](https://travis-ci.org/shivampaw/UltimateCRM)
 
-![UltimateCRM](https://i.imgur.com/UMAIxfa.png)
+![UltimateCRM](http://i.imgur.com/gIqzUe2.png)
 
 ### Features
 * The super admin (ID 1) can create and delete multiple admins
 * Admins can create and manage clients
 * Admins can create invoices and projects for clients
 * Clients can view and pay invoice through Stripe integration
-* Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid.
+* Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid or becomes overdue.
 
 **If you have any feature requests then just [open an issue](https://github.com/shivampaw/UltimateCRM/issues/new) and let us know!**
 
 ## Requirements / Installation / Usage / Troubleshooting
 Need help getting started? Here's where to look!
 ### Requirements
-This CRM runs with Laravel 5.4 for which the requirements are as follows:
-* PHP >= 5.6.4
+This CRM runs with Laravel 5.5 and the requirements are as follows:
+* PHP >= 7.1.3
 * OpenSSL PHP Extension
 * PDO PHP Extension
 * Mbstring PHP Extension
 * Tokenizer PHP Extension
 * XML PHP Extension
+* PHP INTL Extension
+* Composer Installed
+* NPM & Node Installed
 
 ### Installation
 To install run the following commands in a working directory:
@@ -34,16 +37,13 @@ To install run the following commands in a working directory:
 You will then need to change your web server root to the public directory. Contact your host for help if you need it.
 
 Now run `composer install` and make sure you have composer installed on your server!
+Also run `npm run production` to generate the asset files in production mode. You will need NPM and Node installed!
 
 Then setup your database and open the `.env.example` file. Rename this file to `.env` and enter details for your site, database, stripe and email integration.
 
-Run `php artisan key:generate` from the root project folder.
+Run `php artisan app:install` which will install the app for you by creating the migrations, sorting out file permissions and walking you through creating the super admin account.
 
-Run `php artisan migrate` from the root project folder. This will create the database tables for you.
-
-Now you can setup your Super Admin account by running `php artisan super_admin:create` which will walk you through creating the account.
-
-You also need to add a crontab with the following details: `* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1` Edit the /path/to/artisan to your actual artisan path. Artisan is the file in the root directory of the project. You should be able to do this by logging into your server via SSH and running `crontab -e`. Then just paste the above line correctly. **This step is optional and only required if you want to use recurring invoices**.
+You also need to add a crontab with the following details: `* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1` Edit the /path/to/artisan to your actual artisan path. Artisan is the file in the root directory of the project. You should be able to do this by logging into your server via SSH and running `crontab -e`. Then just paste the above line correctly.
 
 You should then be able to access UltimateCRM easily!
 
@@ -51,6 +51,7 @@ You should then be able to access UltimateCRM easily!
 To upgrade run the following commands:
 `git pull`
 `composer install`
+`npm run production`
 `php artisan migrate`
 This should have you already to go in most versions. If additional steps are required they will be specified in the version release.
 
@@ -68,7 +69,7 @@ We will add common issues here for everyone to see easily!
 
 ## Contributing
 If you would like to contribute to this project then please submit all pull requests to the `develop` branch.
-All builds are checked with Travis CI.
+All builds are checked with Travis CI and the tests are run with Laravel Dusk.
 Please ensure your coding standard matches PSR-2. You can do so by running the following commands:
 
 #### Install PHP-CS-Fixer

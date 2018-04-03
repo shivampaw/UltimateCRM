@@ -16,7 +16,7 @@ class ManageRecurringInvoices extends Command
      *
      * @var string
      */
-    protected $signature = 'manage_invoices';
+    protected $signature = 'invocies:recurring';
 
     /**
      * The console command description.
@@ -59,9 +59,7 @@ class ManageRecurringInvoices extends Command
             $completedInvoice->next_run = Carbon::today()->addDays($completedInvoice->how_often);
             $completedInvoice->save();
 
-            $client = $newInvoice->client;
-
-            $this->info(Mail::send(new NewInvoice($client, $newInvoice)));
+            $this->info(Mail::send(new NewInvoice($newInvoice->client, $newInvoice)));
         }
     }
 }

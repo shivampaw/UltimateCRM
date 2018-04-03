@@ -12,10 +12,7 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-        Commands\CreateSuperAdmin::class,
-        Commands\ManageRecurringInvoices::class,
-    ];
+    protected $commands = [];
 
     /**
      * Define the application's command schedule.
@@ -26,9 +23,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('manage_invoices')
-                 ->hourly();
+        $schedule->command('invoices:recurring')->hourly();
+        $schedule->command('invoices:overdue')->hourly();
     }
+
     /**
      * Register the Closure based commands for the application.
      *
@@ -37,5 +35,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         require base_path('routes/console.php');
+        $this->load(__DIR__ . '/Commands');
     }
 }

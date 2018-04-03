@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreInvoiceRequest;
 use App\Models\Client;
 use App\Models\Invoice;
-use App\Http\Requests\StoreInvoiceRequest;
 
 class InvoicesController extends Controller
 {
@@ -17,6 +17,8 @@ class InvoicesController extends Controller
     public function index(Client $client)
     {
         $invoices = $client->invoices;
+        $invoices->load('client');
+
         return view('adminsOnly.invoices.index', compact('client', 'invoices'));
     }
 
@@ -25,16 +27,17 @@ class InvoicesController extends Controller
         return view('adminsOnly.invoices.create', compact('client'));
     }
 
-    public function store(StoreInvoiceRequest $request, Client $client)
+    public function store(StoreInvoiceRequest $request)
     {
         $request->storeInvoice();
 
         flash('Invoice Created!');
-        return redirect('/clients/'.$client->id);
     }
 
-    public function show(Client $client, Invoice $invoice)
+    public function show($client, Invoice $invoice)
     {
+        $invoice->load('client');
+
         return view('adminsOnly.invoices.show', compact('invoice'));
     }
 
@@ -42,6 +45,7 @@ class InvoicesController extends Controller
     {
         $client->invoices()->findOrFail($invoice->id)->delete();
         flash('Invoice Deleted!');
-        return redirect('/clients/'.$client->id.'/invoices');
+
+        return redirect('/clients/' . $client->id . '/invoices');
     }
 }

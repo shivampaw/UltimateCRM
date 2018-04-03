@@ -1,0 +1,40 @@
+/**
+ * Bootstrap Default Colours
+ */
+$white:  		#fff;
+$black:  		#000;
+$red:    		#d9534f;
+$orange: 		#f0ad4e;
+$yellow: 		#ffd500;
+$green:  		#5cb85c;
+$blue:   		#0275d8;
+$teal:   		#5bc0de;
+$pink:   		#ff5b77;
+$purple: 		#613d7c;
+
+$gray-dark:			#292b2c;
+$gray:              #464a4c;
+$gray-light:        #636c72;
+$gray-lighter:      #eceeef;
+$gray-lightest:     #f7f7f9;
+
+$brand-primary:         $blue;
+$brand-success:         $green;
+$brand-info:            $teal;
+$brand-warning:         $orange;
+$brand-danger:          $red;
+$brand-inverse:         $gray-dark;
+
+/**
+ * Bootstrap Link Colours/Decorations
+ */
+$link-color:            	$brand-primary;
+$link-decoration:       	none;
+$link-hover-color:      	darken($link-color, 15%);
+$link-hover-decoration: 	underline;
+
+/**
+ * Bootstrap Font Typography
+ */
+$font-family-sans-serif:	"Open Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$headings-font-family: "Lato";
