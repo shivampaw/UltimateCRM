@@ -7,13 +7,13 @@ use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class InvoiceTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $client;
 
@@ -34,18 +34,18 @@ class InvoiceTest extends TestCase
         $invoiceItems = [
             [
                 'description' => 'Test invoice item',
-                'quantity'    => 4,
-                'price'       => 302.20,
+                'quantity' => 4,
+                'price' => 302.20,
             ],
         ];
 
         Mail::fake();
 
         $this->signIn($this->admin)
-             ->post('/clients/' . $client->id . '/invoices', [
-                 'due_date'     => Carbon::tomorrow(),
-                 'invoiceItems' => $invoiceItems,
-             ]);
+            ->post('/clients/' . $client->id . '/invoices', [
+                'due_date' => Carbon::tomorrow(),
+                'invoiceItems' => $invoiceItems,
+            ]);
 
         Mail::assertSent(NewInvoice::class, function ($mail) use ($client) {
             return $mail->hasTo($client->email);
@@ -64,9 +64,9 @@ class InvoiceTest extends TestCase
         $invoice = create(Invoice::class);
 
         $this->signIn($invoice->client->user)
-             ->get('/invoices/')
-             ->assertSee("Invoice #" . $invoice->id)
-             ->assertStatus(200);
+            ->get('/invoices/')
+            ->assertSee("Invoice #" . $invoice->id)
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -75,10 +75,10 @@ class InvoiceTest extends TestCase
         $invoice = create(Invoice::class);
 
         $this->signIn($invoice->client->user)
-             ->get('/invoices/' . $invoice->id)
-             ->assertSee("Invoice #" . $invoice->id)
-             ->assertSee($invoice->client->name)
-             ->assertStatus(200);
+            ->get('/invoices/' . $invoice->id)
+            ->assertSee("Invoice #" . $invoice->id)
+            ->assertSee($invoice->client->name)
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -88,9 +88,9 @@ class InvoiceTest extends TestCase
         $client = $invoice->client;
 
         $this->signIn($this->admin)
-             ->get('/clients/' . $client->id . '/invoices/')
-             ->assertSee("Invoice #" . $invoice->id)
-             ->assertStatus(200);
+            ->get('/clients/' . $client->id . '/invoices/')
+            ->assertSee("Invoice #" . $invoice->id)
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -100,9 +100,9 @@ class InvoiceTest extends TestCase
         $client = $invoice->client;
 
         $this->signIn($this->admin)
-             ->get('/clients/' . $client->id . '/invoices/' . $invoice->id)
-             ->assertSee("Invoice #" . $invoice->id)
-             ->assertSee($client->name)
-             ->assertStatus(200);
+            ->get('/clients/' . $client->id . '/invoices/' . $invoice->id)
+            ->assertSee("Invoice #" . $invoice->id)
+            ->assertSee($client->name)
+            ->assertStatus(200);
     }
 }

@@ -4,12 +4,12 @@ namespace Tests\Unit;
 
 use App\Models\Client;
 use App\Models\Project;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ProjectTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /** @test */
     public function projects_belong_to_a_client()

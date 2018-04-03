@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,7 @@ use Tests\TestCase;
 
 class ProjectTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $admin;
 

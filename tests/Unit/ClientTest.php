@@ -6,12 +6,12 @@ use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ClientTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /** @test */
     public function client_has_a_user()
