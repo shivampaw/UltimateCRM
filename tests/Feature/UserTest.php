@@ -15,10 +15,10 @@ class UserTest extends TestCase
     {
         $user = create(User::class);
         $this->post('/login', [
-            'email'    => $user->email,
+            'email' => $user->email,
             'password' => 'secret',
         ]);
-        $this->seeIsAuthenticated();
+        $this->assertAuthenticated();
     }
 
     /** @test */
@@ -26,6 +26,6 @@ class UserTest extends TestCase
     {
         $this->signIn();
         $this->post('/logout');
-        $this->dontSeeIsAuthenticated();
+        $this->assertGuest();
     }
 }

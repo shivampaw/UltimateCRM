@@ -2,11 +2,7 @@
 
 namespace App\Console;
 
-use App\Console\Commands\RunInstall;
-use App\Console\Commands\CreateSuperAdmin;
 use Illuminate\Console\Scheduling\Schedule;
-use App\Console\Commands\ManageOverdueInvoices;
-use App\Console\Commands\ManageRecurringInvoices;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -16,12 +12,7 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
-        CreateSuperAdmin::class,
-        ManageRecurringInvoices::class,
-        ManageOverdueInvoices::class,
-        RunInstall::class,
-    ];
+    protected $commands = [];
 
     /**
      * Define the application's command schedule.
@@ -35,6 +26,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('invoices:recurring')->hourly();
         $schedule->command('invoices:overdue')->hourly();
     }
+
     /**
      * Register the Closure based commands for the application.
      *
@@ -43,5 +35,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         require base_path('routes/console.php');
+        $this->load(__DIR__ . '/Commands');
     }
 }
