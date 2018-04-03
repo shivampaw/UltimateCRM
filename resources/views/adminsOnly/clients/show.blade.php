@@ -7,7 +7,7 @@
     <div class="row text-center">
 		<div class="col-md-6 mt-3">
 			<div class="card">
-				<div class="card-block">
+				<div class="card-body">
 					<h4 class="card-title">Client Details</h4>
 					<p class="card-text">
 						<div class="text-success">{{ $client->name }}</div>
@@ -20,7 +20,7 @@
 
 		<div class="col-md-6 mt-3">
 			<div class="card">
-				<div class="card-block">
+				<div class="card-body">
 					<h4 class="card-title">Client Address</h4>
 					<p class="card-text">
 						<p class="text-info">
@@ -33,7 +33,7 @@
 
 		<div class="col-md-6 mt-3">
 			<div class="card">
-				<div class="card-block">
+				<div class="card-body">
 					<h4 class="card-title">Invoices</h4>
 					<p class="card-text">
 						<div class="text-success">Paid Invoices: {{ $client->invoices->where('paid', true)->count() }}</div>
@@ -47,7 +47,7 @@
 
 		<div class="col-md-6 mt-3">
 			<div class="card">
-				<div class="card-block">
+				<div class="card-body">
 					<h4 class="card-title">Projects</h4>
 					<p class="card-text">
 						<div class="text-success">Agreed Projects: {{ $client->projects->where('accepted', true)->count() }}</div>

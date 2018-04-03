@@ -14,7 +14,7 @@
 		@foreach($clients as $client)
             <div class="col-lg-4 col-sm-6 mt-3">
 				<div class="card text-center">
-					<div class="card-block">
+					<div class="card-body">
 						<h4 class="card-title">{{ $client->name }}</h4>
 						<p class="card-text">
 							<div class="text-success">Paid Invoices: {{ $client->invoices->where('paid', true)->count() }}</div>

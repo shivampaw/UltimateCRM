@@ -2,7 +2,7 @@
     @forelse($projects as $project)
         <div class="col-lg-4 col-sm-6 mt-3">
             <div class="card client text-center">
-                <div class="card-block">
+                <div class="card-body">
                     <h5 class="card-title">{{ $project->title }}</h5>
                     <p class="card-text">
                     @if($project->accepted)
