@@ -19,8 +19,8 @@ Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch
 ## Requirements / Installation / Usage / Troubleshooting
 Need help getting started? Here's where to look!
 ### Requirements
-This CRM runs with Laravel 5.4 for which the requirements are as follows:
-* PHP >= 5.6.4
+This CRM runs with Laravel 5.5 and the requirements are as follows:
+* PHP >= 7.1.3
 * OpenSSL PHP Extension
 * PDO PHP Extension
 * Mbstring PHP Extension
