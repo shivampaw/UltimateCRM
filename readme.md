@@ -3,7 +3,7 @@ A quick and easy way to manage your clients, invoices and projects all on one we
 
 Master: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch=master)](https://travis-ci.org/shivampaw/UltimateCRM)
 
-Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch=develop)](https://travis-ci.org/shivampaw/UltimateCRM)
+Develop: [![Build Status](https://api.travis-ci.org/shivampaw/UltimateCRM.svg?branch=develop)](https://travis-ci.org/shivampaw/UltimateCRM)
 
 ![UltimateCRM](http://i.imgur.com/gIqzUe2.png)
 
@@ -11,6 +11,7 @@ Develop: [![Build Status](https://travis-ci.org/shivampaw/UltimateCRM.svg?branch
 * The super admin (ID 1) can create and delete multiple admins
 * Admins can create and manage clients
 * Admins can create invoices and projects for clients
+* Admins can create recurring invoices for clients
 * Clients can view and pay invoice through Stripe integration
 * Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid or becomes overdue.
 
