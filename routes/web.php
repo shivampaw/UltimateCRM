@@ -44,3 +44,7 @@ Route::post('/invoices/{id}', 'ClientsOnlyController@paidInvoice');
 Route::get('/projects', 'ClientsOnlyController@allProjects');
 Route::get('/projects/{id}', 'ClientsOnlyController@showProject');
 Route::get('/projects/{id}/accept', 'ClientsOnlyController@acceptProject');
+
+
+// Project Chats Routes
+Route::resource('/projects.chats', 'ChatController');

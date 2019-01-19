@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Chat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,6 +18,11 @@ class Project extends Model
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
     }
 
     protected static function boot()

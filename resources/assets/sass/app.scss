@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans|Lato:400|Lato:700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans|Lato:400|Lato:700);
 // Custom Variables
 @import "variables";
 // Need to import bootstrap here
@@ -147,4 +147,21 @@ div.col_row {
   * {
     font-weight: normal !important;
   }
+}
+
+.chat-message-meta {
+  font-size: 14px;
+  color: grey;
+  margin-bottom: 5px;
+}
+
+.chat-message {
+  padding: 10px;
+  border-bottom: 1px solid black;
+}
+
+.chat-body {
+  padding: 20px;
+  border: 1px solid lightgrey;
+  margin: 20px 0;
 }
