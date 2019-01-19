@@ -13,7 +13,8 @@ Develop: [![Build Status](https://api.travis-ci.org/shivampaw/UltimateCRM.svg?br
 * Admins can create invoices and projects for clients
 * Admins can create recurring invoices for clients
 * Clients can view and pay invoice through Stripe integration
-* Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid or becomes overdue.
+* Emails sent when a new admin or client account is created, a client invoice or project is created and a client invoice is paid or becomes overdue
+* Chat system for projects including email notifications
 
 **If you have any feature requests then just [open an issue](https://github.com/shivampaw/UltimateCRM/issues/new) and let us know!**
 
@@ -52,6 +53,7 @@ You should then be able to access UltimateCRM easily!
 To upgrade run the following commands:
 `git pull`
 `composer install`
+`npm install`
 `npm run production`
 `php artisan migrate`
 This should have you already to go in most versions. If additional steps are required they will be specified in the version release.
@@ -70,20 +72,8 @@ We will add common issues here for everyone to see easily!
 
 ## Contributing
 If you would like to contribute to this project then please submit all pull requests to the `develop` branch.
-All builds are checked with Travis CI and the tests are run with Laravel Dusk.
-Please ensure your coding standard matches PSR-2. You can do so by running the following commands:
-
-#### Install PHP-CS-Fixer
-This command will install `php-cs-fixer` which will be used to format the project to PSR-2 standards.
-
-`composer global require friendsofphp/php-cs-fixer`
-
-#### Run Command
-Run the following command from the project root because it needs to load the .php_cs config file.
-
-`php-cs-fixer fix`
-
-This will format the project to PSR-2. Be sure to run this before committing and pushing any changes!
+All builds are checked with Travis CI.
+Please ensure your coding standard matches PSR-2.
 
 ## License
 This project is open-sourced and licensed under the [MIT license](http://opensource.org/licenses/MIT).
