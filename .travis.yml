@@ -3,6 +3,7 @@ language: php
 php:
     - '7.1'
     - '7.2'
+    - '7.3'
 
 install:
     - travis_retry composer install --no-interaction
@@ -10,6 +11,6 @@ install:
 before_script:
     - cp .env.testing .env
     - composer install
-    - php artisan key:generat
+    - php artisan key:generate
 
 script: vendor/bin/phpunit --configuration phpunit.xml
