@@ -9,7 +9,7 @@
         <input type="hidden" name="token" value="{{ $token }}">
 
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-            <input id="email" type="email" class="form-control" name="email" placeholder="Email" value="{{ $email or old('email') }}">
+            <input id="email" type="email" class="form-control" name="email" placeholder="Email" value="{{ $email ?? old('email') }}">
             @if ($errors->has('email'))
                 <span class="help-block">
                     <strong>{{ $errors->first('email') }}</strong>
