@@ -9,7 +9,8 @@
         <div class="payment-errors"></div>
         <div class="form-group">
             <label class="sr-only">Full Name</label>
-            <input type="text" data-stripe="name" placeholder="Full Name" class="form-control">
+            <input type="text" data-stripe="name" placeholder="Full Name" class="form-control"
+                   value="{{ $invoice->client->name }}">
         </div>
         <div class="form-group">
             <label class="sr-only">Postal Code</label>
@@ -41,7 +42,8 @@
 
     <hr/>
 
-    <a href="/invoices/{{ $invoice->id }}" class="btn btn-danger"><span class="fa fa-angle-double-left"></span> Back to Invoice</a>
+    <a href="/invoices/{{ $invoice->id }}" class="btn btn-danger"><span class="fa fa-angle-double-left"></span> Back to
+        Invoice</a>
 @endsection
 
 @section('footer')
