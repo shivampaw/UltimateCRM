@@ -63,7 +63,7 @@ class ClientsOnlyController extends Controller
             $invoice->paid_at = Carbon::now();
             $invoice->save();
 
-            Mail::send(new InvoicePaid($client, $invoice));
+            Mail::send(new InvoicePaid($invoice));
 
             flash('Invoice Paid!');
 

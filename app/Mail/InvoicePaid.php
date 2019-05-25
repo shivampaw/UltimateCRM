@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -20,9 +21,9 @@ class InvoicePaid extends Mailable
      * @param $client
      * @param $invoice
      */
-    public function __construct($client, $invoice)
+    public function __construct($invoice)
     {
-        $this->client = $client;
+        $this->client = $invoice->client;
         $this->invoice = $invoice;
     }
 
@@ -34,9 +35,10 @@ class InvoicePaid extends Mailable
     public function build()
     {
         return $this->view('emails.invoices.paid')
-                    ->with('client', $this->client)
-                    ->with('invoice', $this->invoice)
-                    ->subject('[' . $this->client->name . '] Invoice #' . $this->invoice->id . ' Has Been Paid For')
-                    ->to($this->client->email, $this->client->name);
+            ->with('client', $this->client)
+            ->with('invoice', $this->invoice)
+            ->subject('[' . $this->client->name . '] Invoice #' . $this->invoice->id . ' Has Been Paid For')
+            ->to($this->client->email, $this->client->name)
+            ->bcc(User::where('is_admin', true)->get());
     }
 }
