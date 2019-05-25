@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'site_title' => env('SITE_TITLE', 'UltimateCRM'),
-    'currency'   => env('CURRENCY', '£'),
+	'site_title' => env( 'SITE_TITLE', 'UltimateCRM' ),
+	'currency'   => env( 'CURRENCY', 'GBP' ),
 ];
