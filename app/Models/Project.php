@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Chat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,6 +30,7 @@ class Project extends Model
         static::deleting(function ($project) {
             $project->invoices->each->delete();
             Storage::delete($project->pdf_path);
+            $project->chats->each->delete();
         });
     }
 }
