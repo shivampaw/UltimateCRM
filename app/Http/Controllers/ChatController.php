@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewChatMessageFromAdmin;
+use App\Mail\NewChatMessageFromClient;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ChatController extends Controller
 {
@@ -22,11 +26,13 @@ class ChatController extends Controller
             $data['attachment'] = $request->attachment->store('public/chats');
         }
 
-        $project->chats()->create($data);
+        $chat = $project->chats()->create($data);
 
         if (Auth::user()->is_admin) {
+            Mail::to($project->client->email, $project->client->name)->send(new NewChatMessageFromAdmin($chat));
             return redirect('/clients/' . $project->client_id . '/projects/' . $project->id . '#project_chat');
         }
+        Mail::to(User::where('is_admin', true)->get())->send(new NewChatMessageFromClient($chat));
         return redirect('/projects/' . $project->id . '#project_chat');
     }
 }
