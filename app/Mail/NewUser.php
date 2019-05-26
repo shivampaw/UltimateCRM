@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\URL;
 
 class NewUser extends Mailable
 {
@@ -34,10 +35,16 @@ class NewUser extends Mailable
     public function build()
     {
         return $this->view('emails.users.' . strtolower(($this->user->is_admin) ? 'Admin' : 'Client'))
-                    ->with([
-                               'user'     => $this->user,
-                               'password' => $this->password,
-                           ])
-                    ->subject('[' . $this->user->name . '] Your New ' . ($this->user->is_admin ? 'Admin' : 'Client') . ' Account');
+            ->with([
+                'user' => $this->user,
+                'password' => $this->password,
+                'login_url' => $this->getLoginUrl()
+            ])
+            ->subject('[' . $this->user->name . '] Your New ' . ($this->user->is_admin ? 'Admin' : 'Client') . ' Account');
+    }
+
+    private function getLoginUrl()
+    {
+        return URL::signedRoute('signedLogin', ['user' => $this->user->id, 'path' => null]);
     }
 }

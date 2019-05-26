@@ -10,7 +10,9 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
 // Home and Update Password Routes
+
 Route::get('/', 'PagesController@index');
 Route::get('/update-password', 'PagesController@showUpdatePasswordForm');
 Route::put('/update-password', 'PagesController@updatePassword');
@@ -33,6 +35,7 @@ Route::resource('/admins', 'AdminsController', ['except' => [
 ]]);
 
 // Authentication Routes
+Route::get('/signed-login/{user}{path?}', 'Auth\\LoginController@loginSignedUrl')->name('signedLogin')->middleware('signed');
 Auth::routes();
 
 // Routes for logged in clients only
