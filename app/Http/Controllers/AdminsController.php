@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Admin;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -71,7 +70,7 @@ class AdminsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param User                     $admin
+     * @param User $admin
      *
      * @return \Illuminate\Http\Response
      *
@@ -80,7 +79,7 @@ class AdminsController extends Controller
     public function update(Request $request, User $admin)
     {
         $admin->update($request->all());
-        flash('Admin ('.$admin->name.') Updated!');
+        flash('Admin (' . $admin->name . ') Updated!');
 
         return redirect('/admins');
     }

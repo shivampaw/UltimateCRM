@@ -37,17 +37,17 @@ class PagesController extends Controller
     {
         $rules = [
             'currentPassword' => 'required',
-            'password'        => 'required|same:confirmPassword|min:6',
+            'password' => 'required|same:confirmPassword|min:6',
             'confirmPassword' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
 
         $validator->after(function ($validator) use ($request) {
             $check = Auth::validate([
-                                        'email'    => Auth::user()->email,
-                                        'password' => $request->currentPassword,
-                                    ]);
-            if (! $check) :
+                'email' => Auth::user()->email,
+                'password' => $request->currentPassword,
+            ]);
+            if (!$check) :
                 $validator->errors()->add('current_password', 'Your current password is incorrect.');
             endif;
         });

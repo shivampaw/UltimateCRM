@@ -27,9 +27,9 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => 'required',
+            'name' => 'required',
             'number' => 'nullable',
-            'email'  => 'required|email|unique:users',
+            'email' => 'required|email|unique:users',
         ];
     }
 
@@ -42,11 +42,11 @@ class StoreUserRequest extends FormRequest
     {
         $password = $password ?: str_random(10);
         $user = User::create([
-                                 'name'     => ($name) ?: $this->name,
-                                 'email'    => ($email) ?: $this->email,
-                                 'password' => bcrypt($password),
-                                 'is_admin' => $admin,
-                             ]);
+            'name' => ($name) ?: $this->name,
+            'email' => ($email) ?: $this->email,
+            'password' => bcrypt($password),
+            'is_admin' => $admin,
+        ]);
 
         Mail::to($user->email, $user->name)->send(new NewUser($user, $password));
 

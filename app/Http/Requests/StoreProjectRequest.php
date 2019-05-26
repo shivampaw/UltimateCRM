@@ -29,7 +29,7 @@ class StoreProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'pdf'   => 'required|file|mimes:pdf',
+            'pdf' => 'required|file|mimes:pdf',
             'title' => 'required',
         ];
     }
@@ -43,7 +43,7 @@ class StoreProjectRequest extends FormRequest
     public function messages()
     {
         return [
-            'pdf.*'          => 'You must upload a PDF with the project details.',
+            'pdf.*' => 'You must upload a PDF with the project details.',
             'title.required' => 'You must enter a project title',
         ];
     }
