@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\URL;
 use Money\Currencies\ISOCurrencies;
 use Money\Currency;
 use Money\Formatter\IntlMoneyFormatter;
@@ -20,4 +21,9 @@ function formatInvoiceTotal($number)
     $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
 
     return $moneyFormatter->format($money);
+}
+
+function signedLoginUrl($user, $path = null)
+{
+    return URL::signedRoute('signedLogin', ['user' => $user, 'path' => $path]);
 }

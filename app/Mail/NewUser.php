@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\URL;
 
 class NewUser extends Mailable
 {
@@ -45,6 +44,6 @@ class NewUser extends Mailable
 
     private function getLoginUrl()
     {
-        return URL::signedRoute('signedLogin', ['user' => $this->user->id, 'path' => null]);
+        return signedLoginUrl($this->user->id);
     }
 }
