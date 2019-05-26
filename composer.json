@@ -14,7 +14,8 @@
     "laravel/framework": "5.7.*",
     "laravel/tinker": "^1.0",
     "moneyphp/money": "^3.0",
-    "stripe/stripe-php": "3.*"
+    "stripe/stripe-php": "3.*",
+    "ext-intl": "*"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
