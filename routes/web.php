@@ -35,7 +35,7 @@ Route::resource('/admins', 'AdminsController', ['except' => [
 ]]);
 
 // Authentication Routes
-Route::get('/signed-login/{user}/{path?}', 'Auth\\LoginController@loginSignedUrl')->name('signedLogin')->middleware('signed');
+Route::get('/signed-login/{user}', 'Auth\\LoginController@loginSignedUrl')->name('signedLogin')->middleware('signed');
 Auth::routes();
 
 // Routes for logged in clients only

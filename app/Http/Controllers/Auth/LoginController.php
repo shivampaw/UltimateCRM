@@ -43,10 +43,11 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function loginSignedUrl($user, $path = null)
+    public function loginSignedUrl($user)
     {
+        $path = request('path') ?? 'update-password';
         Auth::loginUsingId($user);
 
-        return redirect()->to($path ?? 'update-password');
+        return redirect()->to($path);
     }
 }
