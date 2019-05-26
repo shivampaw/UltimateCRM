@@ -59,7 +59,7 @@ class ManageRecurringInvoices extends Command
             $completedInvoice->next_run = Carbon::today()->addDays($completedInvoice->how_often);
             $completedInvoice->save();
 
-            $this->info(Mail::send(new NewInvoice($newInvoice->client, $newInvoice)));
+            Mail::send(new NewInvoice($newInvoice->client, $newInvoice));
         }
     }
 }

@@ -35,13 +35,13 @@ class StoreInvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'due_date'           => 'date|required',
-            'recurring_date'     => 'required_if:recurringChecked,true',
+            'due_date' => 'date|required',
+            'recurring_date' => 'required_if:recurringChecked,true',
             'recurring_due_date' => 'required_if:recurringChecked,true',
-            'project_id'         => [
+            'project_id' => [
                 'nullable',
                 Rule::exists('projects', 'id')->where(function ($query) {
-                    $query->where('client_id', $this->client->id);
+                    $query->where('client_id', $this->route('client'));
                 }),
             ],
         ];
@@ -56,9 +56,9 @@ class StoreInvoiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'project_id.exists'              => 'The Project ID you entered does not exist for this user.',
-            'due_date.required'              => 'You must enter a Due Date.',
-            'recurring_date.required_if'     => 'You need to enter a Recurring Date if you want this invoice to recur.',
+            'project_id.exists' => 'The Project ID you entered does not exist for this user.',
+            'due_date.required' => 'You must enter a Due Date.',
+            'recurring_date.required_if' => 'You need to enter a Recurring Date if you want this invoice to recur.',
             'recurring_due_date.required_if' => 'You need to enter a Recurring Due Date if you want this invoice to recur.',
         ];
     }
@@ -84,7 +84,7 @@ class StoreInvoiceRequest extends FormRequest
         }
         $currencies = new ISOCurrencies();
         $moneyParser = new DecimalMoneyParser($currencies);
-        $money = $moneyParser->parse((string) $invoice->total, config('crm.currency'));
+        $money = $moneyParser->parse((string)$invoice->total, config('crm.currency'));
 
         $invoice->total = $money->getAmount();
 
