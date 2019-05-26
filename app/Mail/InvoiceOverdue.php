@@ -2,10 +2,10 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class InvoiceOverdue extends Mailable
 {
@@ -31,10 +31,11 @@ class InvoiceOverdue extends Mailable
     {
         $diffInDays = $this->invoice->due_date->diffInDays();
         return $this->view('emails.invoices.overdue')
-                    ->with('client', $this->client)
-                    ->with('invoice', $this->invoice)
-                    ->with('overdueDays', $diffInDays)
-                    ->subject('['.$this->client->name.'] Invoice #'.$this->invoice->id.' Is Now Overdue')
-                    ->to($this->client->email, $this->client->name);
+            ->with('client', $this->client)
+            ->with('invoice', $this->invoice)
+            ->with('overdueDays', $diffInDays)
+            ->subject('[' . $this->client->name . '] Invoice #' . $this->invoice->id . ' Is Now Overdue')
+            ->to($this->client->user)
+            ->bcc(User::where('is_admin', true)->get());
     }
 }

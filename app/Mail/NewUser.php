@@ -39,7 +39,8 @@ class NewUser extends Mailable
                 'password' => $this->password,
                 'login_url' => $this->getLoginUrl()
             ])
-            ->subject('[' . $this->user->name . '] Your New ' . ($this->user->is_admin ? 'Admin' : 'Client') . ' Account');
+            ->subject('[' . $this->user->name . '] Your New ' . ($this->user->is_admin ? 'Admin' : 'Client') . ' Account')
+            ->to($this->user);
     }
 
     private function getLoginUrl()

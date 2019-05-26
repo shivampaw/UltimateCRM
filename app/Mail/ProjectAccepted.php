@@ -35,11 +35,12 @@ class ProjectAccepted extends Mailable
      */
     public function build()
     {
-        if (User::where('id', 1)->exists()) {
-            $superAdmin = User::find(1);
-            $this->cc($superAdmin->email, $superAdmin->name);
-        }
-
-        return $this->view('emails.projects.accepted')->with('client', $this->client)->with('project', $this->project)->subject('['.$this->client->name.'] '.$this->project->title.' Has Been Accepted')->attachData(Storage::get($this->project->pdf_path), 'project.pdf')->to($this->client->email, $this->client->name);
+        return $this->view('emails.projects.accepted')
+            ->with('client', $this->client)
+            ->with('project', $this->project)
+            ->subject('[' . $this->client->name . '] ' . $this->project->title . ' Has Been Accepted')
+            ->attachData(Storage::get($this->project->pdf_path), 'project.pdf')
+            ->to($this->client->user)
+            ->bcc(User::where('is_admin', true)->get());
     }
 }

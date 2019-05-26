@@ -38,7 +38,7 @@ class InvoicePaid extends Mailable
             ->with('client', $this->client)
             ->with('invoice', $this->invoice)
             ->subject('[' . $this->client->name . '] Invoice #' . $this->invoice->id . ' Has Been Paid For')
-            ->to($this->client->email, $this->client->name)
+            ->to($this->client->user)
             ->bcc(User::where('is_admin', true)->get());
     }
 }

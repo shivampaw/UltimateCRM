@@ -63,7 +63,7 @@ class StoreProjectRequest extends FormRequest
         $project->pdf_path = $this->pdf->store('public/project_files');
 
         $this->client->addProject($project);
-        Mail::to($this->client->email, $this->client->name)->send(new NewProject($this->client, $project));
+        Mail::send(new NewProject($this->client, $project));
 
         return $project;
     }

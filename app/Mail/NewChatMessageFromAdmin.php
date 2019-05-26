@@ -31,6 +31,7 @@ class NewChatMessageFromAdmin extends Mailable
     public function build()
     {
         return $this->view('emails.chats.from_admin')
-            ->subject('[' . $this->chat->project->client->name . '] Project ' . $this->chat->project->title . ' Has Had A Chat Added');
+            ->subject('[' . $this->chat->project->client->name . '] Project ' . $this->chat->project->title . ' Has Had A Chat Added')
+            ->to($this->chat->project->client->user);
     }
 }

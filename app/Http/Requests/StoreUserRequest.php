@@ -48,7 +48,7 @@ class StoreUserRequest extends FormRequest
             'is_admin' => $admin,
         ]);
 
-        Mail::to($user->email, $user->name)->send(new NewUser($user, $password));
+        Mail::send(new NewUser($user, $password));
 
         return $user;
     }

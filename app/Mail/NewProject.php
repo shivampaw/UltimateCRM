@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -35,9 +36,11 @@ class NewProject extends Mailable
     public function build()
     {
         return $this->view('emails.projects.new')
-                    ->with('client', $this->client)
-                    ->with('project', $this->project)
-                    ->attachData(Storage::get($this->project->pdf_path), 'project.pdf')
-                    ->subject('[' . $this->client->name . '] New Project Created');
+            ->with('client', $this->client)
+            ->with('project', $this->project)
+            ->attachData(Storage::get($this->project->pdf_path), 'project.pdf')
+            ->subject('[' . $this->client->name . '] New Project Created')
+            ->to($this->client->user)
+            ->bcc(User::where('is_admin', true)->get());
     }
 }
