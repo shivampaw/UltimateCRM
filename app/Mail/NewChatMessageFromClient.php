@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Chat;
+use App\Models\Chat;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
