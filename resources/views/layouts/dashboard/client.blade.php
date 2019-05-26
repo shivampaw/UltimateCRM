@@ -1,4 +1,4 @@
-<p>Thanks for logging in!</p>
+<p>Thank you for logging in!</p>
 <p>You can view your projects, invoices and make payments using the navigation menu above!</p>
 @php
     $invoiceCount = $user->client->invoices()->where('paid', false)->count();
