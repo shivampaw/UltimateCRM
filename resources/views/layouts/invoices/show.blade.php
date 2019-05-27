@@ -40,8 +40,8 @@
                     <tr scope="row">
                         <td>{{ $item->description }}</td>
                         <td>{{ $item->quantity }}</td>
-                        <td>{{ formatInvoiceTotal($item->price * 100) }}</td>
-                        <td>{{ formatInvoiceTotal(($item->price * 100) * $item->quantity) }}</td>
+                        <td>{{ formatInvoiceTotal($item->price) }}</td>
+                        <td>{{ formatInvoiceTotal($item->price * $item->quantity) }}</td>
                     </tr>
                 @endforeach
                 <tr scope="row">

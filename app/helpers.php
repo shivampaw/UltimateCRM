@@ -1,10 +1,7 @@
 <?php
 
+use Brick\Money\Money;
 use Illuminate\Support\Facades\URL;
-use Money\Currencies\ISOCurrencies;
-use Money\Currency;
-use Money\Formatter\DecimalMoneyFormatter;
-use Money\Money;
 
 function flash($message, $level = 'success')
 {
@@ -12,14 +9,13 @@ function flash($message, $level = 'success')
     session()->flash('status_level', $level);
 }
 
+/**
+ * @param $number
+ * @throws \Brick\Money\Exception\UnknownCurrencyException
+ */
 function formatInvoiceTotal($number)
 {
-    $money = new Money($number, new Currency(config('crm.currency')));
-    $currencies = new ISOCurrencies();
-
-    $moneyFormatter = new DecimalMoneyFormatter($currencies);
-
-    return $moneyFormatter->format($money) . ' ' . config('crm.currency');
+    return Money::ofMinor($number, config('crm.currency'));
 }
 
 function signedLoginUrl($user, $path = 'update-password')

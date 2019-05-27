@@ -6,11 +6,13 @@ use App\Mail\NewInvoice;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\RecurringInvoice;
+use Brick\Money\Money;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Money\Currencies\ISOCurrencies;
+use Money\Currency;
 use Money\Parser\DecimalMoneyParser;
 
 class StoreInvoiceRequest extends FormRequest
@@ -78,15 +80,15 @@ class StoreInvoiceRequest extends FormRequest
         $invoice->notes = $this->notes;
         $invoice->project_id = ($this->project_id) ?: null;
         $invoice->overdue_notification_sent = false;
+
         $invoice->total = 0;
         foreach ($this->invoiceItems as $item) {
             $invoice->total += $item['quantity'] * $item['price'];
+            $item['price'] = Money::of($item['price'], config('crm.currency'))->getMinorAmount()->toInt();
         }
-        $currencies = new ISOCurrencies();
-        $moneyParser = new DecimalMoneyParser($currencies);
-        $money = $moneyParser->parse((string)$invoice->total, config('crm.currency'));
 
-        $invoice->total = $money->getAmount();
+        $money = Money::of($invoice->total, config('crm.currency'));
+        $invoice->total = $money->getMinorAmount()->toInt();
 
         $this->client->addInvoice($invoice);
 
