@@ -19,7 +19,7 @@ function formatInvoiceTotal($number)
 
     $moneyFormatter = new DecimalMoneyFormatter($currencies);
 
-    return $moneyFormatter->format($money);
+    return $moneyFormatter->format($money) . ' ' . config('crm.currency');
 }
 
 function signedLoginUrl($user, $path = 'update-password')
