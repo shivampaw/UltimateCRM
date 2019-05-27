@@ -23,7 +23,7 @@ function formatInvoiceTotal($number)
     return $moneyFormatter->format($money);
 }
 
-function signedLoginUrl($user, $path = null)
+function signedLoginUrl($user, $path = 'update-password')
 {
     return URL::signedRoute('signedLogin', ['user' => $user, 'path' => $path]);
 }

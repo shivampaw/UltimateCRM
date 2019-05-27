@@ -35,7 +35,13 @@ class UserTest extends TestCase
     public function user_can_sign_in_via_signed_url()
     {
         $user = create(User::class);
-        $url = signedLoginUrl($user->id, 'clients');
+        $url = signedLoginUrl($user->id);
+        $this->get($url)
+            ->assertRedirect('update-password');
+
+        $this->post('/logout');
+
+        $url = signedLoginUrl($user->id, "clients");
         $this->get($url)
             ->assertRedirect('clients');
     }
