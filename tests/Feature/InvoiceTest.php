@@ -48,6 +48,7 @@ class InvoiceTest extends TestCase
             ]);
 
         Mail::assertSent(NewInvoice::class, function ($mail) use ($client) {
+            $mail->build();
             return $mail->hasTo($client->email);
         });
 

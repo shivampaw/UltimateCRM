@@ -7,7 +7,6 @@ use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
@@ -39,15 +38,16 @@ class ProjectTest extends TestCase
         Mail::fake();
 
         $this->signIn($this->admin)
-             ->post('/clients/' . $client->id . '/projects', [
-                 'pdf'   => UploadedFile::fake()->create('project.pdf', 200),
-                 'title' => 'Test Project',
-             ])
-             ->assertRedirect('/clients/' . $client->id . '/projects');
+            ->post('/clients/' . $client->id . '/projects', [
+                'pdf' => UploadedFile::fake()->create('project.pdf', 200),
+                'title' => 'Test Project',
+            ])
+            ->assertRedirect('/clients/' . $client->id . '/projects');
 
         $project = $client->projects()->first();
 
         Mail::assertSent(NewProject::class, function ($mail) use ($client) {
+            $mail->build();
             return $mail->hasTo($client->email);
         });
 
@@ -69,9 +69,9 @@ class ProjectTest extends TestCase
         $project = create(Project::class);
 
         $this->signIn($project->client->user)
-             ->get('/projects')
-             ->assertSee($project->title)
-             ->assertStatus(200);
+            ->get('/projects')
+            ->assertSee($project->title)
+            ->assertStatus(200);
 
         $project->delete();
         Storage::assertMissing($project->pdf_path);
@@ -83,9 +83,9 @@ class ProjectTest extends TestCase
         $project = create(Project::class);
 
         $this->signIn($project->client->user)
-             ->get('/projects/' . $project->id)
-             ->assertSee($project->title)
-             ->assertStatus(200);
+            ->get('/projects/' . $project->id)
+            ->assertSee($project->title)
+            ->assertStatus(200);
 
         $project->delete();
         Storage::assertMissing($project->pdf_path);
@@ -98,9 +98,9 @@ class ProjectTest extends TestCase
         $client = $project->client;
 
         $this->signIn($this->admin)
-             ->get('/clients/' . $client->id . '/projects/' . $project->id)
-             ->assertSee($project->title)
-             ->assertStatus(200);
+            ->get('/clients/' . $client->id . '/projects/' . $project->id)
+            ->assertSee($project->title)
+            ->assertStatus(200);
 
         $project->delete();
         Storage::assertMissing($project->pdf_path);
@@ -113,12 +113,12 @@ class ProjectTest extends TestCase
         $client = $project->client;
         $invoice = create(Invoice::class, [
             'project_id' => $project->id,
-            'client_id'  => $client->id,
+            'client_id' => $client->id,
         ]);
 
         $this->signIn($this->admin)
-             ->get('/clients/' . $client->id . '/projects/' . $project->id)
-             ->assertSee('Invoice #' . $invoice->id);
+            ->get('/clients/' . $client->id . '/projects/' . $project->id)
+            ->assertSee('Invoice #' . $invoice->id);
 
         $project->delete();
         Storage::assertMissing($project->pdf_path);
@@ -131,7 +131,7 @@ class ProjectTest extends TestCase
         $client = $project->client;
         create(Invoice::class, [
             'project_id' => $project->id,
-            'client_id'  => $client->id,
+            'client_id' => $client->id,
         ], 5);
 
         $project->delete();

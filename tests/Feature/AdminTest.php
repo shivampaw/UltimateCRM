@@ -49,6 +49,7 @@ class AdminTest extends TestCase
             ->assertRedirect('/clients');
 
         Mail::assertSent(NewUser::class, function ($mail) use ($client) {
+            $mail->build();
             return $mail->hasTo($client['email']);
         });
 

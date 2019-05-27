@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Shared;
 
+use App\Http\Controllers\Controller;
 use App\Mail\NewChatMessageFromAdmin;
 use App\Mail\NewChatMessageFromClient;
 use App\Models\Project;
