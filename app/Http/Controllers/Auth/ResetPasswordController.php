@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller
 {
@@ -42,7 +42,6 @@ class ResetPasswordController extends Controller
         );
 
 
-
         switch ($response) {
             case Password::RESET_LINK_SENT:
                 return $this->getSendResetLinkEmailSuccessResponse($response);
@@ -72,7 +71,7 @@ class ResetPasswordController extends Controller
      */
     protected function getEmailSubject($name)
     {
-        return '['.$name->name.'] Your Password Reset Link';
+        return '[' . $name->name . '] Your Password Reset Link';
     }
 
 

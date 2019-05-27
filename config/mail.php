@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\User;
-
 return [
 
     /*
@@ -114,11 +112,11 @@ return [
 
 
     'markdown' => [
-    'theme' => 'default',
+        'theme' => 'default',
 
-    'paths' => [
-        resource_path('views/vendor/mail'),
+        'paths' => [
+            resource_path('views/vendor/mail'),
+        ],
     ],
-],
 
 ];

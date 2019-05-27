@@ -16,7 +16,7 @@ class MiddlewareTest extends TestCase
     protected $admin;
 
     protected $client;
-    
+
     public function setUp()
     {
         parent::setUp();

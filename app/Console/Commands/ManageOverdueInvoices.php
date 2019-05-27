@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
-use App\Models\Invoice;
 use App\Mail\InvoiceOverdue;
+use App\Models\Invoice;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -42,9 +42,9 @@ class ManageOverdueInvoices extends Command
     public function handle()
     {
         $overdueInvoices = Invoice::whereDate('due_date', '<', Carbon::today()->toDateString())
-                                    ->where('paid', false)
-                                    ->where('overdue_notification_sent', false)
-                                    ->get();
+            ->where('paid', false)
+            ->where('overdue_notification_sent', false)
+            ->get();
 
         foreach ($overdueInvoices as $invoice) {
             Mail::send(new InvoiceOverdue($invoice->client, $invoice));
