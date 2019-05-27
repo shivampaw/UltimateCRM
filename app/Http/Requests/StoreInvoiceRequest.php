@@ -40,6 +40,7 @@ class StoreInvoiceRequest extends FormRequest
             'due_date' => 'date|required',
             'recurring_date' => 'required_if:recurringChecked,true',
             'recurring_due_date' => 'required_if:recurringChecked,true',
+            'discount' => 'nullable|numeric',
             'project_id' => [
                 'nullable',
                 Rule::exists('projects', 'id')->where(function ($query) {
@@ -74,18 +75,23 @@ class StoreInvoiceRequest extends FormRequest
     {
         $this->client = Client::find($this->route('client'));
         $invoice = new Invoice();
-        $invoice->item_details = json_encode($this->invoiceItems);
         $invoice->due_date = $this->due_date;
         $invoice->paid = false;
         $invoice->notes = $this->notes;
         $invoice->project_id = ($this->project_id) ?: null;
         $invoice->overdue_notification_sent = false;
-
         $invoice->total = 0;
+
+        $invoiceItems = [];
         foreach ($this->invoiceItems as $item) {
             $invoice->total += $item['quantity'] * $item['price'];
             $item['price'] = Money::of($item['price'], config('crm.currency'))->getMinorAmount()->toInt();
+            $invoiceItems[] = $item;
         }
+        $invoice->item_details = json_encode($invoiceItems);
+
+        $invoice->total -= $this->discount;
+        $invoice->discount = Money::of($this->discount ?? 0, config('crm.currency'))->getMinorAmount()->toInt();
 
         $money = Money::of($invoice->total, config('crm.currency'));
         $invoice->total = $money->getMinorAmount()->toInt();

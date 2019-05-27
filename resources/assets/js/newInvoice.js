@@ -15,6 +15,7 @@ new Vue({
     recurring_due_date: null,
     notes: null,
     recurringChecked: false,
+    discount: null,
     errors: [],
   },
 
@@ -52,7 +53,7 @@ new Vue({
     canAddItemOrProceed() {
       this.errors = [];
       var canAdd = true;
-      
+
       this.invoiceItems.forEach(function(item) {
         if(!item.description || !item.quantity || !item.price) {
           canAdd = false;

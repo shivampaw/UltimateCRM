@@ -45,6 +45,10 @@
                     </tr>
                 @endforeach
                 <tr scope="row">
+                    <td colspan="3"><strong>Discount</strong></td>
+                    <td>{{ formatInvoiceTotal($invoice->discount) }}
+                </tr>
+                <tr scope="row">
                     <td colspan="3"><strong>Total</strong></td>
                     <td>{{ formatInvoiceTotal($invoice->total) }}
                 </tr>

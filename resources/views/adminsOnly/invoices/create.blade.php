@@ -18,7 +18,7 @@
             <div class="form-group">
                 <input type="number" v-model="project_id" placeholder="Project ID" class="form-control">
             </div>
-            <hr />
+            <hr/>
             <p class="clearfix">
                 <strong class="float-left">Invoice Items</strong>
                 <a @click.prevent="addInvoiceItem" class="float-right text-info">Add Invoice Item</a>
@@ -27,19 +27,22 @@
             <div class="form-group" v-for="(invoiceItem, i) in invoiceItems">
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Description" v-model="invoiceItem.description" required>
+                        <input type="text" class="form-control" placeholder="Description"
+                               v-model="invoiceItem.description" required>
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" placeholder="Quantity" v-model="invoiceItem.quantity" required>
+                        <input type="number" class="form-control" placeholder="Quantity" v-model="invoiceItem.quantity"
+                               required>
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" placeholder="Price" step="0.01" v-model="invoiceItem.price" required>
+                        <input type="number" class="form-control" placeholder="Price" step="0.01"
+                               v-model="invoiceItem.price" required>
                     </div>
                 </div>
                 <a class="text-danger" @click="removeInvoiceItem(i)">Remove Item</a>
             </div>
 
-            <hr />
+            <hr/>
             <div class="form-group">
                 <label class="custom-control custom-checkbox">
                     <input type="checkbox" v-model="recurringChecked" class="custom-control-input">
@@ -48,15 +51,23 @@
                 </label>
             </div>
             <div class="form-group" v-if="recurringChecked">
-                <input type="number" v-model="recurring_date" class="form-control" placeholder="Recurring Date" required>
-                <small class="form-text text-muted">How many days should this invoice be generated after it's last generation.</small>
+                <input type="number" v-model="recurring_date" class="form-control" placeholder="Recurring Date"
+                       required>
+                <small class="form-text text-muted">How many days should this invoice be generated after it's last
+                    generation.
+                </small>
             </div>
             <div class="form-group" v-if="recurringChecked">
-                <input type="number" v-model="recurring_due_date" class="form-control" placeholder="Reucrring Due Date" required>
-                <small class="form-text text-muted">How many days after this invoice generates should the due date be.</small>
+                <input type="number" v-model="recurring_due_date" class="form-control" placeholder="Reucrring Due Date"
+                       required>
+                <small class="form-text text-muted">How many days after this invoice generates should the due date be.
+                </small>
             </div>
             <div class="form-group">
                 <textarea v-model="notes" id="notes" rows="5" placeholder="Notes" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="Discount" step="0.01" v-model="discount">
             </div>
             <div class="form-group">
                 <input type="submit" class="btn-primary btn btn-block" value="Create Invoice">
@@ -70,15 +81,16 @@
             </ul>
         </div>
 
-        <hr />
+        <hr/>
 
         <p>
-            <a href="/clients/{{ $client->id }}/invoices" class="btn btn-info"><span class="fa fa-angle-double-left"></span> Back to Client Invoices</a>
+            <a href="/clients/{{ $client->id }}/invoices" class="btn btn-info"><span
+                        class="fa fa-angle-double-left"></span> Back to Client Invoices</a>
         </p>
     </div>
 
 @endsection
 
 @section('footer')
-<script type="text/javascript" src="/js/newInvoice.js"></script>
+    <script type="text/javascript" src="/js/newInvoice.js"></script>
 @endsection
