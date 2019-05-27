@@ -37,7 +37,7 @@ class PagesController extends Controller
     {
         $rules = [
             'currentPassword' => 'required',
-            'password' => 'required|same:confirmPassword|min:6',
+            'password' => 'required|same:confirmPassword|min:8',
             'confirmPassword' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
