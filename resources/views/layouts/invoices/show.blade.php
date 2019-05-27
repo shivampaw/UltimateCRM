@@ -58,7 +58,7 @@
                 <h5>Notes</h5>
             </div>
             <div class="col-12">
-                <p>{{ $invoice->notes }}</p>
+                <p>{!! nl2br($invoice->notes) !!}</p>
             </div>
         </div>
     @endif
