@@ -21,7 +21,7 @@ Develop: [![Build Status](https://api.travis-ci.org/shivampaw/UltimateCRM.svg?br
 ## Requirements / Installation / Usage / Troubleshooting
 Need help getting started? Here's where to look!
 ### Requirements
-This CRM runs with Laravel 5.5 and the requirements are as follows:
+This CRM runs with Laravel 5.7 and the requirements are as follows:
 * PHP >= 7.1.3
 * OpenSSL PHP Extension
 * PDO PHP Extension
@@ -39,7 +39,7 @@ To install run the following commands in a working directory:
 You will then need to change your web server root to the public directory. Contact your host for help if you need it.
 
 Now run `composer install` and make sure you have composer installed on your server!
-Also run `npm run production` to generate the asset files in production mode. You will need NPM and Node installed!
+Also run `npm install && npm run production` to generate the asset files in production mode. You will need NPM and Node installed!
 
 Then setup your database and open the `.env.example` file. Rename this file to `.env` and enter details for your site, database, stripe and email integration.
 
@@ -52,7 +52,7 @@ You should then be able to access UltimateCRM easily!
 ### Upgrading
 To upgrade run the following commands:
 `git pull`
-`composer install`
+`composer update`
 `npm install`
 `npm run production`
 `php artisan migrate`
