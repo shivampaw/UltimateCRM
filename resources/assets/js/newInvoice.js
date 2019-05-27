@@ -39,7 +39,7 @@ new Vue({
                     .then(success => window.location.href = "../invoices")
                     .catch(failure => {
                         if (failure.response.status >= 500) {
-                            this.errors.push("Something weird went wrong...Please try again later or contact the admin.");
+                            this.errors.push(failure.response.data.message);
                         } else {
                             var errorsArray = failure.response.data;
                             Object.keys(errorsArray).forEach(error => {
