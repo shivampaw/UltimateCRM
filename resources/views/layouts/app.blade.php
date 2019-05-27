@@ -68,19 +68,20 @@
                     <h3>@yield('page_title')</h3>
                 </div>
                 <div class="card-body">
+
                     @if (session('status'))
                         <div class="alert alert-{{ session('status_level') ?: "success" }}">
-                            <div>{{ session('status') }}</div>
+                            <p>{{ session('status') }}</p>
                         </div>
                     @endif
 
-
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                                <div>{{ $error }}</div>
-                                @endforeach
-                                </ul>
+                            @foreach($errors->all() as $error)
+                                <p>
+                                    {{ $error }}
+                                </p>
+                            @endforeach
                         </div>
                     @endif
 
