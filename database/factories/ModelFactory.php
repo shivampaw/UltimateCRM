@@ -4,6 +4,7 @@ use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\User;
+use Brick\Money\Money;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -49,20 +50,18 @@ $factory->define(Invoice::class, function (Faker\Generator $faker) {
         'quantity' => $faker->numberBetween(1, 10),
         'price' => $faker->randomFloat(2, 50, 500),
     ];
+
+    $total = 0;
+    $invoiceItems = [];
+    $total += $invoiceItem['quantity'] * $invoiceItem['price'];
+    $invoiceItem['price'] = Money::of($invoiceItem['price'], config('crm.currency'))->getMinorAmount()->toInt();
+
     $invoice_items = json_encode([$invoiceItem]);
-
-    $total = $invoiceItem['quantity'] * $invoiceItem['price'];
-
-    $currencies = new ISOCurrencies();
-    $moneyParser = new DecimalMoneyParser($currencies);
-    $money = $moneyParser->parse((string)$total, config('crm.currency'));
-
-    $total = $money->getAmount();
 
     return [
         'client_id' => create(Client::class)->id,
         'due_date' => Carbon::tomorrow(),
-        'total' => $total,
+        'total' => Money::of($total, config('crm.currency'))->getMinorAmount()->toInt(),
         'item_details' => $invoice_items,
         'project_id' => null,
     ];
