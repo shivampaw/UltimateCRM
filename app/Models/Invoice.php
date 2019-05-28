@@ -20,12 +20,4 @@ class Invoice extends Model
     {
         return $this->belongsTo(Project::class);
     }
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::deleting(function ($invoice) {
-            RecurringInvoice::where('invoice_id', $invoice->id)->delete();
-        });
-    }
 }

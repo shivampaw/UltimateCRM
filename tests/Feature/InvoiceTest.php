@@ -111,34 +111,6 @@ class InvoiceTest extends TestCase
     }
 
     /** @test */
-    public function invoices_can_be_set_to_recur()
-    {
-        create(Client::class);
-        $this->assertEmpty(Invoice::all());
-
-        $item_details = [
-            [
-                'description' => 'Test invoice item',
-                'quantity' => 4,
-                'price' => 302.20,
-            ],
-        ];
-
-        Mail::fake();
-
-        $this->signIn($this->admin)
-            ->post('/clients/1/invoices', [
-                'due_date' => Carbon::tomorrow(),
-                'item_details' => $item_details,
-                'recurringChecked' => true,
-                'recurring_date' => 1,
-                'recurring_due_date' => 1
-            ]);
-
-        $this->assertDatabaseHas('recurring_invoices', ['invoice_id' => 1]);
-    }
-
-    /** @test */
     public function client_can_pay_invoice()
     {
         $invoice = create(Invoice::class);

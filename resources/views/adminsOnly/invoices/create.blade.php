@@ -43,26 +43,26 @@
             </div>
 
             <hr/>
-            <div class="form-group">
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" v-model="recurringChecked" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Check this if you want to make this invoice recurring.</span>
-                </label>
-            </div>
-            <div class="form-group" v-if="recurringChecked">
-                <input type="number" v-model="recurring_date" class="form-control" placeholder="Recurring Date"
-                       required>
-                <small class="form-text text-muted">How many days should this invoice be generated after it's last
-                    generation.
-                </small>
-            </div>
-            <div class="form-group" v-if="recurringChecked">
-                <input type="number" v-model="recurring_due_date" class="form-control" placeholder="Reucrring Due Date"
-                       required>
-                <small class="form-text text-muted">How many days after this invoice generates should the due date be.
-                </small>
-            </div>
+{{--            <div class="form-group">--}}
+            {{--                <label class="custom-control custom-checkbox">--}}
+            {{--                    <input type="checkbox" v-model="recurringChecked" class="custom-control-input">--}}
+            {{--                    <span class="custom-control-indicator"></span>--}}
+            {{--                    <span class="custom-control-description">Check this if you want to make this invoice recurring.</span>--}}
+            {{--                </label>--}}
+            {{--            </div>--}}
+            {{--            <div class="form-group" v-if="recurringChecked">--}}
+            {{--                <input type="number" v-model="recurring_date" class="form-control" placeholder="Recurring Date"--}}
+            {{--                       required>--}}
+            {{--                <small class="form-text text-muted">How many days should this invoice be generated after it's last--}}
+            {{--                    generation.--}}
+            {{--                </small>--}}
+            {{--            </div>--}}
+            {{--            <div class="form-group" v-if="recurringChecked">--}}
+            {{--                <input type="number" v-model="recurring_due_date" class="form-control" placeholder="Reucrring Due Date"--}}
+            {{--                       required>--}}
+            {{--                <small class="form-text text-muted">How many days after this invoice generates should the due date be.--}}
+            {{--                </small>--}}
+            {{--            </div>--}}
             <div class="form-group">
                 <textarea v-model="notes" id="notes" rows="5" placeholder="Notes" class="form-control"></textarea>
             </div>

@@ -47,8 +47,8 @@ class StoreInvoiceRequest extends FormRequest
     {
         return [
             'due_date' => 'date|required',
-            'recurring_date' => 'required_if:recurringChecked,true',
-            'recurring_due_date' => 'required_if:recurringChecked,true',
+//            'recurring_date' => 'required_if:recurringChecked,true',
+//            'recurring_due_date' => 'required_if:recurringChecked,true',
             'discount' => 'nullable|numeric',
             'project_id' => [
                 'nullable',
@@ -70,8 +70,8 @@ class StoreInvoiceRequest extends FormRequest
         return [
             'project_id.exists' => 'The Project ID you entered does not exist for this user.',
             'due_date.required' => 'You must enter a Due Date.',
-            'recurring_date.required_if' => 'You need to enter a Recurring Date if you want this invoice to recur.',
-            'recurring_due_date.required_if' => 'You need to enter a Recurring Due Date if you want this invoice to recur.',
+//            'recurring_date.required_if' => 'You need to enter a Recurring Date if you want this invoice to recur.',
+//            'recurring_due_date.required_if' => 'You need to enter a Recurring Due Date if you want this invoice to recur.',
         ];
     }
 
@@ -86,10 +86,6 @@ class StoreInvoiceRequest extends FormRequest
         $invoiceData['client_id'] = $this->route('client');
 
         $invoice = $this->invoiceService->create($invoiceData);
-
-        if ($this->recurringChecked) {
-            $this->invoiceService->recurInvoice($invoice, $this->recurring_date, $this->recurring_due_date);
-        }
 
         Mail::send(new NewInvoice($invoice->client, $invoice));
 

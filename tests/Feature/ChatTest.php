@@ -57,7 +57,7 @@ class ChatTest extends TestCase
 
         Mail::assertSent(NewChatMessageFromClient::class, function (NewChatMessageFromClient $mail) {
             $mail->build();
-            return $mail->hasTo(User::query()->where('ws_admin', true)->get());
+            return $mail->hasTo(User::where('is_admin', true)->get());
         });
     }
 }
