@@ -46,7 +46,7 @@ class ProjectTest extends TestCase
 
         $project = $client->projects()->first();
 
-        Mail::assertSent(NewProject::class, function ($mail) use ($client) {
+        Mail::assertSent(NewProject::class, function (NewProject $mail) use ($client) {
             $mail->build();
             return $mail->hasTo($client->email);
         });
@@ -111,14 +111,26 @@ class ProjectTest extends TestCase
     {
         $project = create(Project::class);
         $client = $project->client;
-        $invoice = create(Invoice::class, [
-            'project_id' => $project->id,
-            'client_id' => $client->id,
-        ]);
+
+        $invoice = [
+            "due_date" => "2019-01-01 00:00:00",
+            "total" => 175848,
+            "project_id" => 1,
+            "item_details" => [
+                [
+                    "description" => "Ipsa quia voluptatem eveniet aperiam.",
+                    "quantity" => 4,
+                    "price" => 43962,
+                ]
+            ]
+        ];
 
         $this->signIn($this->admin)
-            ->get('/clients/' . $client->id . '/projects/' . $project->id)
-            ->assertSee('Invoice #' . $invoice->id);
+            ->post('/clients/' . $client->id . '/invoices', $invoice);
+
+        $this->get('/clients/' . $client->id . '/invoices')
+            ->assertSee('Invoice #1')
+            ->assertSee($invoice['total']);
 
         $project->delete();
         Storage::assertMissing($project->pdf_path);

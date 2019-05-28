@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Console\Command;
 
 class CreateSuperAdmin extends Command
@@ -22,12 +23,18 @@ class CreateSuperAdmin extends Command
     protected $description = 'This will help create your first user (the super admin) on a fresh install.';
 
     /**
+     * @var UserService
+     */
+    protected $userService;
+
+    /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserService $userService)
     {
+        $this->userService = $userService;
         parent::__construct();
     }
 
@@ -50,12 +57,11 @@ class CreateSuperAdmin extends Command
         $email = $this->ask('What is the email for the super admin?');
         $password = $this->secret('What is the password for the super admin? (You won\'t be able to see what you are typing)');
 
-        User::create([
-            'email' => $email,
+        $this->userService->create([
             'name' => $name,
-            'password' => bcrypt($password),
-            'is_admin' => true,
-            'id' => 1,
+            'email' => $email,
+            'password' => $password,
+            'is_admin' => true
         ]);
 
         $this->info('Super Admin created.');

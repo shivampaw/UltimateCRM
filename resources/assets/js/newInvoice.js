@@ -2,7 +2,7 @@ new Vue({
     el: "#newInvoice",
 
     data: {
-        invoiceItems: [
+        item_details: [
             {
                 description: null,
                 quantity: null,
@@ -23,7 +23,7 @@ new Vue({
         addInvoiceItem(e) {
 
             if (this.canAddItemOrProceed()) {
-                this.invoiceItems.push({
+                this.item_details.push({
                     description: null,
                     quantity: null,
                     price: null,
@@ -54,7 +54,7 @@ new Vue({
             this.errors = [];
             var canAdd = true;
 
-            this.invoiceItems.forEach(function (item) {
+            this.item_details.forEach(function (item) {
                 if (!item.description || !item.quantity || !item.price) {
                     canAdd = false;
                     return;
@@ -70,8 +70,8 @@ new Vue({
 
         removeInvoiceItem(itemIndex) {
             this.errors = [];
-            if (this.invoiceItems.length > 1) {
-                this.invoiceItems.splice(itemIndex, 1);
+            if (this.item_details.length > 1) {
+                this.item_details.splice(itemIndex, 1);
             } else {
                 this.errors.push("You cannot remove your only item");
             }

@@ -4,19 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Mail\InvoicePaid;
 use App\Mail\ProjectAccepted;
+use App\Models\Invoice;
+use App\Services\InvoiceService;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Stripe\Charge;
-use Stripe\Error\Base;
-use Stripe\Stripe;
 
 class ClientsOnlyController extends Controller
 {
-    public function __construct()
+
+    /**
+     * @var InvoiceService
+     */
+    protected $invoiceService;
+
+    public function __construct(InvoiceService $invoiceService)
     {
+        $this->invoiceService = $invoiceService;
         $this->middleware('auth');
         $this->middleware('client');
     }
@@ -42,23 +47,14 @@ class ClientsOnlyController extends Controller
         return view('clientsOnly.invoices.pay', compact('invoice'));
     }
 
-    public function paidInvoice(Request $request, $id)
+    public function attemptInvoiceCharge(Request $request, $id)
     {
-        $client = Auth::user()->client;
-        $invoice = $client->invoices()->findOrFail($id);
+        $invoice = Invoice::findOrFail($id);
 
-        Stripe::setApiKey(config('services.stripe.secret'));
+        $response = $this->invoiceService->attemptInvoiceCharge($invoice, $request->stripeToken);
 
-        try {
-            $charge = Charge::create([
-                'amount' => $invoice->total,
-                'description' => config('app.name') . ' - Invoice #' . $invoice->id,
-                'source' => $request->stripeToken,
-                'currency' => (config('crm.currency')),
-                'receipt_email' => $client->email,
-            ]);
-
-            $invoice->stripe_charge_id = $charge->id;
+        if ($response['success']) {
+            $invoice->stripe_charge_id = $response['stripe_charge_id'];
             $invoice->paid = true;
             $invoice->paid_at = Carbon::now();
             $invoice->save();
@@ -66,17 +62,11 @@ class ClientsOnlyController extends Controller
             Mail::send(new InvoicePaid($invoice));
 
             flash('Invoice Paid!');
-
             return redirect('/invoices/' . $id);
-        } catch (Base $e) {
-            flash($e->getMessage(), 'danger');
-
-            return back();
-        } catch (Exception $e) {
-            flash('An unknown error occurred. Please try again.', 'danger');
-
-            return back();
         }
+
+        flash($response['message'], 'danger');
+        return back();
     }
 
     public function allProjects()

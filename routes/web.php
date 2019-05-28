@@ -36,7 +36,7 @@ Route::resource('/projects.chats', 'Shared\\ChatController', ['only' => ['store'
 Route::get('/invoices', 'ClientsOnlyController@allInvoices');
 Route::get('/invoices/{id}', 'ClientsOnlyController@showInvoice');
 Route::get('/invoices/{id}/pay', 'ClientsOnlyController@payInvoice');
-Route::post('/invoices/{id}', 'ClientsOnlyController@paidInvoice');
+Route::post('/invoices/{id}', 'ClientsOnlyController@attemptInvoiceCharge');
 Route::get('/projects', 'ClientsOnlyController@allProjects');
 Route::get('/projects/{id}', 'ClientsOnlyController@showProject');
 Route::get('/projects/{id}/accept', 'ClientsOnlyController@acceptProject');

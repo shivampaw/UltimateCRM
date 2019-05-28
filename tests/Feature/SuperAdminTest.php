@@ -42,7 +42,7 @@ class SuperAdminTest extends TestCase
             ->post('/admins', $admin)
             ->assertRedirect('/admins');
 
-        Mail::assertSent(NewUser::class, function ($mail) use ($admin) {
+        Mail::assertSent(NewUser::class, function (NewUser $mail) use ($admin) {
             $mail->build();
             return $mail->hasTo($admin['email']);
         });

@@ -5,13 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Client;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ClientsController extends Controller
 {
-    public function __construct()
+
+
+    /**
+     * @var UserService
+     */
+    protected $userService;
+
+    public function __construct(UserService $userService)
     {
+        $this->userService = $userService;
         $this->middleware('auth');
         $this->middleware('admin');
     }
@@ -50,9 +59,8 @@ class ClientsController extends Controller
         DB::beginTransaction();
 
         try {
-            $user = $request->storeUser();
-            $client = new Client($request->all());
-            $user->client()->save($client);
+            $user = $this->userService->create($request->only(['name', 'email']));
+            $user->client()->create($request->all());
         } catch (\Exception $e) {
             DB::rollBack();
             flash('An error occurred! Check your database and email settings.', 'danger');
@@ -117,6 +125,7 @@ class ClientsController extends Controller
      * @param \App\Models\Client $client
      *
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Client $client)
     {

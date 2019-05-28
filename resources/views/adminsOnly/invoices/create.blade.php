@@ -24,7 +24,7 @@
                 <a @click.prevent="addInvoiceItem" class="float-right text-info">Add Invoice Item</a>
             </p>
 
-            <div class="form-group" v-for="(invoiceItem, i) in invoiceItems">
+            <div class="form-group" v-for="(invoiceItem, i) in invoice_details">
                 <div class="row">
                     <div class="col-md-6">
                         <input type="text" class="form-control" placeholder="Description"

@@ -4,20 +4,29 @@ namespace App\Http\Requests;
 
 use App\Mail\NewInvoice;
 use App\Models\Client;
-use App\Models\Invoice;
-use App\Models\RecurringInvoice;
-use Brick\Money\Money;
-use Carbon\Carbon;
+use App\Services\InvoiceService;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
-use Money\Currencies\ISOCurrencies;
-use Money\Currency;
-use Money\Parser\DecimalMoneyParser;
 
 class StoreInvoiceRequest extends FormRequest
 {
+    /**
+     * @var Client
+     */
     protected $client;
+
+    /**
+     * @var InvoiceService
+     */
+    protected $invoiceService;
+
+    public function __construct(InvoiceService $invoiceService)
+    {
+        $this->invoiceService = $invoiceService;
+        parent::__construct();
+    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -43,7 +52,7 @@ class StoreInvoiceRequest extends FormRequest
             'discount' => 'nullable|numeric',
             'project_id' => [
                 'nullable',
-                Rule::exists('projects', 'id')->where(function ($query) {
+                Rule::exists('projects', 'id')->where(function (Builder $query) {
                     $query->where('client_id', $this->route('client'));
                 }),
             ],
@@ -73,57 +82,17 @@ class StoreInvoiceRequest extends FormRequest
      */
     public function storeInvoice()
     {
-        $this->client = Client::find($this->route('client'));
-        $invoice = new Invoice();
-        $invoice->due_date = $this->due_date;
-        $invoice->paid = false;
-        $invoice->notes = $this->notes;
-        $invoice->project_id = ($this->project_id) ?: null;
-        $invoice->overdue_notification_sent = false;
-        $invoice->total = 0;
+        $invoiceData = $this->only(['due_date', 'notes', 'item_details', 'project_id', 'discount']);
+        $invoiceData['client_id'] = $this->route('client');
 
-        $invoiceItems = [];
-        foreach ($this->invoiceItems as $item) {
-            $invoice->total += $item['quantity'] * $item['price'];
-            $item['price'] = Money::of($item['price'], config('crm.currency'))->getMinorAmount()->toInt();
-            $invoiceItems[] = $item;
-        }
-        $invoice->item_details = json_encode($invoiceItems);
-
-        $invoice->total -= $this->discount;
-        $invoice->discount = Money::of($this->discount ?? 0, config('crm.currency'))->getMinorAmount()->toInt();
-
-        $money = Money::of($invoice->total, config('crm.currency'));
-        $invoice->total = $money->getMinorAmount()->toInt();
-
-        $this->client->addInvoice($invoice);
+        $invoice = $this->invoiceService->create($invoiceData);
 
         if ($this->recurringChecked) {
-            $this->recurInvoice($invoice->id, $this->recurring_date, $this->recurring_due_date);
+            $this->invoiceService->recurInvoice($invoice, $this->recurring_date, $this->recurring_due_date);
         }
 
-        Mail::send(new NewInvoice($this->client, $invoice));
+        Mail::send(new NewInvoice($invoice->client, $invoice));
 
         return $invoice;
-    }
-
-    /**
-     * This is run to create a recurring value for the invoice
-     * specified.
-     *
-     * @return mixed
-     */
-    protected function recurInvoice($id, $date, $due_date)
-    {
-        $recurringInvoice = new RecurringInvoice();
-        $recurringInvoice->invoice_id = $id;
-        $recurringInvoice->last_run = Carbon::today();
-        $recurringInvoice->next_run = Carbon::today()->addDays($date);
-        $recurringInvoice->due_date = $due_date;
-        $recurringInvoice->how_often = $date;
-        $recurringInvoice->client_id = $this->client->id;
-        $recurringInvoice->save();
-
-        return $recurringInvoice;
     }
 }

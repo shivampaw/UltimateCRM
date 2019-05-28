@@ -48,7 +48,7 @@ class AdminTest extends TestCase
             ->post('/clients', $client)
             ->assertRedirect('/clients');
 
-        Mail::assertSent(NewUser::class, function ($mail) use ($client) {
+        Mail::assertSent(NewUser::class, function (NewUser $mail) use ($client) {
             $mail->build();
             return $mail->hasTo($client['email']);
         });

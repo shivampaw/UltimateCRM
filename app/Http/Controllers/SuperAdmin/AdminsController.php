@@ -5,12 +5,19 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class AdminsController extends Controller
 {
-    public function __construct()
+    /**
+     * @var UserService
+     */
+    protected $userService;
+
+    public function __construct(UserService $userService)
     {
+        $this->userService = $userService;
         $this->middleware('auth');
         $this->middleware('super_admin');
     }
@@ -46,7 +53,10 @@ class AdminsController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $user = $request->storeUser(null, null, null, true);
+        $data = $request->only(['name', 'email']);
+        $data['is_admin'] = true;
+
+        $this->userService->create($data);
 
         flash('Admin Created!');
 
