@@ -4,8 +4,6 @@ namespace App\Services;
 
 use App\Models\Client;
 use App\Models\Invoice;
-use App\Models\RecurringInvoice;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Charge;
@@ -19,31 +17,16 @@ class InvoiceService
         /** @var Client $client */
         $client = Client::find($data['client_id']);
 
-        $data = $this->normaliseInvoiceData($data);
+        $invoice['project_id'] = $data['project_id'] ?? null;
+        $invoice['notes'] = $data['notes'] ?? null;
+        $invoice['due_date'] = $data['due_date'];
 
-        return $client->addInvoice(Invoice::make($data));
-    }
+        $invoice = array_merge(
+            $invoice,
+            $this->normaliseInvoicePrices($data['item_details'], $data['discount'] ?? 0)
+        );
 
-    public function recurInvoice(Invoice $invoice, int $howOften, int $dueDate)
-    {
-        return RecurringInvoice::create([
-            'invoice_id' => $invoice->id,
-            'last_run' => Carbon::today(),
-            'next_run' => Carbon::today()->addDays($howOften),
-            'due_date' => $dueDate,
-            'how_often' => $howOften,
-            'client_id' => $invoice->client->id
-        ]);
-    }
-
-    public function isInvoiceRecurring(Invoice $invoice)
-    {
-
-    }
-
-    public function removeInvoiceRecurrence(Invoice $invoice)
-    {
-
+        return $client->addInvoice(Invoice::make($invoice));
     }
 
     public function attemptInvoiceCharge(Invoice $invoice, string $stripeToken)
@@ -80,24 +63,23 @@ class InvoiceService
 
     }
 
-    private function normaliseInvoiceData(array $data)
+    public function normaliseInvoicePrices(array $items, $discount)
     {
-        $data['paid'] = false;
-        $data['overdue_notification_sent'] = false;
         $data['total'] = 0;
-        $data['discount'] = $data['discount'] ?? 0;
+        $data['discount'] = $discount;
+        $data['item_details'] = [];
 
-        $tempItemDetails = [];
-        foreach ($data['item_details'] as $item) {
+        foreach ($items as $item) {
             $data['total'] += $item['quantity'] * $item['price'];
             $item['price'] = getMinorUnit($item['price']);
-            $tempItemDetails[] = $item;
+            $data['item_details'][] = $item;
         }
-        $data['item_details'] = json_encode($tempItemDetails);
+
+        $data['item_details'] = json_encode($data['item_details']);
 
         $data['total'] -= $data['discount'];
-        $data['discount'] = getMinorUnit($data['discount']);
 
+        $data['discount'] = getMinorUnit($data['discount']);
         $data['total'] = getMinorUnit($data['total']);
 
         return $data;

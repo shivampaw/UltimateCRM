@@ -25,6 +25,7 @@ Route::resource('/admins', 'SuperAdmin\\AdminsController', ['except' => ['show']
 Route::resource('/clients', 'Admin\\ClientsController');
 Route::resource('/clients.invoices', 'Admin\\InvoicesController', ['except' => ['update', 'edit']]);
 Route::resource('/clients.projects', 'Admin\\ProjectsController', ['except' => ['update', 'edit']]);
+Route::resource('/clients.recurring-invoices', 'Admin\\RecurringInvoicesController');
 
 // Admin + Client Routes
 Route::get('/', 'PagesController@index');

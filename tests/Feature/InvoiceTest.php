@@ -35,7 +35,7 @@ class InvoiceTest extends TestCase
         $client = create(Client::class);
         $item_details = [
             [
-                'description' => 'Test invoice item',
+                'description' => 'Test Invoice Item',
                 'quantity' => 4,
                 'price' => 302.20,
             ],
@@ -47,7 +47,19 @@ class InvoiceTest extends TestCase
             ->post('/clients/' . $client->id . '/invoices', [
                 'due_date' => Carbon::tomorrow(),
                 'item_details' => $item_details,
+                'notes' => 'Lorem Ipsum.',
+                'discount' => 10.00
             ]);
+
+        $this->get('/clients/1/invoices/1')
+            ->assertSee('Lorem Ipsum.')
+            ->assertSee('Test Invoice Item')
+            ->assertSee('4')
+            ->assertSee('GBP 302.20')
+            ->assertSee('GBP 1208.80')
+            ->assertSee('GBP 10.00')
+            ->assertSee('GBP 1198.80')
+            ->assertSee(Carbon::tomorrow()->toFormattedDateString());
 
         Mail::assertSent(NewInvoice::class, function (NewInvoice $mail) use ($client) {
             $mail->build();
@@ -56,8 +68,6 @@ class InvoiceTest extends TestCase
 
         /** @var Invoice $invoice */
         $invoice = $client->invoices()->first();
-        $this->assertDatabaseHas('invoices', $invoice->toArray());
-
         $this->delete('/clients/' . $client->id . '/invoices/' . $invoice->id);
         $this->assertDatabaseMissing('invoices', $invoice->toArray());
     }
