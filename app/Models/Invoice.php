@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -19,5 +20,13 @@ class Invoice extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function markAsPaid($stripeChargeId)
+    {
+        $this->stripe_charge_id = $stripeChargeId;
+        $this->paid = true;
+        $this->paid_at = Carbon::now();
+        $this->save();
     }
 }

@@ -35,8 +35,10 @@ class InvoicesController extends Controller
         flash('Invoice Created!');
     }
 
-    public function show($client, Invoice $invoice)
+    public function show(Client $client, Invoice $invoice)
     {
+        abort_if($invoice->client->isNot($client), 404);
+
         $invoice->load('client');
 
         return view('adminsOnly.invoices.show', compact('invoice'));

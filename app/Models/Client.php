@@ -23,6 +23,11 @@ class Client extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function recurringInvoices()
+    {
+        return $this->hasMany(RecurringInvoice::class, 'client_id');
+    }
+
     public function addInvoice(Invoice $invoice)
     {
         return $this->invoices()->save($invoice);
@@ -31,6 +36,11 @@ class Client extends Model
     public function addProject(Project $project)
     {
         return $this->projects()->save($project);
+    }
+
+    public function addRecurringInvoice(RecurringInvoice $recurringInvoice)
+    {
+        return $this->recurringInvoices()->save($recurringInvoice);
     }
 
     protected static function boot()

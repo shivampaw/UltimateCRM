@@ -18,10 +18,12 @@ class MakeRecurringInvoicesTableV2 extends Migration
             $table->integer('client_id')->unsigned()->index();
             $table->longText('item_details');
             $table->integer('discount');
+            $table->integer('total');
             $table->integer('project_id')->nullable()->index();
             $table->text('notes')->nullable();
             $table->integer('due_date');
             $table->text('how_often');
+            $table->date('next_run');
             $table->timestamps();
         });
     }

@@ -13,6 +13,8 @@ new Vue({
         project_id: null,
         notes: null,
         discount: null,
+        how_often: null,
+        next_run: null,
         errors: [],
     },
 
@@ -33,12 +35,12 @@ new Vue({
                 return;
             } else {
                 axios.post(e.target.action, this.$data)
-                    .then(success => window.location.href = "../invoices")
+                    .then(success => window.location.href = e.target.action)
                     .catch(failure => {
                         if (failure.response.status >= 500) {
                             this.errors.push(failure.response.data.message);
                         } else {
-                            var errorsArray = failure.response.data;
+                            var errorsArray = failure.response.data.errors;
                             Object.keys(errorsArray).forEach(error => {
                                 this.errors.push(errorsArray[error][0]);
                             });

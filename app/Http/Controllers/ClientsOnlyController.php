@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\InvoicePaid;
 use App\Mail\ProjectAccepted;
 use App\Models\Invoice;
 use App\Services\InvoiceService;
@@ -49,17 +48,13 @@ class ClientsOnlyController extends Controller
 
     public function attemptInvoiceCharge(Request $request, $id)
     {
+        /** @var Invoice $invoice */
         $invoice = Invoice::findOrFail($id);
 
         $response = $this->invoiceService->attemptInvoiceCharge($invoice, $request->stripeToken);
 
         if ($response['success']) {
-            $invoice->stripe_charge_id = $response['stripe_charge_id'];
-            $invoice->paid = true;
-            $invoice->paid_at = Carbon::now();
-            $invoice->save();
-
-            Mail::send(new InvoicePaid($invoice));
+            $invoice->markAsPaid($response['stripe_charge_id']);
 
             flash('Invoice Paid!');
             return redirect('/invoices/' . $id);

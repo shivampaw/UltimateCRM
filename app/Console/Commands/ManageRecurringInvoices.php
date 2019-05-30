@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\RecurringInvoice;
+use App\Services\RecurringInvoiceService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class ManageRecurringInvoices extends Command
@@ -37,6 +40,12 @@ class ManageRecurringInvoices extends Command
      */
     public function handle()
     {
+        RecurringInvoice::where('next_run', Carbon::today())->get()->each(
+            function (RecurringInvoice $recurringInvoice) {
+                app(RecurringInvoiceService::class)->createInvoiceFromRecurringInvoice($recurringInvoice);
+            }
+        );
 
+        return true;
     }
 }

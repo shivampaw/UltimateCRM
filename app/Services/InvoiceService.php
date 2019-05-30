@@ -2,10 +2,13 @@
 
 namespace App\Services;
 
+use App\Mail\InvoicePaid;
+use App\Mail\NewInvoice;
 use App\Models\Client;
 use App\Models\Invoice;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Stripe\Charge;
 use Stripe\Error\Base;
 use Stripe\Stripe;
@@ -17,16 +20,11 @@ class InvoiceService
         /** @var Client $client */
         $client = Client::find($data['client_id']);
 
-        $invoice['project_id'] = $data['project_id'] ?? null;
-        $invoice['notes'] = $data['notes'] ?? null;
-        $invoice['due_date'] = $data['due_date'];
+        $invoice = $this->getInvoiceData($data);
 
-        $invoice = array_merge(
-            $invoice,
-            $this->normaliseInvoicePrices($data['item_details'], $data['discount'] ?? 0)
-        );
+        $invoice = $this->persistAndEmail($client, $invoice);
 
-        return $client->addInvoice(Invoice::make($invoice));
+        return $invoice;
     }
 
     public function attemptInvoiceCharge(Invoice $invoice, string $stripeToken)
@@ -43,6 +41,8 @@ class InvoiceService
                 'currency' => (config('crm.currency')),
                 'receipt_email' => $client->email,
             ]);
+
+            Mail::send(new InvoicePaid($invoice));
 
             return [
                 'success' => true,
@@ -83,5 +83,32 @@ class InvoiceService
         $data['total'] = getMinorUnit($data['total']);
 
         return $data;
+    }
+
+    public function getInvoiceData(array $data)
+    {
+        $invoice['project_id'] = $data['project_id'] ?? null;
+        $invoice['notes'] = $data['notes'] ?? null;
+        $invoice['due_date'] = $data['due_date'];
+
+        $invoice = array_merge(
+            $invoice,
+            $this->normaliseInvoicePrices($data['item_details'], $data['discount'] ?? 0)
+        );
+
+        return $invoice;
+    }
+
+    /**
+     * @param Client $client
+     * @param array $invoice
+     * @return array|false|\Illuminate\Database\Eloquent\Model
+     */
+    public function persistAndEmail(Client $client, array $invoice): Invoice
+    {
+        $invoice = $client->addInvoice(Invoice::make($invoice));
+
+        Mail::send(new NewInvoice($client, $invoice));
+        return $invoice;
     }
 }

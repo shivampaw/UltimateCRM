@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Mail\NewInvoice;
 use App\Models\Client;
 use App\Services\InvoiceService;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class StoreInvoiceRequest extends FormRequest
@@ -86,8 +84,6 @@ class StoreInvoiceRequest extends FormRequest
         $invoiceData['client_id'] = $this->route('client');
 
         $invoice = $this->invoiceService->create($invoiceData);
-
-        Mail::send(new NewInvoice($invoice->client, $invoice));
 
         return $invoice;
     }

@@ -3,13 +3,13 @@
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Project;
+use App\Models\RecurringInvoice;
 use App\Models\User;
+use App\Services\RecurringInvoiceService;
 use Brick\Money\Money;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Money\Currencies\ISOCurrencies;
-use Money\Parser\DecimalMoneyParser;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,4 +76,25 @@ $factory->define(Project::class, function (Faker\Generator $faker) {
         'client_id' => create(Client::class)->id,
         'pdf_path' => $path,
     ];
+});
+
+$factory->define(RecurringInvoice::class, function (Faker\Generator $faker) {
+    $data = [
+        'how_often' => 'Every month',
+        'next_run' => Carbon::today(),
+        'due_date' => 14,
+        'discount' => 5.99,
+        'item_details' => [
+            [
+                'description' => $faker->sentence(),
+                'quantity' => $faker->numberBetween(1, 10),
+                'price' => $faker->randomFloat(2, 50, 500)
+            ]
+        ],
+    ];
+
+    $data = app(RecurringInvoiceService::class)->getRecurringInvoiceData($data);
+    $data['client_id'] = create(Client::class)->id;
+
+    return $data;
 });
