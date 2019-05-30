@@ -6,6 +6,6 @@
 <p>Created On: {{ $invoice->created_at->toFormattedDateString() }}</p>
 <p>Due By: {{ $invoice->due_date->toFormattedDateString() }}</p>
 
-@if($invoice->due_date->isPast())
+@if($invoice->due_date->isPast() && !$invoice->paid)
     <p class="text-danger h4">Payment Overdue</p>
 @endif

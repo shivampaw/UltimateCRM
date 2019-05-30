@@ -8,8 +8,6 @@ use App\Models\User;
 use App\Services\RecurringInvoiceService;
 use Brick\Money\Money;
 use Carbon\Carbon;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +24,7 @@ $factory->define(User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt('secret'),
+        'password' => bcrypt('password'),
         'is_admin' => false,
         'remember_token' => str_random(10),
     ];
@@ -51,25 +49,38 @@ $factory->define(Invoice::class, function (Faker\Generator $faker) {
         'price' => $faker->randomFloat(2, 50, 500),
     ];
 
-    $total = 0;
-    $invoiceItems = [];
+    $discount = $faker->randomFloat(2, 0, 10);
+    $total = 0 - $discount;
+
+    $discount = getMinorUnit($discount);
+
     $total += $invoiceItem['quantity'] * $invoiceItem['price'];
-    $invoiceItem['price'] = Money::of($invoiceItem['price'], config('crm.currency'))->getMinorAmount()->toInt();
+    $invoiceItem['price'] = getMinorUnit($invoiceItem['price']);
 
     $invoice_items = json_encode([$invoiceItem]);
 
+    $due_date = $faker->dateTimeBetween($startDate = '-10 days', $endDate = '+2 weeks');
+    $create_project = rand(0, 1) == 1;
+
+    if ($create_project) {
+        $project = create(Project::class);
+        $client_id = $project->client->id;
+        $project_id = $project->id;
+    }
+
     return [
-        'client_id' => create(Client::class)->id,
-        'due_date' => Carbon::tomorrow(),
+        'client_id' => $client_id ?? create(Client::class)->id,
+        'project_id' => $project_id ?? null,
+        'discount' => $discount,
+        'due_date' => $due_date,
         'total' => Money::of($total, config('crm.currency'))->getMinorAmount()->toInt(),
         'item_details' => $invoice_items,
-        'project_id' => null,
+        'overdue_notification_sent' => Carbon::parse($due_date->format('Y-m-d'))->isPast() ? true : false
     ];
 });
 
 $factory->define(Project::class, function (Faker\Generator $faker) {
-    $file = UploadedFile::fake()->create('project.pdf', 200);
-    $path = Storage::put('public/project_files', $file);
+    $path = "http://www.pdf995.com/samples/pdf.pdf";
 
     return [
         'title' => $faker->sentence(),
@@ -80,10 +91,10 @@ $factory->define(Project::class, function (Faker\Generator $faker) {
 
 $factory->define(RecurringInvoice::class, function (Faker\Generator $faker) {
     $data = [
-        'how_often' => 'Every month',
-        'next_run' => Carbon::today(),
-        'due_date' => 14,
-        'discount' => 5.99,
+        'how_often' => $faker->randomElement(['Every month', 'Every day', 'Every week', 'Every two weeks']),
+        'next_run' => $faker->dateTimeBetween('today', '+1 week')->setTime(0, 0),
+        'due_date' => $faker->numberBetween(1, 14),
+        'discount' => $faker->randomFloat(2, 0, 10),
         'item_details' => [
             [
                 'description' => $faker->sentence(),
