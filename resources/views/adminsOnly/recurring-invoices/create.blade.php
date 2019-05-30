@@ -43,6 +43,7 @@
             </div>
 
             <hr/>
+            
             <div class="form-group">
                 <select v-model="how_often" class="form-control" required>
                     <option value="">Select...</option>

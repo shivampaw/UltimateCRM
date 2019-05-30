@@ -1,10 +1,5 @@
 <div id="invoice">
     <div class="row">
-        @if($invoice->due_date->addDays(1)->isPast())
-            <div class="col-12 text-center text-danger">
-                <h3>Payment Overdue</h3>
-            </div>
-        @endif
         <div class="col-sm-6 text-center text-sm-left">
             <strong>Billed To</strong><br/>
             {{ $invoice->client->name }}<br/>
@@ -12,13 +7,11 @@
         </div>
         <span class="d-sm-none invoice_break"></span>
         <div class="col-sm-6 text-sm-right text-center">
-            <strong>Invoice #{{ $invoice->id }}</strong>
-            <div>Total Charge: {{ formatInvoiceTotal($invoice->total) }}</div>
-            @if($invoice->paid)
-                <div>Paid On: {{ $invoice->paid_at->toFormattedDateString() }}</div>
+            @if($invoice instanceof  App\Models\Invoice)
+                @include("layouts.invoices.show.invoice")
+            @else
+                @include("layouts.invoices.show.recurring-invoice")
             @endif
-            <div>Created On: {{ $invoice->created_at->toFormattedDateString() }}</div>
-            <div>Due By: {{ $invoice->due_date->toFormattedDateString() }}</div>
         </div>
     </div>
     <div class="row">

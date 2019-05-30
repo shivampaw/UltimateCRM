@@ -75,7 +75,6 @@
                 $form.get(0).submit();
             }
         }
-        ;
 
     </script>
 @endsection

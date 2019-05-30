@@ -40,7 +40,6 @@ class RecurringInvoiceService
      */
     public function calculateNextRun($how_often)
     {
-        $carbonString = "";
         switch ($how_often) {
             case 'Every day':
                 $carbonString = "+1 day";

@@ -18,16 +18,16 @@ class RecurringInvoicesController extends Controller
 
     public function index(Client $client)
     {
-        $recurringInvoices = $client->recurringInvoices;
+        $invoices = $client->recurringInvoices;
 
-        return view("adminsOnly.recurring-invoices.index", compact('recurringInvoices', 'client'));
+        return view("adminsOnly.recurring-invoices.index", compact('invoices', 'client'));
     }
 
     public function show(Client $client, RecurringInvoice $recurringInvoice)
     {
         abort_if($recurringInvoice->client->isNot($client), 404);
 
-        return ($recurringInvoice);
+        return view("adminsOnly.recurring-invoices.show", ['client' => $client, 'invoice' => $recurringInvoice]);
     }
 
     public function create(Client $client)
