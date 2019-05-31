@@ -18,7 +18,7 @@ class UserTest extends TestCase
         $user = create(User::class);
         $this->post('/login', [
             'email' => $user->email,
-            'password' => 'secret',
+            'password' => 'password',
         ]);
         $this->assertAuthenticated();
     }
