@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         app(UserService::class)->create([
             'name' => 'Admin',
-            'email' => 'admin@example.com',
+            'email' => config('mail.from.address') ?? 'admin@example.com',
             'password' => 'password',
             'is_admin' => true
         ]);
