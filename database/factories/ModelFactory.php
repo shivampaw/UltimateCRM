@@ -34,7 +34,7 @@ $factory->define(Client::class, function (Faker\Generator $faker) {
     $user = create(User::class);
 
     return [
-        'name' => $faker->name,
+        'name' => $user->name,
         'user_id' => $user->id,
         'email' => $user->email,
         'number' => $faker->phoneNumber,
@@ -46,7 +46,7 @@ $factory->define(Invoice::class, function (Faker\Generator $faker) {
     $invoiceItem = [
         'description' => $faker->sentence(),
         'quantity' => $faker->numberBetween(1, 10),
-        'price' => $faker->randomFloat(2, 50, 500),
+        'price' => $faker->randomFloat(2, 10, 50),
     ];
 
     $discount = $faker->randomFloat(2, 0, 10);
@@ -61,6 +61,9 @@ $factory->define(Invoice::class, function (Faker\Generator $faker) {
 
     $due_date = $faker->dateTimeBetween($startDate = '-10 days', $endDate = '+2 weeks');
     $create_project = rand(0, 1) == 1;
+
+    $client_id = null;
+    $project_id = null;
 
     if ($create_project) {
         $project = create(Project::class);
@@ -92,14 +95,14 @@ $factory->define(Project::class, function (Faker\Generator $faker) {
 $factory->define(RecurringInvoice::class, function (Faker\Generator $faker) {
     $data = [
         'how_often' => $faker->randomElement(['Every month', 'Every day', 'Every week', 'Every two weeks']),
-        'next_run' => $faker->dateTimeBetween('today', '+1 week')->setTime(0, 0),
+        'next_run' => $faker->dateTimeBetween('today', '+3 days')->setTime(0, 0),
         'due_date' => $faker->numberBetween(1, 14),
         'discount' => $faker->randomFloat(2, 0, 10),
         'item_details' => [
             [
                 'description' => $faker->sentence(),
                 'quantity' => $faker->numberBetween(1, 10),
-                'price' => $faker->randomFloat(2, 50, 500)
+                'price' => $faker->randomFloat(2, 10, 50)
             ]
         ],
     ];

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\RecurringInvoice;
 use App\Services\UserService;
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         app(UserService::class)->create([
             'name' => 'Admin',
-            'email' => config('mail.from.address') ?? 'admin@example.com',
+            'email' => 'admin@example.com',
             'password' => 'password',
             'is_admin' => true
         ]);
@@ -26,9 +27,11 @@ class DatabaseSeeder extends Seeder
             'paid' => true,
             'paid_at' => Carbon::now(),
             'stripe_charge_id' => 'test_charge'
-        ], 2);
+        ], 3);
 
-        create(Invoice::class, [], 4);
+        create(Invoice::class, [
+            'client_id' => create(Client::class)->id
+        ], 2);
 
         create(RecurringInvoice::class, [], 2);
     }
