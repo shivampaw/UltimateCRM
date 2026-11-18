@@ -12,8 +12,19 @@ use Illuminate\Support\Facades\Mail;
 
 class ChatController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function store(Project $project, Request $request)
     {
+        $user = Auth::user();
+
+        if (!$user->is_admin && (!$user->client || $project->client_id !== $user->client->id)) {
+            abort(403);
+        }
+
         $data = $this->validate($request, [
             'message' => 'required',
             'attachment' => 'file|mimes:jpeg,bmp,png,pdf,gif,jpg,docx,xlsx,doc,xls'
